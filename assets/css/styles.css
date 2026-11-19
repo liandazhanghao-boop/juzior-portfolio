@@ -1,0 +1,203 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Space+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;700;900&display=swap");
+:root{--bg-color:#fff;--text-main:#111;--accent:#000}*{box-sizing:border-box}html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-stopped{overflow:hidden}.lenis.lenis-scrolling iframe{pointer-events:none}body{margin:0;overflow-x:hidden;background:var(--bg-color);color:var(--text-main);font-family:Inter,sans-serif;cursor:none}button{cursor:none;background:none;border:0}.font-mono{font-family:"Space Mono",monospace}.text-stroke{color:transparent;-webkit-text-stroke:2px #111}
+.cursor-dot{position:fixed;z-index:10000;top:0;left:0;width:8px;height:8px;transform:translate(-50%,-50%);border-radius:50%;background:#000;pointer-events:none}.cursor-outline{position:fixed;z-index:9999;top:0;left:0;width:50px;height:50px;transform:translate(-50%,-50%);border:1px solid rgba(0,0,0,.25);border-radius:50%;pointer-events:none}
+.loader-overlay{position:fixed;z-index:20000;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#000;color:#fff}.loader-curtain{position:fixed;z-index:19999;inset:0;transform:translateY(100%);background:#111}
+.grid-bg{background-image:linear-gradient(rgba(0,0,0,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.035) 1px,transparent 1px);background-size:50px 50px}.hero-img-container{clip-path:polygon(10% 0,100% 0,100% 90%,0 100%);transition:clip-path .5s}.hero-img-container:hover{clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}.magnetic-btn{display:inline-flex;transition:transform .2s cubic-bezier(.25,.46,.45,.94)}
+.marquee-track{width:max-content}.map-svg path{fill:#e5e5e5;stroke:#fff;stroke-width:1;transition:fill .5s}.map-svg path:hover{fill:#d4d4d4}.map-pin{transform-origin:bottom center}
+.time-cell{position:relative;padding:24px;border:1px solid #282828;border-radius:8px;background:rgba(17,24,39,.5)}.time-cell b{display:block;font-family:"Space Mono",monospace;font-size:clamp(34px,5vw,60px);font-variant-numeric:tabular-nums}.time-cell span{display:block;margin-top:8px;color:#777;font-size:11px;text-transform:uppercase}.time-cell--active{overflow:hidden;border-color:#fff;background:#fff;color:#000}.time-cell--active span{color:#333;font-weight:700}.time-cell--active i{position:absolute;bottom:0;left:0;width:0;height:4px;background:#000;transition:width 1s linear}
+.work-item{position:relative;width:80vw;max-width:600px;height:60vh;min-height:480px;flex:none}.work-item--offset{margin-top:70px}.work-shadow{position:absolute;inset:0;border:1px solid #000;background:#eee;transition:transform .5s}.work-card{position:absolute;inset:0;display:flex;justify-content:space-between;flex-direction:column;border:1px solid #000;background:#fff;padding:30px;transition:transform .5s}.work-item:hover .work-shadow{transform:rotate(0)}.work-item:hover .work-card{transform:translateY(-8px)}.work-image{position:relative;overflow:hidden;width:100%;height:58%;margin-bottom:22px;background:#e5e5e5}.work-image img{width:100%;height:100%;transform:scale(1.08);object-fit:cover;filter:grayscale(1);transition:.7s}.work-item:hover .work-image img{transform:scale(1);filter:grayscale(0)}.work-image span{position:absolute;top:8px;right:8px;background:#000;color:#fff;padding:5px 8px;font-family:"Space Mono",monospace;font-size:10px}.work-card h3{margin:0 0 8px;font-size:clamp(28px,4vw,40px);font-weight:800}.work-card p{margin:0;color:#777;font-family:"Space Mono",monospace;font-size:13px}.work-card footer{display:flex;align-items:end;justify-content:space-between;border-top:1px solid #111;padding-top:14px}.work-card footer b{font-size:36px;opacity:.1}.work-card footer i{font-size:24px}.work-item--dark .work-shadow{background:#111}.work-item--dark .work-card{border-color:#333;background:#050505;color:#fff}.work-item--dark .work-card p{color:#999}.work-item--dark .work-card footer{border-color:#444}
+.timeline-line{position:absolute;z-index:0;top:0;left:50%;width:1px;height:100%;transform:translateX(-50%);background:rgba(0,0,0,.1)}.timeline-progress{position:absolute;z-index:1;top:0;left:50%;width:2px;height:0;transform:translateX(-50%);background:#000}.service-item{display:grid;grid-template-columns:1fr 16px 1fr;align-items:center;gap:40px}.service-item--reverse .service-card{grid-column:3}.service-item--reverse .service-node{grid-column:2;grid-row:1}.service-item--reverse>p{grid-column:1;grid-row:1;text-align:right}.service-card{width:100%;max-width:340px;justify-self:end;border:1px solid #ddd;background:#fff;padding:30px;box-shadow:0 12px 40px rgba(0,0,0,.08);transition:.3s}.service-card:hover{transform:translate(-5px,-5px);box-shadow:10px 10px 0 #000}.service-card>i{font-size:46px}.service-card h3{margin:16px 0 8px;font-size:24px;font-weight:800}.service-card p,.service-item>p{color:#777;font-size:14px;line-height:1.7}.service-item>p{font-family:"Space Mono",monospace}.service-node{width:16px;height:16px;border:4px solid #fff;border-radius:50%;background:#000}.contact-texture{background-image:linear-gradient(45deg,rgba(255,255,255,.05) 25%,transparent 25%),linear-gradient(-45deg,rgba(255,255,255,.05) 25%,transparent 25%);background-size:28px 28px}.contact-email{align-items:center;justify-content:center;border:1px solid #555;border-radius:999px;padding:18px 30px;font-family:"Space Mono",monospace;font-size:clamp(14px,2vw,20px)}.contact-email:hover{background:#fff;color:#000}
+.animate-spin-slow{animation:spin 20s linear infinite}.animate-fade-in-up{animation:fadeInUp 1s ease-out forwards}@keyframes spin{to{transform:rotate(360deg)}}@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:767px){body,button{cursor:auto}.cursor-dot,.cursor-outline{display:none!important}.text-stroke{-webkit-text-stroke:1px #111}.service-item,.service-item--reverse{grid-template-columns:1fr;gap:18px}.service-item .service-card,.service-item--reverse .service-card,.service-item .service-node,.service-item--reverse .service-node,.service-item>p,.service-item--reverse>p{grid-column:1;grid-row:auto;text-align:left}.service-node{justify-self:center}.work-item{width:82vw;min-width:300px;height:64vh;min-height:500px}.work-item--offset{margin-top:0}.work-card{padding:22px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.animate-spin-slow{animation:none}}
+
+/* ===== Theme overrides (ADAPTIVE: theme_tokens / copy_fit / image_fit) =====
+   平面/品牌视觉作品集：暖白底 #F4F1EA、石墨黑 #17181A、朱红强调 #C8341F。
+   仅改主题色/字体栈/图片焦点，不动任何 LOCKED 结构与 selector。 */
+:root{--bg-color:#F4F1EA;--text-main:#17181A;--accent:#C8341F;--ink:#17181A;--paper-line:#E3DDD0}
+body{font-family:Inter,"Noto Sans SC","PingFang SC","Hiragino Sans GB",sans-serif}
+.font-mono,.time-cell b,.work-image span,.work-card p,.service-item>p,.contact-email{font-family:"Space Mono","Noto Sans SC","PingFang SC",monospace}
+.text-stroke{-webkit-text-stroke:2px var(--ink)}
+@media(max-width:767px){.text-stroke{-webkit-text-stroke:1px var(--ink)}}
+.cursor-dot{background:var(--accent)}
+.cursor-outline{border-color:rgba(200,52,31,.45)}
+.loader-overlay{background:var(--ink)}
+.loader-curtain{background:var(--accent)}
+#loader-percent{color:var(--accent)}
+.grid-bg{background-image:linear-gradient(rgba(23,24,26,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(23,24,26,.045) 1px,transparent 1px)}
+.map-svg path{fill:#E6E0D2;stroke:#F4F1EA}
+.map-svg path:hover{fill:#DCD5C4}
+.time-cell{border-color:#2E2F31;background:rgba(244,241,234,.04)}
+.time-cell span{color:#9b9c9e}
+.time-cell--active{border-color:var(--accent);background:var(--accent);color:#fff}
+.time-cell--active span{color:rgba(255,255,255,.85)}
+.time-cell--active i{background:#fff}
+.work-shadow{border-color:var(--ink);background:#E6E0D2}
+.work-card{border-color:var(--ink)}
+.work-image{background:#E6E0D2}
+.work-image span{background:var(--accent);font-size:12px;padding:6px 9px;letter-spacing:.02em}
+.work-card p{color:#666}
+.work-item--dark .work-card p{color:#a3a3a3}
+.work-card footer{border-top-color:var(--ink)}
+.work-item--dark .work-shadow{background:var(--ink)}
+.work-item--dark .work-card{border-color:#333436;background:#1D1E20}
+.work-item--dark .work-card footer{border-color:#444547}
+.timeline-line{background:rgba(23,24,26,.14)}
+.timeline-progress{background:var(--accent)}
+.service-card{border-color:var(--paper-line);box-shadow:0 12px 40px rgba(23,24,26,.08)}
+.service-card:hover{box-shadow:10px 10px 0 var(--accent)}
+.service-card>i{color:var(--accent)}
+.service-node{background:var(--accent);border-color:var(--bg-color)}
+.contact-email{border-color:#55565A}
+.contact-email:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+/* 图片焦点（image_fit ADAPTIVE）：2026-11 素材批量更新轮按 brief 给定焦点重置——
+   卡1 50% 50%：桑葚米乳茶 KV 完稿 1920×1080（16:9）入 16:10 卡面，cover，几乎无裁切；
+   卡2 50% 50%：安徒生童话林横版主视觉 2048×1152，cover，Logo 字效与卡牌阵列居中入窗；
+   卡3 50% 50%：1500×1000 近 16:10，基本无裁切；
+   卡4 50% 50%：漫潮 principles 方形标识 2048×2048，contain + 白底（见下方 .work-image--contain），焦点居中；
+   卡5 50% 45%：2048×2048 方图中心构图，裁上下留人物主体；
+   卡6 天坛竖版海报 541×976，contain + 深蓝底 #16305C，不参与 cover 裁切；
+   旧 .focal-right 65% 规则作废，class 保留但焦点由 [data-slot] 驱动 */
+.work-image img[data-slot="work_visual_1"]{object-position:50% 50%}
+.work-image img[data-slot="work_visual_2"]{object-position:50% 50%}
+.work-image img[data-slot="work_visual_3"]{object-position:50% 50%}
+.work-image img[data-slot="work_visual_4"]{object-position:50% 50%}
+.work-image img[data-slot="work_visual_5"]{object-position:50% 45%}
+.work-image img[data-slot="work_visual_6"]{object-position:50% 50%}
+/* 2026-11 本轮（A 组）：Hero 肖像换真人实拍 1536×2048（3:4）。4:5 容器 cover 仅裁总高约 6.25%；
+   object-position 50% 26% 使裁量偏下（上裁约 1.6% / 下裁约 4.6%），头顶（源图约 y5.8%）、双眼、下巴完整可见；
+   clip-path 斜边位于 x≤10% 区而人物水平居中，不会切到脸部；不改成 contain、不改容器尺寸与 clip-path 形状 */
+img[data-slot="hero_portrait"]{object-position:50% 26%}
+/* 卡4（方形标识）与卡6（竖版海报）：contain 呈现，cover 会切掉「漫潮 / principles」两侧与海报顶部纹样、底部标题。
+   底色取各自图片自带色（白 #FFFFFF / 深蓝 #16305C），仅作图片容器填充，不用于文字、按钮或边框，不构成第二强调色；
+   同时豁免画廊既有的 grayscale 滤镜与 scale(1.08) 静息缩放：scale 会把 contain 内容上下各裁 4%（与「不裁切」硬约束冲突），
+   灰度会让卡6 彩色海报与深蓝底色失配（底色正是为融合海报自带深蓝而取）；hover 抬升/阴影旋转等卡片动效不受影响，cover 卡（01/02/03/05）灰度+缩放语言不变 */
+.work-image--contain{background:#FFFFFF}
+.work-image--contain img{object-fit:contain;filter:none;transform:none}
+.work-item:hover .work-image--contain img{filter:none;transform:none}
+.work-item[data-work="tiantan"] .work-image--contain{background:#16305C}
+/* copy_fit ADAPTIVE：圆形按钮双语「全部项目 All Works」—— 改回允许在唯一空格处折行（word-break:keep-all 保证中文永不拆字、英文单词不断），防孤行意图保留 */
+.view-all-btn{font-size:13px;line-height:1.35;padding:10px;text-align:center;letter-spacing:0;white-space:normal;word-break:keep-all;overflow-wrap:normal}
+
+/* ===== 2026-11 轮：中英双语 + 真实信息的 ADAPTIVE 收口 ===== */
+/* 窄屏间距（三选一中的方案 a）：768–1200px 时 brand.short 字标降一档 24px→20px，与中部导航/右侧胶囊拉开余量；不改 DOM、不隐藏链接 */
+@media(min-width:768px) and (max-width:1200px){#navbar button[data-copy-target="brand.short"]{font-size:20px;letter-spacing:-.02em}}
+/* copy_fit：打字机双语文本变长，按视口收字号并禁折行，避免在 h-12 overflow-hidden 容器内被裁 */
+#typewriter{font-size:clamp(12px,1.55vw,24px);white-space:nowrap}
+/* copy_fit：联系区大标题双语后变宽，clamp 收上限，避免 768–1023px 视口横向溢出 */
+#contact h2[data-copy-target="contact.heading"]{font-size:clamp(40px,8vw,128px)}
+/* copy_fit：作品卡正文变长（约 60–90 字），窄屏下压缩图区高度与描述字号防溢出卡片 */
+@media(max-width:767px){.work-image{height:48%}.work-card p{font-size:12px}}
+/* 2026-11 五卡轮：卡片整体可点击（role=button + tabindex=0），键盘焦点环用朱红小面积强调 */
+.work-item{cursor:pointer}
+.work-item:focus{outline:none}
+.work-item:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
+
+/* ===== 2026-11 五卡轮：项目详情覆盖层（同页全屏、hash 路由；配色沿用站点三色，朱红仅小面积强调） ===== */
+html.overlay-open{overflow:hidden}
+.work-overlay{position:fixed;inset:0;z-index:9500;display:none;background:rgba(23,24,26,.62)}
+.work-overlay.is-open{display:block}
+.wo-scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:clamp(64px,9vh,110px) clamp(16px,4vw,48px) clamp(56px,8vh,96px)}
+.wo-sheet{position:relative;max-width:1120px;margin:0 auto;background:var(--bg-color);color:var(--ink);border:1px solid var(--ink);box-shadow:14px 14px 0 rgba(23,24,26,.28);padding:clamp(28px,4.5vw,64px) clamp(20px,4.5vw,64px) clamp(40px,5vw,72px)}
+.wo-close{position:fixed;top:20px;right:22px;z-index:2;width:52px;height:52px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(244,241,234,.55);background:var(--ink);color:var(--bg-color);font-size:26px;transition:background .25s,color .25s,border-color .25s}
+.wo-close:hover,.wo-close:focus-visible{background:var(--accent);border-color:var(--accent);color:#fff;outline:none}
+.wo-head{border-bottom:1px solid var(--ink);padding-bottom:clamp(20px,3vw,32px);margin-bottom:clamp(24px,3.4vw,40px)}
+.wo-head-top{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.wo-index{font-family:"Space Mono","Noto Sans SC",monospace;font-size:clamp(28px,3.4vw,44px);font-weight:700;line-height:1;color:var(--accent)}
+.wo-tag{font-family:"Space Mono","Noto Sans SC",monospace;font-size:11px;letter-spacing:.08em;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:5px 12px;white-space:nowrap}
+.wo-title{margin:0;font-size:clamp(30px,4.6vw,58px);font-weight:900;letter-spacing:-.02em;line-height:1.12}
+.wo-sub{margin:10px 0 0;font-family:"Space Mono","Noto Sans SC",monospace;font-size:clamp(11px,1.2vw,14px);letter-spacing:.06em;color:#6b6b66}
+.wo-h{margin:0 0 14px;font-family:"Space Mono","Noto Sans SC",monospace;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink)}
+.wo-hero{margin:0 0 clamp(28px,3.6vw,44px)}
+.wo-hero img{display:block;width:100%;height:auto;background:#fff}
+.wo-cols{display:grid;grid-template-columns:1fr;gap:clamp(24px,3vw,40px);margin-bottom:clamp(28px,3.6vw,44px)}
+@media(min-width:900px){.wo-cols{grid-template-columns:7fr 5fr;gap:clamp(36px,4vw,64px)}.wo-cols--lead{grid-template-columns:6fr 6fr}}
+.wo-overview p{margin:0;font-size:clamp(14px,1.35vw,17px);line-height:1.9;color:#4a4a46}
+.wo-facts ul{list-style:none;margin:0;padding:0}
+.wo-facts li{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px;padding:11px 0;border-top:1px solid var(--paper-line);font-size:clamp(13px,1.25vw,15px);line-height:1.7}
+.wo-facts li:first-child{border-top:0;padding-top:0}
+.wo-facts li b{font-weight:700;color:var(--ink)}
+.wo-sep{font-style:normal;color:var(--accent)}
+.wo-facts li span{color:#55554f}
+.wo-note{margin:16px 0 0;font-family:"Space Mono","Noto Sans SC",monospace;font-size:12px;line-height:1.8;color:#6b6b66}
+.wo-note--lead{margin:0 0 18px}
+.wo-groups{display:grid;gap:12px}
+.wo-group h4{margin:0 0 4px;font-size:13px;font-weight:700;color:var(--ink)}
+.wo-group p{margin:0;font-size:clamp(13px,1.25vw,15px);line-height:1.8;color:#55554f}
+/* ===== 2026-11-19 本轮（A 组）：01 collector 层「五段分段索引」=====
+   位置：.wo-gallery 内、「项目图集 / Gallery」标题之后、长图 .wo-figs--long 之前；长图本体不裁切不切片，只在其上方加结构化索引。
+   排版语言与 .wo-facts li 完全对齐（flex + baseline + gap 2px + padding 11px 0 + hairline border-top + 同字号/行高档位），
+   不做卡片、不加背景色块、不加图标、不新增字号档位；序号用 Space Mono + 朱红 var(--accent)（与 .wo-index 同族用法，朱红仅限序号）。
+   序号写死在 HTML 文本（01–05 补零）而非 CSS counter：关掉 CSS 也保留顺序语义；
+   该列表为静态普通内容，未挂 data-gsap / hero-reveal / scroll-reveal class，不依赖 IntersectionObserver —— 全页截图与禁用 JS 场景同样可见。 */
+.wo-sections{list-style:none;margin:0 0 clamp(20px,2.6vw,32px);padding:0}
+.wo-sections li{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px;padding:11px 0;border-top:1px solid var(--paper-line);font-size:clamp(13px,1.25vw,15px);line-height:1.7}
+.wo-sections li:first-child{border-top:0;padding-top:0}
+.wo-sections li b{font-weight:700;color:var(--ink)}
+.wo-sections li span{color:#55554f}
+.wo-sec-n{font-style:normal;font-family:"Space Mono","Noto Sans SC",monospace;font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--accent);margin-right:8px}
+.wo-gallery{border-top:1px solid var(--ink);padding-top:clamp(22px,3vw,32px)}
+.wo-figs{display:grid;grid-template-columns:1fr;gap:clamp(20px,2.6vw,32px)}
+@media(min-width:900px){.wo-figs{grid-template-columns:1fr 1fr}.wo-figs--duo{grid-template-columns:1fr 1fr}}
+.wo-figs figure{margin:0}
+.wo-figs img{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--paper-line)}
+.wo-figs figcaption{margin-top:10px;font-family:"Space Mono","Noto Sans SC",monospace;font-size:12px;line-height:1.7;color:#6b6b66}
+.wo-figs--masonry{display:block;column-count:2;column-gap:clamp(20px,2.6vw,32px)}
+.wo-figs--masonry figure{break-inside:avoid;margin:0 0 clamp(20px,2.6vw,32px)}
+@media(max-width:767px){.wo-figs--masonry{column-count:1}.wo-close{top:12px;right:12px;width:46px;height:46px}.wo-scroll{padding:64px 12px 48px}}
+
+/* 2026-11 本轮（B 组）：长图（高宽比 >4:1 的 5 张）统一规格 —— 每张独占一段、自上而下一竖列，
+   容器 width:min(100%,1000px) 桌面居中（移动端 min() 自然回落 100%），img 等比放大到该宽度：不裁切、不变形、不加黑边、不加滤镜；
+   取代上一轮「源像素 1:1 细窄条」（.wo-figs--single / .wo-fig-tall 规则随其使用点一并移除）；
+   .wo-figs--duo 死规则、.wo-hero--tall（541×976 竖版海报非长图）、05 层 masonry 均不动；
+   段间距沿用 .wo-figs 的 gap 与 .wo-gallery 的 border-top/padding-top，与其余覆盖层区块一致。
+   2026-11-19 高清原稿轮：宽度上限 760px → 1000px（用户「这些图片应该足够清晰，允许对尺寸进行调整，适应画面」）。
+   四张新原稿源宽 1080–1280px（06 天坛 1080×16042、02 安徒生 1280×15120、04 漫潮 1280×15120，03 菜狗源宽未知），
+   1000px 低于全部已知源宽 → 不产生超采样放大；该值为全局规则，01 层那段长图一并受益，无需特例，也不为 03 层单设 max-width。
+   图片仍 display:block;width:100%;height:auto（等比、不裁切、不 cover），渲染高随宽等比增长（06 层约 14,850px / 02·04 层约 11,810px），
+   .wo-scroll 无 max-height 或其他截断约束，滚动到底仍可达；长图继续走 data-src 开层注入（保留各自 loading="lazy" 原状）。 */
+.wo-figs--long{grid-template-columns:1fr;justify-items:center}
+.wo-figs--long figure{width:min(100%,1000px);margin:0 auto}
+.wo-figs--long img{display:block;width:100%;height:auto;margin:0 auto}
+/* 06 层 wo-hero 竖版海报（541×976，非长图）限宽居中规则保留，本轮不动 */
+.wo-hero--tall img{width:auto;max-width:min(100%,460px);height:auto;margin:0 auto}
+
+/* ===== 2026-11 本轮：关于区地图定位（A 组）+ Hero 第一行回归修复（B 组） =====
+   ① 新增 .map-stage 定位盒：包住 .map-img / #map-pin / .map-radar，盒子比例锁 448/452（= 地图源图比例），
+      高度沿用上一轮的容器 76%（h-400px 移动 / md:h-500px 桌面），.map-img 改为 width/height:100% + object-fit:contain，
+      使图像盒子与 stage 盒子完全重合 —— 于是针/雷达的百分比坐标恒等于「图像内归一化坐标」，移动端与桌面端自动指向同一地理点。
+      窄屏（≤430px）容器宽不足 76% 高对应的宽度，改由宽度驱动（width:88% + aspect-ratio），比例关系不变。
+      #map-container 外层 class/id/尺寸、「Beijing, CN」标签与 about.map.region 属性未动。
+   ② 针与雷达一律只用 left/top 百分比 + 负 margin 做几何对位，禁止 transform：
+      #map-pin 的 transform 由 GSAP 写（y:-70→0 入场），.map-radar 的 transform 由 animate-ping 占用（写入静态 transform 会让 0% 帧从平移态插值到 scale(2)，产生跳动）。
+      黄点归一化坐标 x=48% / y=54%：针盒 36×35、margin(-35px,0,0,-18px) → 针尖落点；雷达 80×80、margin(-40px,0,0,-40px) → 圆心同点。
+      画布拖拽残留的内联 transform/width/height/transform-origin/background-color 已在 HTML 中全部清除；
+      旧「top:44%/left:46% + translate(-50%,-50%)」与「移动端 left:45%/top:60%」偏移规则一并删除（百分比定位跨视口天然一致，无需分档偏移）。 */
+.map-stage{position:relative;display:flex;align-items:center;justify-content:center;height:76%;aspect-ratio:448/452}
+.map-img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;user-select:none}
+@media(max-width:430px){.map-stage{height:auto;width:88%}}
+#map-pin{left:48%;top:54%;width:36px;height:35px;margin:-35px 0 0 -18px;display:flex;align-items:flex-end;justify-content:center;line-height:1}
+.map-radar{left:48%;top:54%;margin:-40px 0 0 -40px}
+
+/* ③ Hero 第一行「张浩」（B 组，回归修复）：span[data-copy-target="hero.name.line1"] 上被重新写入的内联锁定值
+      （width:1164.88px / height:130.541px / transform-origin:0 0 / transform:translate(3.45544px,8.63861px)）已在 HTML 中清除；
+      130.541px 行盒 < clamp 上限 126px × 1.05 ≈ 132.3px，会再次把 CJK 墨迹上下裁切。
+      下方规则与上一轮一致、未改：字号 clamp 随视口自适应、行高 1.05（不继承父级 .8），375–1920px 全区间两字完整不触边；
+      hero-reveal class 与 data-copy-target 保留，入场 transform 由 GSAP runtime 重新接管；第二行 text-stroke 与第三行实心字号未动。 */
+#hero h1 span[data-copy-target="hero.name.line1"]{font-size:clamp(64px,11.5vw,126px);line-height:1.05}
+
+/* ===== 2026-11-18 本轮：结尾黑色页前两行滚动作品墙 =====
+   结构：#works-wall 两行 .wall-row，行内 .wall-track 为同一序列重复两份（第二份 aria-hidden）做无缝循环；
+   tile 间距用 margin-right（不用 gap）：track 宽 = 2×序列宽，translateX -50% 恰为一个序列，接缝无缝。
+   平行四边形外观用 clip-path 裁 tile（不 skew 图片本体，避免内容变形）；图片 object-fit:cover 焦点 50% 50%。
+   行一向左、行二向右（--reverse）；prefers-reduced-motion 停动画（内容仍可见，首序列铺满视口）。
+   38 个 img 初始无 src（data-wall-src），由 main.js initWorksWall() 在墙临近视口时注入，控首屏/渲染预算。 */
+#works-wall{background:var(--bg-color);padding:clamp(28px,4vw,56px) 0;border-top:1px solid var(--paper-line);border-bottom:1px solid var(--paper-line);overflow:hidden}
+.wall-row{overflow:hidden}
+.wall-row + .wall-row{margin-top:20px}
+.wall-track{display:flex;width:max-content;animation:wall-left 52s linear infinite}
+.wall-row--reverse .wall-track{animation-name:wall-right}
+.wall-tile{flex:none;width:clamp(200px,24vw,340px);aspect-ratio:4/3;margin-right:20px;background:#E6E0D2;clip-path:polygon(7% 0,100% 0,93% 100%,0 100%)}
+.wall-tile img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+@keyframes wall-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes wall-right{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media(prefers-reduced-motion:reduce){.wall-track{animation:none}}

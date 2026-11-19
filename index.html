@@ -1,0 +1,737 @@
+<!DOCTYPE html><html lang="zh-CN" class="lenis lenis-smooth" data-lvt-canonical="1"><head>
+  <!--
+  Preamble（2026-11-19 本轮：纯 <head> 元数据补齐 —— description / theme-color / favicon 三件套 / Open Graph + Twitter Card；<body> 与 assets/ 下 css·js 零改动）
+  Canvas: 响应式单页作品集；顶层区块顺序与数量不变；作品画廊 6 卡不变；覆盖层 6 层不变；本轮零新增/零替换 body 内素材，零布局改动
+  Design given: 本轮只涉及 head 元数据与图标图形本身；图标设计语言 = 暖白 #F4F1EA 满幅底 + 石墨黑 #17181A「JZ」紧排字母 + 右下角一小块朱红 #C8341F 实心方块作签名，
+    取自导航区品牌名「张浩 JUZIOR」首字母，与站点三色完全一致，不引入任何新颜色；theme-color 用站点底色暖白 #F4F1EA。
+  Asset map（本轮全部只进 head，不进 body、不作可见图片渲染）:
+    favicon 主图标 — 内联 SVG（32×32 viewBox）URL 编码为 data URI，写进 <link rel="icon" type="image/svg+xml">；无独立文件、无本地路径、部署到任何域名都不 404，且无额外网络请求。
+      SVG 源码按 brief 原样使用，只做 URL 编码：颜色 #F4F1EA/#17181A/#C8341F、字形 JZ、坐标 (x16 y23.2 / rect 21.5,21.5,4.5,4.5)、font-size 19、font-weight 700、letter-spacing -0.8 一字未改。
+      编码规则：'<'->%3C、'>'->%3E、'#'->%23、空格->%20、SVG 内部属性引号全部改为单引号（外层 HTML 属性用双引号，避免引号冲突）；自查 data URI 内无裸露双引号与 '#'。
+    favicon PNG 兜底 — https://a.lovart.ai/artifacts/agent/dUxVIPN8a167GdXh.png（512×512，同一设计语言位图版）-> <link rel="icon" type="image/png" sizes="512x512">，供不支持 SVG favicon 的旧版 Safari
+    iOS 主屏图标 — 同上 512×512 PNG -> <link rel="apple-touch-icon">（Apple touch icon 不接受 SVG，必须 PNG）
+    OG 分享卡 — https://a.lovart.ai/artifacts/agent/mNQiYTAkV0EQtnme.png（1200×630，暖白底编辑式横版卡：左侧文字层级「AI-ENHANCED VISUAL DESIGNER / 张浩 / JUZIOR 描边 / 平面设计 · 卡牌设计 · AI 设计 / BEIJING · PORTFOLIO 2026」，右侧深蓝-石墨黑-朱红叠压卡牌组，卡面无可读文字）
+      -> og:image 与 twitter:image，绝对 https URL，从任何域名打开都能加载；og:image:width/height = 1200/630 与真实尺寸一致
+    本轮 <head> 内原有会 404 的旧 icon 声明：无（原 head 只有 charset / viewport / title / tailwind CDN / remixicon CDN / styles.css，未新增或删除任何既有标签）
+  Typography: favicon 内 SVG 用 Arial,Helvetica,sans-serif 系统栈（图标自身例外：不依赖 webfont，保证 16px 标签页下可辨），不影响页面 Inter + Space Mono + Noto Sans SC 字体栈
+  Content map（逐字，全部来自 brief）:
+    <title> 核对为原值「张浩 Juzior — AI-Enhanced Visual Designer｜平面·卡牌·AI 设计作品集」，与 brief 字面一致 -> 一个字符未改，元素上 data-copy-target="page.title" 属性未动；
+    <html lang> 核对已是 zh-CN -> 未动，<html> 上 class/data-lvt-canonical 亦未动；charset UTF-8 与 viewport 均已存在 -> 未动、未补写；
+    meta description（新增）/ meta theme-color（新增，#F4F1EA）/ og:type · og:site_name · og:title · og:description · og:locale · og:image · og:image:width · og:image:height · og:image:alt（property 形式）/
+    twitter:card · twitter:title · twitter:description · twitter:image · twitter:image:alt（name 形式）—— content 全部逐字照抄，不改写、不翻译、不扩写。
+  Assumptions（brief 未指明处的最朴素选择）:
+    1) head 内标签插入位置：description 与 theme-color 紧随 <title> 之后，三条 icon 声明次之，og/twitter 一组放在最后，tailwind / remixicon / styles.css 三条既有标签原位不动 —— 纯元数据，不参与渲染，顺序对脚本加载与首屏无影响；
+    2) og:image:alt 与 twitter:image:alt 采用 brief 给定同一句文案；og:image 的 property 与 twitter:image 的 name 分别按 brief 指定的属性形式书写；
+    3) favicon PNG 兜底与 apple-touch-icon 复用同一张 512×512 资源（brief 明确指定），未生成多尺寸、未建 site.webmanifest。
+  本轮明确未加（域名/句柄未知，加了即编造）: og:url、<link rel="canonical">（部署拿到域名后再补，留给用户一步）、twitter:site、twitter:creator、robots、author、keywords、
+    og:video、og:audio、article:*、apple-touch-icon-precomposed、PWA manifest、JSON-LD 结构化数据、任何第三方 analytics/统计脚本；未从天坛/WAVES/安徒生长图画面转录卡种名·工艺名·规格·数量；
+    未添加社媒句柄·门牌地址·获奖列表·客户评价·量化口径·报价。
+  本轮未动: <body> 全部 DOM·文案·图片 URL·data-src 注入机制·object-position 焦点·单列 1000px 长图规格·01 层五条分段索引·05 层 13 张 masonry 与 4 条篇目图注；
+    assets/css/styles.css 与 assets/js/main.js、assets/js/work-overlay.js 本轮一行未写；gsap/lenis runtime、hash 路由、开闭三通道、层内滚轮/键盘/触摸接管、
+    横向画廊 pin、打字机、自定义光标、磁吸按钮、计时器、跑马灯、Loader、hero-reveal、#map-pin 与 .map-radar、data-copy-target 与 data-slot 的 id 体系全部保持；
+    配色/栅格/字号层级/顶层区块顺序零改动；未引用工作区任何 qa-*.html 遗留临时文件；未使用「不得再引用」清单中的地址。
+  QA risks: ① 浏览器标签页是否真的显示出 JZ 图标（截图确认，不只看源码）-> 渲染后核对 favicon；
+    ② SVG data URI 是否因编码错误解析失败（若失败会回落到 PNG 兜底）-> 源码自查无裸双引号与 '#'，并用独立 svg 探针渲染同一 data URI 验证；
+    ③ 新增 head 标签是否影响脚本加载顺序导致 Loader / 画廊 pin / hash 路由回归 -> 交付前回归六卡点击开层、层内滚轮、Hero 两条 CTA 锚点跳转；
+    ④ og/twitter content 是否与 brief 逐字一致、og:image:width/height 是否为 1200/630 -> 源码逐项比对；
+    ⑤ body 与 css/js 是否零改动 -> 行数与 diff 确认。
+  -->
+  <!--
+  Preamble（2026-11-19 上轮：01 层五段分段索引 + 05 层 4 条图注补童话出处；范围严格限定 A/B 两组，其余全部沿用存量）
+  Canvas: 响应式单页作品集；顶层区块顺序与数量不变；作品画廊 6 卡不变；覆盖层 6 层不变；本轮零新增/零替换图片 URL
+  Design given: 明亮克制纸感编辑式；暖白 #F4F1EA + 石墨黑 #17181A + 朱红 #C8341F 单强调色（不新增颜色）。
+    A 01 collector 层：在 .wo-gallery 内、「项目图集 / Gallery」标题之后、长图 <figure> 之前，新增一个五段分段索引 <ol class="wo-sections">；
+      用户建议原话「按菜单/活动页/KV/Banner/插画拆成五个带小标题的分段」——实现为「不裁切长图，只在其上方加结构化分段索引」，
+      长图本体保持完整单列（brief 明令：不得裁切/切片/按估算比例切五段，原图分界像素未知）。
+    B 05 andersen-chars 层：13 张 masonry 中恰好 4 条 <figcaption> 补篇目名，格式「原描述 · 《篇目名》」（中英之间不留空格、书名号、「 · 」分隔）。
+  Asset map: 本轮无新增、无替换素材。01 层长图 assets-persist.../28db0ec8ba4cb265/images/page1_img1.jpeg（+ data-fallback pages/page_1.jpg）位置/URL/alt/figcaption/data-src/1000px 单列规格全部原样；
+    05 层 13 张方图（ao0FTUowx26fvTDw / 2yYL2yCxNELXf4Eo / 1w4eKHtmNKFXI8vz / vZwM8Q3FqO4gHvRE / hHxPQPEwe8VlHvJP / KY8choTPdS7dUMjN / qVfMF8WgqlGv5c2I /
+    Cn0oVCIUPKHmxFvT / ZOhqStXjeMLw0MCe / wiSrOeG1DBKOd9hp / hwEU5gsOBbKCrJue / Daa1y5iGd8623lde / 8OQYuC0uGt7YfxbM）URL 与顺序一律不动，13 条 <img> alt 全部原文不动（出处只进 figcaption，不进 alt）；
+    02/03/04/06 四层长图 URL 与单列 1000px 规格不动；六张卡封面与焦点、03 层三张海报网格、hero 肖像、北京地图均未触碰。
+  Layout（A 组）: .wo-sections 为静态普通流内有序列表（ol 语义 = 五段顺序排布），list-style:none、无卡片、无背景色块、无图标；
+    排版语言与 .wo-facts li 完全对齐：flex + wrap + align-items:baseline、gap 2px、padding 11px 0、hairline border-top:1px solid var(--paper-line)（首项去掉 hairline 与上内边距）、
+    font-size:clamp(13px,1.25vw,15px)、line-height:1.7；<b> 小标题 ink 色 700、<span> 说明 #55554f、序号 <i class="wo-sec-n"> 用 Space Mono + 朱红 var(--accent)（与 .wo-index 同族用法，朱红仅限序号）；
+    列表与下方长图 figure 间距 clamp(20px,2.6vw,32px)，沿用 .wo-figs 的 gap 节奏；不新增字号档位。
+  Content map（A 组，逐字照抄，纯中文、不加英文对照、不加引导语、不另设小节标题）:
+    01 菜单设计 — 分时段版式与价格信息层级的排版。 / 02 活动页设计 — KCOFFEE × 三丽鸥联名套餐的移动端承接页面。 /
+    03 KV 主视觉 — 三款季节饮品的主视觉海报。 / 04 Banner 延展 — 三款门店横幅的媒介适配与延展。 / 05 插画设计 — 配套原创食材插画与角色形象。
+    01 层长图 figcaption 原文保留（「整案长图，按菜单设计、活动页设计、KV 设计、Banner 设计、插画设计五段顺序排布。」）与新增列表互为印证；
+    01 层 header / .wo-cols（wo-overview + 四条 wo-facts）DOM 与文字全部未动。
+  Content map（B 组，逐字）: Cn0oVCIUPKHmxFvT → 宫廷场景中的军装少年 · 《坚定的锡兵》；1w4eKHtmNKFXI8vz → 枝头的蓝白雏鸟 · 《夜莺》；
+    2yYL2yCxNELXf4Eo → 天鹅与戴冠少女 · 《野天鹅》；Daa1y5iGd8623lde → 戴礼帽的雪人 · 《雪之女王》。
+    其余 9 条图注（红卷发少女与红玫瑰 / 玻璃瓶中的液体精灵 / 骑在绵羊背上的少年 / 路灯里的光团笑脸 / 向日葵上的长金发少女 / 花窗前起舞的白裙红鞋 /
+    雪夜火堆旁的斗篷少女 / 带翅的蓝紫水彩精灵 / 手持苹果的先生）一字未改——出处未确认，不推断、不加注、不改措辞；wo-note--lead 与三条 wo-facts 未动。
+  Assumptions（brief 未指明处的最朴素选择）:
+    1) 分段索引不带 data-copy-target（brief 直接给定字面）、不带 data-gsap / hero-reveal / 任何 scroll-reveal class、不依赖 IntersectionObserver —— 纯静态 HTML，关掉 JS 与全页截图场景下同样可见；
+    2) 序号取 <i class="wo-sec-n">（font-style:normal）与 <b>/<span> 并列，序号与小标题之间 10px 间距、小标题与说明之间沿用 .wo-facts 的「 · 」分隔文本节点（不用 .wo-sep class：该类是朱红，而 brief 限定朱红仅用于序号）；
+    3) B 组 4 条图注前半段描述全部保留原文未缩短：masonry 桌面 2 列每列约 480px、figcaption 12px，最长一条约 20 字（≈245px）单行可容，移动端单列更宽，故不触发「允许缩短前半段」的兜底条款；
+    4) 新增 CSS 只追加 .wo-sections 一族规则（styles.css 覆盖层区块内），未改任何既有 selector、未新增颜色变量。
+  本轮未动: gsap/lenis runtime、work-overlay.js（hash 路由 / byKey 通配 / data-src 开层注入 / .wo-scroll 滚轮接管 / 键盘接管 / Esc·遮罩·按钮三通道关闭 / scrollTop 重置 / lenis.stop·start 配对）、
+    全部动效依赖 selector、data-copy-target 与 data-slot 的 id 体系、六张卡封面与焦点、长图 URL 与 min(100%,1000px) 单列规格、配色/栅格/字号层级/顶层区块顺序；
+    未引用工作区任何 qa-*.html 遗留临时文件，未引入任何新图片 URL，未使用「不得再引用」清单中的地址。
+  QA risks: 分段索引是否静态可见（关 JS 亦可见）、是否位于长图之前、长图本体是否未被裁切/替换 -> 开 01 层截图 + 源码核对；
+    05 层是否恰好 4 条 figcaption 变化、变长后是否溢出或折三行被裁 -> 开 05 层截图 + 逐条比对；
+    其余五层长图 URL/1000px 规格/wo-facts 是否零影响、6 卡是否各自点开对应层、层内滚轮是否仍可用 -> 逐层自检。
+  -->
+  <!--
+  Preamble（2026-11-19 上轮：四段长图换高清原稿 + 长图宽度上限 760px → 1000px；范围严格限定 A/B 两组，其余全部沿用存量）
+  Canvas: 响应式单页作品集；顶层区块顺序与数量不变；作品画廊 6 卡不变；覆盖层 6 层不变
+  Design given: 明亮克制纸感编辑式；暖白 #F4F1EA + 石墨黑 #17181A + 朱红 #C8341F 单强调色（不新增颜色）；
+    本轮变更：① 02/03/04/06 四层长图素材 URL 换为高清原稿；② .wo-figs--long 容器宽度上限 760px → 1000px（用户原话「这些图片应该足够清晰，允许对尺寸进行调整，适应画面」）。
+  Asset map（四张长图，均 http(s) URL，继续用 data-src 开层注入、不写回 src）:
+    06 tiantan  — K9toZJqoeL1if2R9.png（1080×16042《天坛》卡册图鉴，深蓝底）-> 06 层 .wo-figs--long 唯一素材，单列 min(100%,1000px) 居中，等比不裁切（旧 137×2047 长图已删，页面零残留）
+    02 andersen-forest — LPEP8Vg9JL9UWSzN.jpg（1280×15120 童话林整案图鉴，暖黄底）-> 02 层同规格（旧 173×2048 长图已删）
+    03 vegetable-sprite — 1QTxUPXG4fGDaUOM.png（菜狗系列图鉴，源尺寸未提供按未知处理）-> 03 层同规格，仍在 .wo-figs 三张海报网格之后独立成段，不为其单设 max-width（旧 38×2048 长图已删；用户已否决的 135×2048 素材未引用）
+    04 waves — 9a5UzFoAXJJsRIIQ.jpg（1280×15120 漫潮设计初稿全品类长图）-> 04 层同规格（旧 173×2048 长图已删）
+    01 collector 长图（assets-persist.../28db0ec8ba4cb265/images/page1_img1.jpeg + data-fallback pages/page_1.jpg）本轮不换，URL/alt/figcaption 原样，仅随全局宽度规则从 760px 放宽到 1000px。
+  Layout（B 组）: .wo-figs--long figure width:min(100%,760px) → min(100%,1000px)，仍水平居中、移动端自然回落 100%；img 保持 display:block;width:100%;height:auto —— 等比放大、不裁切、不变形、不加黑边、不 object-fit:cover、不加滤镜、不切片、不进网格、不做 AI 补清晰度、不用 image-rendering:pixelated；
+    1000px < 三张已知原稿源宽（1080/1280/1280）→ 不产生超采样；高度随宽等比增长（06 层渲染高约 14,850px、02/04 层约 11,810px），已确认 .wo-scroll 无 max-height 或其他截断约束（overflow-y:auto + overscroll-behavior:contain），滚动到底可达；
+    四段 DOM 结构、class、位置与前后顺序全部保持，只换 URL/alt/figcaption；四张长图 <img> 原有 loading="lazy"（02/03/06）保持原样，04 原本无 lazy 亦保持原样。
+  Content map（本轮逐字）:
+    02 长图 alt「安徒生世界童话林图鉴整案高清长图」/ figcaption「图鉴整案长图：主视觉、卡牌阵列、角色卡与玩法说明的完整排版。」（删去旧括注「（原稿为长图导出，如需清晰展示可补充单页高清图）」）
+    03 长图 alt「蔬菜精灵菜狗系列图鉴长图」/ figcaption「菜狗系列图鉴长图。」（删去旧括注「（原稿分辨率较低，建议替换为高清原稿）」；因新图源宽未知，此处不写「高清」二字）
+    04 长图 alt「漫潮设计初稿全品类高清长图」/ figcaption「全品类设计初稿长图：各卡种的正面、反面与颜色变体按品类分区排布。」（figcaption 沿用原文）
+    06 长图 alt「天坛祥云瑞彩收藏卡卡种分区高清长图」/ figcaption「卡种分区图鉴长图：各系列卡种的分区排版与正反面工艺示意。」（删去旧括注「（原稿分辨率有限，具体卡种名称与规格以原稿为准）」）
+    06 层 wo-note「各卡种的名称、工艺与规格以图鉴长图所示为准。」（替换原「…以原始稿件为准，详见下方图鉴长图。」）
+    未从长图画面转录任何卡种名称/工艺名/规格/数量到 wo-facts 或品类清单；01–06 各层 header/wo-overview/wo-facts/品类清单/其余 figcaption 全部一字未改。
+  Assumptions（brief 未指明处的最朴素选择）: 1000px 上限为全局规则、不为任何单层做特例；03 层新图源宽未知，按同一规则处理（若其源宽小于 1000px 则为等比放大，用户已授权「允许对尺寸进行调整」）；未新增进度条/滚动提示/lightbox/放大查看等任何额外交互 UI。
+  本轮未动: gsap/lenis runtime、work-overlay.js（hash 路由 / byKey 通配 / data-src 开层注入 / .wo-scroll 滚轮接管 / 键盘接管 / 关闭三通道 / scrollTop 重置 / lenis.stop·start 配对）、全部动效依赖 selector、data-copy-target 与 data-slot 的 id 体系、六张卡封面素材与焦点、05 层 13 张 masonry、03 层三张海报网格、配色/栅格/字号层级/顶层区块顺序；工作区 qa-*.html 为遗留临时文件，未引用未修改。
+  QA risks: 四段是否单列 1000px 宽且等比无变形 -> 开层截图；06 层渲染高约 14,850px 滚轮能否到底、关层后主站滚动是否恢复 -> 交互自检；6 卡是否各自点开对应层 -> 逐卡自检；旧 URL 是否零残留 -> 全文检索。
+  -->
+  <!--
+  Preamble（2026-11-18 本轮：首页肖像确认 + 结尾黑色页前两行滚动作品墙）
+  Canvas: 响应式单页作品集；本轮顶层区块 +1（作品墙置于 #skills 与 #contact 之间），其余区块顺序不变
+  Design given: ① 首页照片换为真人实拍 WChaxqB5zZI5rfvZ.png —— 核对现状：hero_portrait 的 src 已为该 URL（上一轮已换），本轮仅确认不改；
+    ② 结尾黑色页（#contact）之前新增「两行滚动作品墙」：19 张素材分两行（10+9），每行无缝循环横向滚动（行一向左、行二向右），单张外观平行四边形。
+  Asset map（作品墙 19 张，均 http(s) URL，按给定顺序）: 行一 #2–#11（qw4mRnLcn4BmmqR6 / hryvMF4sgj7GvA5l / F3Ee125jQlCkVzXF / cKm9tEC4rP3ImJAx / I6Um1xB92vGInEAf / RWgJIRiBR9KqAFL4 / bf0ab62OR0JzGZRL / gObsZ04S6FCDcKFL / N4P9F04sACJixkUr / SO78nzSI0gFwFamG）；
+    行二 #12–#20（uT4OdSoet82SFT1M / kj4muFvsnr7X8dJ7 / QcYvVJ2IqPDsclVc / bmcBPZCrbxImUjXW / qDnoh4kpT0KVwGfX / Y21hBcDY9Q1Lbepr / GQCygXDSVg1PkBjx / M60PAOtTGQ5hq9FP / 96fCbevWqwE6WD7k）；
+    每行内容重复一份作无缝循环（clone 份 aria-hidden + alt=""）；tile 统一 4:3、clamp(200px,24vw,340px) 宽、object-fit:cover 焦点 50% 50%（混合横/竖/方图的朴素取法）；
+    平行四边形用 clip-path:polygon(7% 0,100% 0,93% 100%,0 100%)（不 skew 图片本体，避免变形）；tile 底色 #E6E0D2（与存量纸色同族，仅作加载前占位）。
+  渲染预算：38 个墙 img 初始无 src、URL 存 data-wall-src，main.js initWorksWall() 以 IntersectionObserver 逐 tile 观察（rootMargin 200px 400px）在 tile 临近视口（含横向滚入）时注入 src 并 unobserve，
+    任一时刻仅视口内/边约 8–10 张在载（注入后 loading="lazy" 继续推迟视口外），避免整墙一次性注入在沙箱滚动检测下同时拉 38 张大图耗尽渲染预算。
+  动效：CSS @keyframes wall-left / wall-right（translateX 0↔-50%；tile 用 margin-right 而非 gap，保证 -50% 恰为一个序列宽、接缝无缝）；prefers-reduced-motion 停动画；不新增 GSAP 依赖。
+  Content map：作品墙无文案（brief 未给，不新增面向读者文字）；alt 为结构性编号「作品墙作品 NN / Works wall piece NN」。
+  Assumptions（brief 未指明的朴素选择）：行速 52s/64s、行间距 20px、tile 尺寸与 4:3 比例、平行四边形斜度 7%、墙区上下纸线分隔、无标题文案。
+  QA risks：沙箱整页截图不触发 IO → 墙 tile 呈占位底色（形状/行数可验、图不显），另以探针页直连 src 验视觉与裁切；真实浏览器 IO+lazy 兜底流量。
+  -->
+  <!--
+  Preamble（2026-11 本轮：真人肖像 + 长图统一单列放大 + 层内滚轮滚动修复；范围严格限定 A/B/C 三组，其余全部沿用存量）
+  A Hero 肖像：data-slot="hero_portrait" 的 src 换为真人实拍 WChaxqB5zZI5rfvZ.png（1536×2048，3:4 竖版，人物居中半身）；
+    object-fit:cover 沿用（class object-cover），object-position:50% 26% 写入 styles.css 的 [data-slot="hero_portrait"] 规则：
+    3:4→4:5 cover 仅裁总高约 6.25%，26% 使裁量偏下（上裁约 1.6%），头顶（源图约 y5.8%）/双眼/下巴完整；
+    clip-path 斜边在 x≤10% 区域而人物水平居中，不会切到脸部；旋转徽章在左栏 h1 右上、不压肖像；
+    alt → 「设计师张浩本人肖像 / Portrait of visual designer 张浩 Juzior」；clip-path、hero.image.hint、入场动效全部不动。
+  B 长图统一规格（取代上一轮「源像素 1:1 细窄条」）：高宽比 >4:1 的 5 张长图各自独占一段、自上而下一竖列：
+    容器 figure width:min(100%,760px) 居中（移动端 min() 自然回落 100%），img display:block;width:100%;height:auto 等比放大到该宽度，不裁切/不变形/不加黑边/不加滤镜；
+    01 层：删除 <figure class="wo-hero">，长图（含 data-fallback 与 figcaption 原文）移到 .wo-cols 之后新增的 .wo-gallery（h3.wo-h「项目图集 / Gallery」+ .wo-figs.wo-figs--long），header/wo-overview/四条 wo-facts 的 DOM 与文字不动；
+    02/04/06 层：原位 .wo-figs--single 包装改为 .wo-figs--long（figure/figcaption/alt 逐字不动）；
+    03 层：第四张 .wo-fig-tall 菜狗长图从 .wo-figs 网格抽出，置于网格之后的独立 .wo-figs--long 段（网格恢复三张既有布局，删除单列特例）；
+    CSS：.wo-figs--single/.wo-fig-tall 规则移除、新增 .wo-figs--long；.wo-figs--duo（死规则）/.wo-hero--tall/05 层 masonry/02·03·06 的 wo-hero 全部不动；长图保持 data-src 开层注入（图集位置统一 loading="lazy"）。
+  C 层内滚动（work-overlay.js）：根因 = Lenis 1.0.42 在 window 绑 wheel 并 preventDefault（stopped 只跳过自身滚动、不跳过 preventDefault），层内滚轮被吞；
+    修复 = 每个 .wo-scroll 加 wheel({passive:false})：preventDefault+stopPropagation 阻断到 window/Lenis 的路径后按 deltaMode（line=16px/page=clientHeight）自累加 scrollTop；
+    window keydown（仅开层时）接管 PageDown/PageUp/Space(Shift 反向)/ArrowUp/ArrowDown/Home/End 写 .wo-scroll.scrollTop，target 为 button/a 等交互元素或 Esc 等非滚动键时原样 return（Esc 仍走全局 dismiss）；
+    触摸依赖 .wo-scroll 原生触摸滚动（Lenis smoothTouch:false 不绑 touch），滚动条拖拽/中键为 .wo-scroll 原生行为；
+    不取消 lenis.stop()/start() 配对、不移除 html.overlay-open；开层 scrollTop=0 重置沿用 setOpen 既有逻辑；.wo-scroll 显式保留 overflow-y:auto/overscroll-behavior:contain/-webkit-overflow-scrolling:touch，无 max-height 截断。
+  Content map（本轮逐字）：01 层新增图集标题「项目图集 / Gallery」；五张长图 figcaption/alt 逐字沿用（位置随区块移动）；未新增任何面向读者的说明文字。
+  QA risks: 真人肖像头顶/下巴是否被斜边切 -> 1080/375 两档截图；长图是否单列约 760px 宽 -> 开层截图；滚轮/键盘/关层恢复 -> 交互自检探针；6 卡开层 -> 逐卡合成点击自检。
+  -->
+  <!--
+  Preamble（2026-11 本轮：素材批量更新 + 第六个项目「天坛」；范围严格限定在 A–F 六组，其余全部沿用存量）
+  Canvas: 响应式单页作品集（桌面为主、移动端自适应）；顶层 9 段顺序与数量不变；本轮作品横向画廊 5 卡 → 6 卡（06 天坛排最后）、详情覆盖层 5 层 → 6 层
+  Design given: 明亮克制纸感编辑式；暖白 #F4F1EA + 石墨黑 #17181A + 朱红 #C8341F 单强调色；本轮仅新增两个「图片容器底色」：卡04 #FFFFFF、卡06 #16305C（contain 留白填充，不作文字/按钮/边框色，不构成第二强调色）
+  A 关于区地图定位：#map-container（外层 class/id/尺寸 h-400px 移动 · md:h-500px 桌面、「Beijing, CN」标签、about.map.region 属性）不动；新增 .map-stage 定位盒包住 .map-img + #map-pin + .map-radar，
+     stage height:76% + aspect-ratio:448/452 + max-width:44% 且 .map-img{width:100%;height:100%;object-fit:contain}，令图像盒子与 stage 盒子在两档容器下同比例；
+     #map-pin left:48%/top:54% + 负 margin(-18px,-35px) 使 36×35 针尖落在该点（GSAP 只写 y 位移，不冲突）；.map-radar 同点 left:48%/top:54% + 负 margin(-40px,-40px) + w-20 h-20 + border-[#C8341F]/40 + opacity-30，不写 transform（animate-ping 占用）；
+     清除画布遗留内联样式：#map-pin > i 的 transform/width/height、.map-radar 的 transform/width/height/transform-origin/background-color；百分比定位天然跨视口一致，故删除旧「移动端 left:45%/top:60% 偏移」死规则。
+  B Hero 回归修复：清除 span[data-copy-target="hero.name.line1"] 上被重新写入的内联 width/height/transform-origin/transform（1164.88×130.541px，130.5px < 126×1.05≈132.3px 行盒会再次裁墨迹）；class/data-copy-target 与 CSS 规则（clamp(64px,11.5vw,126px) + line-height:1.05）保留；第二行 JUZIOR 描边、第三行 DESIGNER 一字一像素未动。另清除卡01 封面 img 上残留的画布内联 transform（translate(0,-2.29636px)）。
+  Asset map（本轮新增/替换）:
+     卡01 work_visual_1 — yxxg2gLn3E2jflNZ.jpg（1920×1080 桑葚米乳茶 KV 完稿）-> .work-image 16:10 容器，cover，焦点 50% 50%，alt「爷爷自在茶桑葚米乳茶 KV 完稿」
+     卡02 work_visual_2 — vp8mJ7ImFH2nCqDL.jpg（2048×1152 横版主视觉）-> 同容器 cover 焦点 50% 50%，alt「安徒生世界童话林横版主视觉」；02 覆盖层 wo-hero 同图（替换原 pages/page_1.jpg 整页截图），figcaption 逐字
+     02 覆盖层图集 — 图鉴整案长图（2026-11-19 已换为高清原稿 LPEP8Vg9JL9UWSzN.jpg，见文件首条 preamble）；本轮改为 .wo-figs--long 单列等比放大（取代上轮 .wo-figs--single 源像素细窄条）
+     卡04 work_visual_4 — Zi6a8x9l8B9haJPY.png（2048×2048 漫潮 principles 方形标识）-> .work-image--contain：object-fit:contain + 容器底色 #FFFFFF + 焦点居中 + 豁免 grayscale/scale（cover 会切掉「漫潮」与「principles」两侧），alt「漫潮 principles 项目标识」
+     04 覆盖层图集 — 设计初稿全品类长图（2026-11-19 已换为高清原稿 9a5UzFoAXJJsRIIQ.jpg）整组替换原两张 duo；本轮改为 .wo-figs--long 单列放大；.wo-figs--duo class 与 p.wo-gap 素材缺口提示整段删除（--duo 规则保留为死规则）
+     03 覆盖层图集第四张 — 菜狗系列图鉴长图（2026-11-19 已换为新上传的 1QTxUPXG4fGDaUOM.png）；本轮从 .wo-figs 网格抽出、置于网格之后独立 .wo-figs--long 段（网格恢复三张）
+     卡06 work_visual_6 — 2PVcTB6dIuJafaCv.png（541×976 竖版海报：祈年殿 + 金色凤凰圆形纹样 + 多层祥云 + 书法标题）-> .work-image--contain：contain + 容器底色 #16305C，alt「天坛「祥云瑞彩」官方纪念收藏卡主视觉海报」；06 覆盖层 wo-hero 同图，.wo-hero--tall 自然比例完整展示不裁切、居中
+     06 覆盖层图集 — 《天坛》图鉴长图（2026-11-19 已换为高清原稿 K9toZJqoeL1if2R9.png，1080×16042），本轮 .wo-figs--long 单列等比放大、不裁切
+  Content map（本轮逐字）: 卡06 work.6.tag / work.6.title / work.6.body -> .work-item[data-work="tiantan"] 的 span/h3/p，序号 <b>06</b>；06 层 wo-index「06」· wo-tag · wo-title · wo-sub「Temple of Heaven · Auspicious Clouds Collectible Cards」· wo-hero figcaption · 项目概述 · 事实要点五条 · wo-note「各卡种的名称、工艺与规格以原始稿件为准，详见下方图鉴长图。」· 图集 figcaption；02/04 层图集 figcaption 与 03 层新增图 figcaption 逐字；全部 alt 见 Asset map 与 Image Assets；未新增任何卡种名称/发行量/价格/获奖/联名方
+  交互 map: 06 卡沿用 .work-item + role=button + tabindex=0 + data-work="tiantan" + aria-label；work-overlay.js 按 querySelectorAll(".work-overlay") 与 [data-work-key] 通配构建 byKey（无 key 白名单数组），新增 tiantan 层自动纳入 hash 路由 #/work/tiantan 与 data-src 开层注入，js 无需改动；main.js 的 initWorks() pin 宽度与 scrub 时长由 wrapper.scrollWidth 动态计算，无写死卡数常量，第 6 张卡自动生效，main.js 本轮零改动
+  Assumptions（brief 未指明处的最朴素选择）:
+     1) .map-stage 取 height:76%（沿用上一轮 .map-img 占容器高比例）并加 max-width:44% 上限：在 375–1920px 全区间两档容器内均由高度决定尺寸，图像盒子比例恒为 448/452，48%/54% 跨视口指向同一地理点；实测 1080 视口图像盒约 353×356px（上一轮 363px，视觉占比基本不变）。
+     2)（本轮被取代）长图改为单列等比放大、居中（.wo-figs--long），宽度上限 2026-11-19 已由 760px 放宽到 1000px（素材已换高清原稿）；.wo-hero--tall img 上限 460px 保留（541×976 竖版海报非长图）；仍不做 AI 补清晰度、不切片放大、不套 object-fit:cover。
+     3) 卡06 取交替序列下一档：.work-item--offset + .work-shadow -rotate-2（现序：无offset/rotate-2 · offset/-rotate-2 · 无offset/rotate-1 · offset/-rotate-1 · 无offset/rotate-2）；未加 --dark 变体（卡面底色 #16305C 与深色卡面 #1D1E20 不同源，取朴素亮卡面），已在总结中报告。
+     4) 删除针对旧 36MP 封面的「work_visual_2 滤镜/缩放豁免」机械修复规则（新封面仅 2.4MP，cover 卡恢复与其他 cover 卡一致的 grayscale + hover 缩放）；
+        但两张 contain 卡（04/06）豁免 grayscale 与 scale(1.08) 静息缩放：scale 会裁 contain 内容上下各 4%、灰度会让卡6 彩色海报与深蓝底色失配；cover 卡动效语言不变。
+     5) .wo-gap 规则随其唯一使用节点删除而成为死规则，一并移除；.wo-figs--duo 规则按「不动其余 selector」原则保留为死规则。
+  QA risks: 针/雷达是否两档视口同落黄点且不压左上角「北京」二字 -> 移动(375)与桌面(1080/1440)分别截图；长图与竖版海报是否被裁/变形 -> 覆盖层逐层截图；第 6 张卡是否进入横向 pin 滚动并能点开 06 层（含 hash 直访）-> 交互自检；「张浩」是否仍完整不被裁 -> Hero 截图；首屏图片预算（6 封面 + 肖像 + 地图，覆盖层 25 图仍走 data-src 开层注入）-> 渲染不超时。
+  -->
+  <!--
+  Preamble（设计→代码映射；上一轮：作品画廊 3 卡 → 5 卡并整体可点击；新增 5 个同页全屏详情覆盖层（hash 路由）；其余存量全部保持）
+  Canvas: 响应式单页作品集（桌面为主、移动端自适应）；顶层 9 段顺序与数量不变；详情覆盖层为同页覆盖层，不计顶层区块
+  Design given: 明亮克制纸感编辑式；暖白 #F4F1EA + 石墨黑 #17181A + 朱红 #C8341F 单强调色；覆盖层沿用同三色（朱红仅分类标签/序号/关闭 hover 等小面积）
+  本轮 Asset map（5 张卡封面，16:10 容器允许 cover 裁切，焦点由 styles.css [data-slot] 规则驱动）:
+          work_visual_1 商业海报合集 — assets-persist.../28db0ec8ba4cb265/images/page1_img1.jpeg（1000×4582 竖长图：菜单→活动页→kv→banner→插画五段）-> 50% 48%（brief 给值；实测 KV 段标签+三张 KV 海报入窗，沿用上一轮微调值）
+          work_visual_2 安徒生世界-童话林 — assets-persist.../966737976f459be3/images/page1_img1.jpeg（4500×8000，实测为深色菱形格纹底、无主体）-> brief 给 50% 50% 会取景纯格纹，按 brief 授权仅微调百分比为 50% 0%，已报
+          work_visual_3 蔬菜精灵 — a.lovart.ai/artifacts/user/bDRQbnqfRm608iOR.jpg（1500×1000，近 16:10）-> 50% 50%，基本无裁切
+          work_visual_4 WAVES — assets-persist.../a3cf71124481f222/images/page1_img1.jpeg（1280×720=16:9）-> 50% 50%，WAVES 字样与 REC 取景框完整入窗
+          work_visual_5 安徒生人物形象 — a.lovart.ai/artifacts/user/hwEU5gsOBbKCrJue.png（2048×2048 方图中心构图）-> 50% 45%，保留精灵少女主体
+  本轮 Content map（5 卡逐字）: work.1–5.tag / work.1–5.title / work.1–5.body 按 Pinned Content；序号 01–05；5 条封面 alt 逐字；works.view_all 不改
+  覆盖层 map（5 层 id=work-overlay-<key>，hash #/work/<key>；层内全部图片初始无 src、URL 存 data-src，开层时由 work-overlay.js 注入：首图注入即 eager（无 lazy 属性，符合 brief「首图除外」）、图集保留 lazy 属性；自然比例不裁切）:
+          collector: 长图本轮移至 .wo-cols 之后的 .wo-gallery 单列放大（原 wo-hero 位删除）+ 4 条事实要点 + 概述；pages/page_1.jpg 为 LOW-RES 兜底（onerror 替换，正常不显示）
+          andersen-forest: 首图=pages/page_1.jpg（1920×1080 整页主视觉海报）；images/page1_img1.jpeg 实测纯格纹底无展示价值且与整页截图同源，按 brief「与首图明显重复则省略」规则省略并已报；
+            Logo 字效=page1_img21.jpeg（5599×3162 黑底白线字效，原样）；排版视图=page2_img35.jpeg（6147×3471）；实物渲染=page3_img45.jpeg（2742×1566，实测为白色圆角矩形框，按 brief 原样使用）；研发方文字一句置事实要点后
+          vegetable-sprite: 首图 jkxhd1AGgmARmPQ2.png(1448×2048) → 图鉴 RyFbgToPr898VSCp.png(1448×2048) → 活动 bDRQbnqfRm608iOR.jpg(1500×1000) → 预热 96JYJF1EtTKAB7VE.png(1080×1433)；菜狗长图（2026-11-19 已换为 1QTxUPXG4fGDaUOM.png）本轮抽出为网格后独立 .wo-figs--long 段；135×2048 的 LOW-RES 素材已被用户否决、不得引用
+          waves: 首图 page1_img1.jpeg(1280×720) + 补充 pages/page_1.jpg(1920×1080) 双列并置；三组品类清单 + 背面规则 + 素材缺口说明逐字呈现，不用他项目图填补
+          andersen-chars: 13 图 masonry（桌面 2 列/移动 1 列，column-count + break-inside:avoid），图注 1–13 逐字，不对应安徒生篇名
+  交互 map: article.work-item 增 role=button + tabindex=0 + data-work + aria-label（既有 class/DOM 嵌套保留）；click / Enter / Space → 写 hash 打开对应层；
+          Esc / 遮罩（内容区外点击）/ 右上关闭按钮 → 清 hash 关闭，焦点回到触发卡片；打开时 html.overlay-open（overflow:hidden）+ lenis.stop()，层内 .wo-scroll 原生滚动；关闭时 lenis.start() + lenis.scrollTo(immediate) 恢复滚动位置；
+          hashchange 支持前进/后退与首屏带 hash 直访；覆盖层节点一律 .wo-* / wo- 前缀，不与存量 selector 冲突；
+          开层焦点落 .wo-sheet（tabindex=-1）而非关闭按钮：避免无交互直访路径上脚本 focus 触发 :focus-visible 朱红态，键盘用户 Tab 即得关闭钮焦点环
+  Palette/Typography: 全部沿用（见历史行）；覆盖层字号/间距/栅格/圆角/阴影为本轮按编辑式气质新定（brief 不指定像素）
+  本轮 Assumptions: 1) 卡2 封面焦点 50% 50%→50% 0%（源图实测纯格纹，brief 授权微调百分比，已报）；2) 童话林层首图与末尾整页截图互换/省略（brief 授权，已报）；
+          3) 遮罩=覆盖层滚动面在内容纸面之外的暗色区域（桌面可见；移动端按 brief 全屏单列，遮罩点击天然不存在，Esc/按钮仍可用）；
+          4) 覆盖层 z-index 9500：低于 loader(20000)/curtain(19999)/自定义光标(10000/9999)，高于 navbar(50)；关闭按钮 fixed 置于 .wo-scroll 之外以免被 transform 捕获；
+          5) 磁吸效果以 .06 低系数作用于五张卡（.magnetic-btn 存量系数 .3 对 600px 大卡位移过大），自定义光标为全局存量行为；
+          6) MECHANICAL：渲染沙箱会审计/预载 DOM 内全部 <img>（含 display:none 覆盖层内的 lazy 图），30 张图总量耗尽 60s 渲染预算（probe 二分证实：6 图页过、30 图页超时、单张 36MP 无滤镜页过）；
+             故覆盖层 24 图初始无 src、开层注入（对用户无感：开层即见首图，图集随滚动 lazy）；主站首屏仅 6 图（hero + 5 封面）；卡2 封面 36MP 保留 lazy 以控首屏总量
+  QA risks: 5 卡后横向 pin 滚动距离变长 -> load 后截图核对末卡与 view-all 可达；覆盖层直访 hash / 三种关闭 / 焦点回归 -> 交互脚本自检；长图单列在移动端宽度 100% 不裁切 -> 移动视口截图
+  -->
+  <!--
+  Preamble（历史行：中英双语 + 真实个人信息 + 4 图替换 + 窄屏间距 ADAPTIVE 修正）
+  Canvas: 响应式单页作品集（桌面为主，移动端自适应），9 段结构与顺序、数量不变：
+          Loader → 导航 → Hero → 能力跑马灯 → 关于（地图+两项数据）→ 职业计时器 → 作品横向画廊(3卡) → 技能时间线(3组) → 联系与页脚
+  Design given: 明亮克制、有纸质感的编辑式版面；暖白 #F4F1EA 底 + 石墨黑 #17181A 深色区块 + 朱红 #C8341F 单强调色（不新增第二强调色、不做几何色块改造）；
+                双语规则：中文为主、英文为辅，同一节点内「中文 / English」并列，中英之间一个半角空格，英文不单独成行抢焦点。
+  Asset map（历史行，已被 2026-11 作品轮覆盖：work_visual_1/2/3 三张 2048×1280 示意图与其 object-position 均已作废，现值见文件首条 preamble；hero 肖像映射仍有效）:
+          [@image:hero_portrait] 1600×2000 (4:5) -> data-slot="hero_portrait"，hero-img-container aspect-[4/5]，object-fit:cover，object-position 50% 50%，多边形裁切安全区内成立
+          [@image:work_visual_1]（历史，已作废）2048×1280 (16:10)，object-position 40% 50% —— 2026-11 作品轮换为 PDF 长图 50% 43%
+          [@image:work_visual_2]（历史，已作废）2048×1280 (16:10)，object-position 50% 50% —— 2026-11 作品轮换为 PDF 长图 50% 20%
+          [@image:work_visual_3]（历史，已作废）2048×1280 (16:10)，object-position 50% 50% —— 2026-11 作品轮换为 PDF 长图 50% 0%
+  Palette: 暖白 #F4F1EA -> --bg-color；石墨黑 #17181A -> --ink/--text-main；朱红 #C8341F -> --accent（仅主按钮/旋转徽章/地图针与雷达/时间线进度/计时器 Seconds 格/角标与 hover）；纸线 #E3DDD0 -> --paper-line（存量，非本轮新增）
+  Typography: Inter + Space Mono + Noto Sans SC（存量）；中文由 Noto Sans SC 承接、Latin 领先；字号/行高/间距/圆角/阴影/hover 参数全部沿用现有实现
+  Content map（全部 data-copy-target 节点逐字按 Pinned Content 落位）: page.title / loader.label / brand.short「张浩 JUZIOR」/ nav.availability /
+          hero.parallax.word「AI VISION」(低透明度背景水印，非缺陷) / hero.greeting / hero.name.line1「张浩」· line2「JUZIOR」(保留 text-stroke 描边)· line3「DESIGNER」/
+          hero.badge / hero.typewriter / hero.statement / hero.cta.primary·secondary / hero.image.hint / marquee.keywords（source 与 clone 写入完全相同字符串，JS 再以 source 覆写 clone）/
+          about.label·heading.prefix·heading.location「北京 Beijing」·body / about.stat.projects.value「3」·projects.label·exp.label / about.map.region /
+          chronometer.eyebrow·title·origin「2023-11-01T00:00:00」(同时写入 #careerOrigin 与 section[data-career-start]，两处一致) /
+          works.watermark「WORKS」/ work.1-3.tag（「示例 ·」前缀本轮去掉）·title·body / works.view_all / skills.title / skill.1-3.title·body·list /
+          contact.eyebrow·heading·statement / contact.email（显示文本与 mailto: 同为 1002434241@qq.com）/ footer.copyright / footer.credit
+  Content map（无 data-copy-target、本轮显式授权改文本的节点）: 导航四链接「关于 About / 作品 Works / 能力 Skills / 联系 Contact」(id/href/class 未动) /
+          计时器六单位标签「年 Years · 月 Months · 日 Days · 时 Hours · 分 Minutes · 秒 Seconds」(b 元素 id 与 DOM 结构未动) / ORIGIN: 前缀 -> 「起点 Since」/
+          4 处图片 alt / 关于区第二项数据 #dynamic-exp 显示值 -> 「5」（与「核心能力方向 / Skill Areas」配对，依据用户 CORE SKILLS 01–05）
+  Palette: 暖白 #F4F1EA -> --bg-color；石墨黑 #17181A -> --ink/--text-main；朱红 #C8341F -> --accent（仅主按钮/旋转徽章/地图针与雷达/时间线进度/计时器 Seconds 格/角标与 hover）；纸线 #E3DDD0 -> --paper-line（均为存量，本轮未改配色）
+  Typography: Inter + Space Mono + Noto Sans SC（存量，Latin 领先、中文由 Noto Sans SC 承接）；字号/行高/间距/圆角/阴影/hover/动效参数全部沿用，仅在下方 4 处 ADAPTIVE copy_fit 调整
+  Assumptions（brief 未指明处的最朴素选择）:
+          1) 只替换节点内部文本与 4 个 img 的 src/alt；未增删属性、未改 class 名与 id 值、未动 data-slot / data-copy-target 的 id 值、未动任何动效 selector。
+          2) 窄屏间距取三选一中的方案 (a)：≤1200px 时把 brand.short 字标降一档（24px -> 20px，#navbar 内 ID 选择器覆盖 Tailwind 工具类）。未改 DOM、未隐藏导航链接；
+             中部导航 gap-8 与右侧胶囊尺寸保持不动（1024px 实测三组元素合计约 813px，仍留 200px+ 余量）。
+          3) ADAPTIVE copy_fit 三处（双语后字符串变长导致裁切/溢出，非重设计）：#typewriter 字号 clamp(12px,1.55vw,24px)+nowrap（原 24px 单行约 600px，会在 h-12 overflow-hidden 内被裁）；
+             #contact h2 字号 clamp(40px,8vw,128px)（原 128px 时「Let's Talk」约 768px，在 768–1023px 视口横向溢出）；
+             .view-all-btn 由 white-space:nowrap 改为 normal + word-break:keep-all + overflow-wrap:normal —— 防孤行意图保留（只在「全部项目」与「All Works」之间的空格断行，中文绝不拆字），
+             因为「全部项目 All Works」在 nowrap 下需约 150px 而 128px 圆钮内容宽仅约 100px。
+          4) 图片焦点改由 [data-slot] 选择器驱动；HTML 上的 .focal-right class 原样保留（未改属性），但其 65% 规则已按本轮 Image Assets 删除。
+          5) assets/js/main.js 仅删除「把 #dynamic-exp 覆写为 年数+」两行：该注入会让 Pinned 的「5」在 runtime 被改成「3+」，与本轮授权改的文本节点冲突。
+             计时器 years/months/days/hours/minutes/seconds/sec-bar 的实时走动、GSAP/Lenis/光标/磁吸/打字机/跑马灯/画廊 pin/时间线揭示全部未动。
+          6) chronometer.origin = 2023-11-01T00:00:00 为推导值（用户自述 3 年经验 + 当前 2026-11 反推）；#dynamic-exp 的「5」为 CORE SKILLS 条目计数，不是年限。
+          7) 用户 27 岁一条按 brief 不落画面；案例标题/描述按学科方向撰写，无任何真实品牌名、客户名、项目代号、销量或奖项。
+  QA risks: 导航在 1024–1200px 是否单行不挤 -> 1080 宽视口截图核对；#typewriter 单行是否被 h-12 裁切 -> 核对 Hero；
+            work card 正文变长（约 60 字）在 60vh/min-480px 卡内是否溢出 -> 核对画廊首卡；contact h2 双语是否单行且不与页脚重叠；
+            footer.copyright / footer.credit 在 md:flex-row 同行（max-w-2xl 672px，实测合计约 635px）是否换行；4 张新图是否全部加载、无旧 URL 残留。
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title data-copy-target="page.title">张浩 Juzior — AI-Enhanced Visual Designer｜平面·卡牌·AI 设计作品集</title>
+  <meta name="description" content="张浩（JUZIOR），常驻北京的 AI-Enhanced Visual Designer。3 年平面及视觉设计经验，覆盖 KV 主视觉、平面与出版物设计、卡牌产品整体视觉与印前落地，并熟悉 ComfyUI、Stable Diffusion、Flux、ControlNet 与 LoRA 的 AI 视觉创作流程。">
+  <meta name="theme-color" content="#F4F1EA">
+  <!-- Favicon：内联 SVG data URI（暖白底 + 石墨黑 JZ + 朱红方块），无独立文件、无本地路径、无 404 风险 -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20fill='%23F4F1EA'/%3E%3Ctext%20x='16'%20y='23.2'%20font-family='Arial,Helvetica,sans-serif'%20font-size='19'%20font-weight='700'%20letter-spacing='-0.8'%20fill='%2317181A'%20text-anchor='middle'%3EJZ%3C/text%3E%3Crect%20x='21.5'%20y='21.5'%20width='4.5'%20height='4.5'%20fill='%23C8341F'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/png" sizes="512x512" href="https://a.lovart.ai/artifacts/agent/dUxVIPN8a167GdXh.png">
+  <link rel="apple-touch-icon" href="https://a.lovart.ai/artifacts/agent/dUxVIPN8a167GdXh.png">
+  <!-- 社交分享卡片：Open Graph + Twitter Card（站点未部署，按 brief 不写 og:url / canonical / twitter:site / twitter:creator） -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="张浩 Juzior 作品集">
+  <meta property="og:title" content="张浩 Juzior — AI-Enhanced Visual Designer">
+  <meta property="og:description" content="平面 · 卡牌 · AI 设计。六个代表项目：商业海报与视觉延展、《安徒生世界-童话林》图鉴、「恭喜發菜」蔬菜精灵收藏卡、WAVES 杂志卡牌、安徒生人物形象设计、天坛「祥云瑞彩」收藏卡。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:image" content="https://a.lovart.ai/artifacts/agent/mNQiYTAkV0EQtnme.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="张浩 Juzior 作品集分享卡：暖白底，左侧为姓名与「平面·卡牌·AI 设计」定位，右侧为深蓝与石墨黑的卡牌组。">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="张浩 Juzior — AI-Enhanced Visual Designer">
+  <meta name="twitter:description" content="平面 · 卡牌 · AI 设计。六个代表项目：商业海报与视觉延展、《安徒生世界-童话林》图鉴、「恭喜發菜」蔬菜精灵收藏卡、WAVES 杂志卡牌、安徒生人物形象设计、天坛「祥云瑞彩」收藏卡。">
+  <meta name="twitter:image" content="https://a.lovart.ai/artifacts/agent/mNQiYTAkV0EQtnme.png">
+  <meta name="twitter:image:alt" content="张浩 Juzior 作品集分享卡：暖白底，左侧为姓名与「平面·卡牌·AI 设计」定位，右侧为深蓝与石墨黑的卡牌组。">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="antialiased selection:bg-[#C8341F] selection:text-white">
+  <div class="cursor-dot hidden md:block" data-lvt-eid="13a884c7c8"></div>
+  <div class="cursor-outline hidden md:block" data-lvt-eid="6de86b3e10"></div>
+
+  <div class="loader-overlay" id="loader" data-lvt-eid="f639ff3ea8">
+    <div class="text-6xl md:text-9xl font-black tracking-tighter" id="loader-percent" data-lvt-eid="d354b68a80">000</div>
+    <div class="text-xs font-mono mt-4 tracking-widest uppercase opacity-50" data-copy-target="loader.label" data-lvt-eid="c9e509bac3">正在加载作品集</div>
+  </div>
+  <div class="loader-curtain" id="loader-curtain" data-lvt-eid="79a7bb521a"></div>
+
+  <nav class="fixed top-0 w-full p-6 md:p-8 flex justify-between items-center z-50 mix-blend-difference text-white opacity-0" id="navbar" data-lvt-eid="b077620de5">
+    <button data-jump="hero" class="text-xl md:text-2xl font-black tracking-tighter uppercase hover:opacity-70" data-copy-target="brand.short" data-lvt-eid="60796193a6">张浩 JUZIOR</button>
+    <div class="hidden md:flex gap-8 font-mono text-sm" data-lvt-eid="4eafd11234">
+      <a href="#about" data-lvt-eid="69a6ceae37">关于 About</a><a href="#works" data-lvt-eid="a01fc8e340">作品 Works</a><a href="#skills" data-lvt-eid="b0bf427e4f">能力 Skills</a><a href="#contact" data-lvt-eid="18e9dcf524">联系 Contact</a>
+    </div>
+    <div class="text-[10px] md:text-xs font-mono border border-white/30 px-3 py-1 rounded-full" data-copy-target="nav.availability" data-lvt-eid="f2953b1fe1">开放合作中 · Open to Work</div>
+  </nav>
+
+  <main class="relative z-10 w-full overflow-hidden" data-lvt-eid="433d767e73">
+    <section id="hero" class="min-h-screen flex flex-col justify-center relative px-6 md:px-20 pt-24 grid-bg" data-lvt-eid="3d2e43f995">
+      <div class="absolute top-1/4 -right-20 text-[20vw] font-bold text-[#17181A] opacity-[0.06] pointer-events-none select-none leading-none parallax-element" data-speed=".2" data-copy-target="hero.parallax.word" data-lvt-eid="1719f88241">AI VISION</div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10" data-lvt-eid="861a3291d3">
+        <div class="order-2 lg:order-1 space-y-6" data-lvt-eid="3bf59b7144">
+          <div class="overflow-hidden" data-lvt-eid="ce88b58a2b"><h2 class="text-xl text-gray-500 font-mono hero-reveal" data-copy-target="hero.greeting" data-lvt-eid="875819be91" style="transform: translate(0px, -9.40109px);">你好，我是 / Hello, I am</h2></div>
+          <div class="relative" data-lvt-eid="9893c926af">
+            <h1 class="text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[.8] mb-4" data-lvt-eid="d40b717caf">
+              <div class="overflow-hidden" data-lvt-eid="6642a4fad4"><span class="block hero-reveal" data-copy-target="hero.name.line1" data-lvt-eid="f9e3ef18b7">张浩</span></div>
+              <div class="overflow-hidden" data-lvt-eid="1378551cfd"><span class="block hero-reveal text-stroke" data-copy-target="hero.name.line2" data-lvt-eid="fbdb3bfcce">JUZIOR</span></div>
+              <div class="overflow-hidden" data-lvt-eid="f7984674bf"><span class="block hero-reveal" data-copy-target="hero.name.line3" data-lvt-eid="34492f5a29">DESIGNER</span></div>
+            </h1>
+            <div class="absolute -top-10 right-0 md:right-20 w-32 h-32 rounded-full bg-[#C8341F] text-white flex items-center justify-center text-center text-xs font-mono rotate-12 animate-spin-slow shadow-2xl hero-reveal" data-copy-target="hero.badge" data-lvt-eid="624d0fe929">AI-ENHANCED DESIGNER</div>
+          </div>
+          <div class="h-12 overflow-hidden flex items-center gap-2" data-lvt-eid="9d7c19274d">
+            <span class="w-2 h-2 bg-[#C8341F] rounded-full animate-pulse" data-lvt-eid="6cd971365f"></span>
+            <span class="text-xl md:text-2xl font-mono" id="typewriter" data-copy-target="hero.typewriter" data-lvt-eid="69a719e609">平面设计 Graphic | 卡牌设计 Card | AI 设计 AI</span>
+          </div>
+          <p class="max-w-xl text-gray-600 leading-relaxed hero-reveal" data-copy-target="hero.statement" data-lvt-eid="d43ea96d3d">AI-Enhanced Visual Designer。把创意构思、AI 生成与后期精修串成一条完整流程：擅长 KV 主视觉、平面与出版物设计，也负责过完整卡牌产品的整体视觉与印前落地。</p>
+          <div class="pt-5 flex flex-wrap gap-5 hero-reveal" data-lvt-eid="e3dfe364ae">
+            <a href="#works" class="magnetic-btn px-9 py-4 bg-[#C8341F] text-white font-bold border border-[#C8341F] shadow-[8px_8px_0_rgba(23,24,26,.18)]" data-copy-target="hero.cta.primary" data-lvt-eid="7f15df3830">查看作品 Works</a>
+            <a href="#contact" class="magnetic-btn px-9 py-4 border border-[#17181A] font-bold hover:bg-[#17181A] hover:text-white" data-copy-target="hero.cta.secondary" data-lvt-eid="dc54112271">联系我 Contact</a>
+          </div>
+        </div>
+        <div class="order-1 lg:order-2 flex justify-center relative" data-lvt-eid="a43804107b">
+          <div class="hero-img-container w-full max-w-md aspect-[4/5] relative grayscale hover:grayscale-0 transition-all duration-700 group" data-lvt-eid="591dd3d007">
+            <img data-slot="hero_portrait" src="https://a.lovart.ai/artifacts/user/WChaxqB5zZI5rfvZ.png" alt="设计师张浩本人肖像 / Portrait of visual designer 张浩 Juzior" class="w-full h-full object-cover" data-lvt-eid="211deb116f">
+            <div class="absolute inset-0 border border-white/20 pointer-events-none" data-lvt-eid="ff6373b2dd"></div>
+            <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-4 py-2 text-xs font-mono font-bold border border-[#17181A]" data-copy-target="hero.image.hint" data-lvt-eid="6654072244">向下滚动 Scroll</div>
+          </div>
+        </div>
+      </div>
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2" data-lvt-eid="c5861faa26"><div class="w-px h-20 bg-gradient-to-b from-transparent to-[#17181A]" data-lvt-eid="0c6c86abff"></div></div>
+    </section>
+
+    <div class="py-12 bg-[#17181A] text-white overflow-hidden border-y border-white/10 rotate-[-2deg] scale-105 relative z-20" data-lvt-eid="54eb56aaa4">
+      <div class="flex whitespace-nowrap marquee-track" data-lvt-eid="bae9fc3723">
+        <span class="marquee-source text-5xl md:text-6xl font-black font-mono mx-8 tracking-tighter" data-copy-target="marquee.keywords" data-lvt-eid="46a4cb5285">KV主视觉 · 平面设计 · 卡牌设计 · 出版物设计 · AI视觉创作 · ComfyUI工作流 · LoRA训练 · 印前工艺</span>
+        <span class="marquee-clone text-5xl md:text-6xl font-black font-mono mx-8 tracking-tighter" aria-hidden="true" data-lvt-eid="a4cef5670e">KV主视觉 · 平面设计 · 卡牌设计 · 出版物设计 · AI视觉创作 · ComfyUI工作流 · LoRA训练 · 印前工艺</span>
+      </div>
+    </div>
+
+    <section id="about" class="py-32 relative" data-lvt-eid="0d029962bb">
+      <div class="container mx-auto px-6 md:px-20" data-lvt-eid="2a31c8a08b">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20" data-lvt-eid="2840d882d4">
+          <div data-lvt-eid="41efcb5e7a">
+            <span class="inline-block border border-[#17181A] px-4 py-1 rounded-full text-sm font-mono mb-8" data-gsap="fade" data-copy-target="about.label" data-lvt-eid="4da1333743">关于我 / About</span>
+            <h2 class="text-5xl md:text-7xl font-black mb-8 leading-tight" data-gsap="slide-up" data-lvt-eid="520dcb15b2"><span data-copy-target="about.heading.prefix" data-lvt-eid="23d42e3fa1">坐标 / Based in</span><br data-lvt-eid="6bc8a91c9c"><span class="text-transparent bg-clip-text bg-gradient-to-r from-[#17181A] to-[#C8341F]" data-copy-target="about.heading.location" data-lvt-eid="954dafa637">北京 Beijing</span></h2>
+            <p class="text-xl text-gray-600 leading-relaxed mb-10 max-w-lg" data-gsap="fade" data-copy-target="about.body" data-lvt-eid="6cd56b9827">拥有 3 年平面及视觉设计经验，具备出版行业与广告创意项目的跨领域设计经历。擅长 KV 主视觉、平面设计、视觉延展及出版物设计，兼具传统视觉设计能力与 AI 视觉创作能力；熟悉 Midjourney、Stable Diffusion、ComfyUI、Flux 等 AI 创作工具，能运用文生图、图生图、ControlNet、LoRA 训练与工作流搭建，完成从创意构思、AI 生成到后期精修的完整视觉创作流程。</p>
+            <div class="grid grid-cols-2 gap-8 mb-12" data-lvt-eid="23fea4faba">
+              <div class="border-l-2 border-[#C8341F] pl-6" data-gsap="fade" data-lvt-eid="4944bea3ae"><div class="text-4xl font-bold mb-2" data-copy-target="about.stat.projects.value" data-lvt-eid="d5df004987">3</div><div class="text-sm font-mono text-gray-500" data-copy-target="about.stat.projects.label" data-lvt-eid="61b1d6670d">年设计经验 / Years Experience</div></div>
+              <div class="border-l-2 border-[#C8341F] pl-6" data-gsap="fade" data-lvt-eid="6f32ebe08d"><div class="text-4xl font-bold mb-2" id="dynamic-exp" data-lvt-eid="2c37611b69">5</div><div class="text-sm font-mono text-gray-500" data-copy-target="about.stat.exp.label" data-lvt-eid="f41eafe02b">核心能力方向 / Skill Areas</div></div>
+            </div>
+          </div>
+          <div class="relative h-[400px] md:h-[500px] bg-[#EDE9DF] border border-[#DED8CA] rounded-2xl flex items-center justify-center overflow-hidden" id="map-container" data-lvt-eid="aeef828e7f">
+            <div class="absolute top-4 right-4 text-xs font-mono text-gray-400" data-copy-target="about.map.region" data-lvt-eid="c40458c0de">Beijing, CN</div>
+            <div class="map-stage" data-lvt-eid="7a1c0d5e21">
+              <img class="map-img" src="https://a.lovart.ai/artifacts/user/521doV8o8PBK6DcU.png" alt="北京市行政区划轮廓图 / Administrative map of Beijing" data-lvt-eid="61fbfcb150">
+              <div class="absolute map-pin opacity-0" id="map-pin" data-lvt-eid="0cae85a703"><i class="ri-map-pin-fill text-4xl text-[#C8341F] drop-shadow-2xl" data-lvt-eid="f2ed9425bf"></i></div>
+              <div class="map-radar absolute w-20 h-20 border border-[#C8341F]/40 rounded-full animate-ping opacity-30" data-lvt-eid="6fee6d90ea"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="chronometer" class="py-20 bg-[#17181A] text-white relative overflow-hidden" data-career-start="2023-11-01T00:00:00" data-lvt-eid="0e82128e9c">
+      <div class="absolute inset-0 opacity-10 grid-bg invert" data-lvt-eid="c68246bb56"></div>
+      <div class="container mx-auto px-6 text-center relative z-10" data-lvt-eid="3c9736d50d">
+        <div class="mb-12" data-lvt-eid="fb30ace597"><h3 class="text-sm font-mono uppercase tracking-[.3em] text-gray-400 mb-2" data-copy-target="chronometer.eyebrow" data-lvt-eid="285bd000b2">从业时间 · Since 2023</h3><h2 class="text-3xl md:text-5xl font-bold" data-copy-target="chronometer.title" data-lvt-eid="42a18f8e1f">从入行到现在 / Since Day One</h2></div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto" data-lvt-eid="a7e3957a52">
+          <div class="time-cell" data-lvt-eid="75e2ec9219"><b id="years" data-lvt-eid="8f454c4ab9">03</b><span data-lvt-eid="b455325424">年 Years</span></div><div class="time-cell" data-lvt-eid="7c557ad5e5"><b id="months" data-lvt-eid="08c7761eb4">00</b><span data-lvt-eid="f908a39918">月 Months</span></div><div class="time-cell" data-lvt-eid="195fe04c3e"><b id="days" data-lvt-eid="da55844547">00</b><span data-lvt-eid="eaaeab3160">日 Days</span></div><div class="time-cell" data-lvt-eid="b7e666ba4a"><b id="hours" data-lvt-eid="943b6ee3eb">00</b><span data-lvt-eid="6ac35d9eeb">时 Hours</span></div><div class="time-cell" data-lvt-eid="e8c4c11e34"><b id="minutes" data-lvt-eid="f9a92e8a2b">00</b><span data-lvt-eid="370a0b854a">分 Minutes</span></div><div class="time-cell time-cell--active" data-lvt-eid="4e6d3d6ce9"><b id="seconds" data-lvt-eid="617981b628">00</b><span data-lvt-eid="d28d5a020a">秒 Seconds</span><i id="sec-bar" data-lvt-eid="92de04b007"></i></div>
+        </div>
+        <div class="mt-12 text-gray-500 font-mono text-xs" data-lvt-eid="2fbc30ae22"><span data-lvt-eid="72bec47d80">起点 Since </span><span id="careerOrigin" data-copy-target="chronometer.origin" data-lvt-eid="8e003d29e6">2023-11-01T00:00:00</span></div>
+      </div>
+    </section>
+
+    <section id="works" class="bg-[#F4F1EA] relative overflow-hidden" data-lvt-eid="5e3ae30206">
+      <div class="h-screen sticky top-0 flex items-center overflow-hidden" id="works-container" data-lvt-eid="f380fd54bd">
+        <h2 class="absolute top-10 left-10 z-20 text-6xl font-black opacity-20" data-copy-target="works.watermark" data-lvt-eid="8eeeb4129c">WORKS</h2>
+        <div class="flex gap-20 px-20 pl-[20vw]" id="works-wrapper" data-lvt-eid="42ab884d95">
+          <article class="work-item" role="button" tabindex="0" data-work="collector" aria-label="查看项目详情：商业海报与视觉延展合集" data-lvt-eid="d853029bc3">
+            <div class="work-shadow rotate-2" data-lvt-eid="c454d7de4c"></div><div class="work-card" data-lvt-eid="030609bd62">
+              <div class="work-image" data-lvt-eid="1a0d781c45"><img data-slot="work_visual_1" decoding="async" src="https://a.lovart.ai/artifacts/user/yxxg2gLn3E2jflNZ.jpg" alt="爷爷自在茶桑葚米乳茶 KV 完稿" data-lvt-eid="552e12d883"><span data-copy-target="work.1.tag" data-lvt-eid="3580373e3d">品牌视觉合集 · Brand Collection</span></div>
+              <div data-lvt-eid="97965ab8d2"><h3 data-copy-target="work.1.title" data-lvt-eid="ca8cca350c">商业海报与视觉延展合集</h3><p data-copy-target="work.1.body" data-lvt-eid="88071c3fb6">餐饮品牌的完整视觉落地：肯德基 KCOFFEE 分时段菜单与三丽鸥联名活动页、爷爷自在茶三款季节饮品 KV 与门店 Banner 延展，以及配套的食材插画。同一批项目里处理了版式栅格、字体设计与多媒介尺寸下的视觉一致性。</p></div><footer data-lvt-eid="81f5893620"><b data-lvt-eid="0ede265cab">01</b><i class="ri-arrow-right-up-line" data-lvt-eid="98dcd99e6e"></i></footer>
+            </div>
+          </article>
+          <article class="work-item work-item--offset work-item--dark" role="button" tabindex="0" data-work="andersen-forest" aria-label="查看项目详情：《安徒生世界-童话林》图鉴设计" data-lvt-eid="695b42833a">
+            <div class="work-shadow -rotate-2" data-lvt-eid="29baa84cbe"></div><div class="work-card" data-lvt-eid="af16c62092">
+              <div class="work-image" data-lvt-eid="3a9a6fd79e"><img data-slot="work_visual_2" class="focal-right" loading="lazy" decoding="async" src="https://a.lovart.ai/artifacts/user/vp8mJ7ImFH2nCqDL.jpg" alt="安徒生世界童话林横版主视觉" data-lvt-eid="7596eccdf0"><span data-copy-target="work.2.tag" data-lvt-eid="f8b52a699d">桌游视觉 · Board Game</span></div>
+              <div data-lvt-eid="57a36014f4"><h3 data-copy-target="work.2.title" data-lvt-eid="6c2f43c0de">《安徒生世界-童话林》图鉴设计</h3><p data-copy-target="work.2.body" data-lvt-eid="bf08ec9d3e">亲子轻策略桌游的整体视觉与图鉴：主视觉海报、Logo 字效、七位安徒生角色的双面角色卡、47 张邂逅卡与 15 个线索印的分类图形语言，并完成玩法说明书与配件实物呈现。该项目获安徒生文化正版独家授权。</p></div><footer data-lvt-eid="36bfa3971c"><b data-lvt-eid="406ae9701a">02</b><i class="ri-arrow-right-up-line" data-lvt-eid="c6e162751b"></i></footer>
+            </div>
+          </article>
+          <article class="work-item" role="button" tabindex="0" data-work="vegetable-sprite" aria-label="查看项目详情：「恭喜發菜」蔬菜精灵收藏卡" data-lvt-eid="baf871338e">
+            <div class="work-shadow rotate-1" data-lvt-eid="0a05566d93"></div><div class="work-card" data-lvt-eid="6916ebf7ce">
+              <div class="work-image" data-lvt-eid="8c7d308f77"><img data-slot="work_visual_3" decoding="async" src="https://a.lovart.ai/artifacts/user/bDRQbnqfRm608iOR.jpg" alt="蔬菜精灵收藏卡直播间活动图" data-lvt-eid="ea8be105cd"><span data-copy-target="work.3.tag" data-lvt-eid="d9e40ef977">收藏卡牌 · Trading Cards</span></div>
+              <div data-lvt-eid="219f250ffd"><h3 data-copy-target="work.3.title" data-lvt-eid="b33fb34ed5">「恭喜發菜」蔬菜精灵收藏卡</h3><p data-copy-target="work.3.body" data-lvt-eid="d397b2580e">dodowo × DOMIKA 联名的蔬菜精灵系列官方纪念收藏卡：主视觉海报、全系列卡牌图鉴与规格清单、直播间抽奖活动物料与新品预热海报。围绕同一 IP 完成从卡面版式、周边延展到社媒传播的一致视觉。</p></div><footer data-lvt-eid="c652aacf8a"><b data-lvt-eid="87e932d16b">03</b><i class="ri-arrow-right-up-line" data-lvt-eid="183d702dae"></i></footer>
+            </div>
+          </article>
+          <article class="work-item work-item--offset" role="button" tabindex="0" data-work="waves" aria-label="查看项目详情：WAVES 杂志卡牌视觉体系" data-lvt-eid="a7c3e91d04">
+            <div class="work-shadow -rotate-1" data-lvt-eid="86ca9b32f6"></div><div class="work-card" data-lvt-eid="a02fb02eba">
+              <div class="work-image work-image--contain" data-lvt-eid="60970e7cc7"><img data-slot="work_visual_4" decoding="async" src="https://a.lovart.ai/artifacts/user/Zi6a8x9l8B9haJPY.png" alt="漫潮 principles 项目标识" data-lvt-eid="8dd18b8787"><span data-copy-target="work.4.tag" data-lvt-eid="2e0fdfa318">收藏卡牌 · Trading Cards</span></div>
+              <div data-lvt-eid="c45f13c96e"><h3 data-copy-target="work.4.title" data-lvt-eid="0ab2e2c621">WAVES 杂志卡牌视觉体系</h3><p data-copy-target="work.4.body" data-lvt-eid="c1a6dd6db6">为时尚杂志题材收藏卡建立的分品类视觉体系，涵盖人物卡、杂志卡、定格魅力、星光永恒、璀璨星耀、走秀、复古、光影鎏金、泼墨、拍立得、霸总、女王与单双窗物料卡等十余个品类：以撕纸、全息镭射、电影胶片、黑胶与实物切片等质感区分稀有度层级。</p></div><footer data-lvt-eid="039c1cd07d"><b data-lvt-eid="0c59057357">04</b><i class="ri-arrow-right-up-line" data-lvt-eid="1a4dd9c1a5"></i></footer>
+            </div>
+          </article>
+          <article class="work-item" role="button" tabindex="0" data-work="andersen-chars" aria-label="查看项目详情：安徒生人物形象设计" data-lvt-eid="c2f84b6e19">
+            <div class="work-shadow rotate-2" data-lvt-eid="31420d73b0"></div><div class="work-card" data-lvt-eid="83f120eeda">
+              <div class="work-image" data-lvt-eid="ce6606f32c"><img data-slot="work_visual_5" decoding="async" src="https://a.lovart.ai/artifacts/user/hwEU5gsOBbKCrJue.png" alt="安徒生童话Q版角色形象" data-lvt-eid="c9519dd542"><span data-copy-target="work.5.tag" data-lvt-eid="012a4da8e9">角色设定 · Character Design</span></div>
+              <div data-lvt-eid="8459b37dce"><h3 data-copy-target="work.5.title" data-lvt-eid="b671f2bf29">安徒生人物形象设计</h3><p data-copy-target="work.5.body" data-lvt-eid="c28aa7d4bd">一组安徒生童话气质的 Q 版角色演绎：统一采用紧凑头身比、细线描边与低饱和水彩晕染，在人物、动物与物件拟人三类角色间保持同一套造型与上色逻辑，形成可批量延展的角色形象库。</p></div><footer data-lvt-eid="d2bb2dddaf"><b data-lvt-eid="5cc38e9937">05</b><i class="ri-arrow-right-up-line" data-lvt-eid="8c863b4198"></i></footer>
+            </div>
+          </article>
+          <article class="work-item work-item--offset" role="button" tabindex="0" data-work="tiantan" aria-label="查看项目详情：天坛「祥云瑞彩」收藏卡" data-lvt-eid="a1f0c93d47">
+            <div class="work-shadow -rotate-2" data-lvt-eid="b7e42a1c58"></div><div class="work-card" data-lvt-eid="c9d13f7a62">
+              <div class="work-image work-image--contain" data-lvt-eid="d3a85c1e94"><img data-slot="work_visual_6" decoding="async" src="https://a.lovart.ai/artifacts/user/2PVcTB6dIuJafaCv.png" alt="天坛「祥云瑞彩」官方纪念收藏卡主视觉海报" data-lvt-eid="e6b24d8f13"><span data-copy-target="work.6.tag" data-lvt-eid="f1c76a3b25">文博卡牌 · Cultural Cards</span></div>
+              <div data-lvt-eid="a4d92e5c71"><h3 data-copy-target="work.6.title" data-lvt-eid="b8e15f2a36">天坛「祥云瑞彩」收藏卡</h3><p data-copy-target="work.6.body" data-lvt-eid="c2f47a9d58">天坛官方纪念收藏卡的整体视觉。以祈年殿为主体、背后置一枚金色凤凰圆形纹样，四周环绕多层祥云与卷草边饰；标题「祥云瑞彩」用书法体配合朱红印章，底部为「官方纪念收藏卡」字样。系列卡面按工艺与题材分区，共用同一套深蓝底色与金色纹样的语言。</p></div><footer data-lvt-eid="d5a18b4c93"><b data-lvt-eid="e7c31d6f42">06</b><i class="ri-arrow-right-up-line" data-lvt-eid="f2d84a7b15"></i></footer>
+            </div>
+          </article>
+          <div class="w-[24vw] min-w-[220px] shrink-0 flex items-center justify-center" data-lvt-eid="3d8cb30662"><a href="#contact" class="w-32 h-32 rounded-full border border-[#17181A] flex items-center justify-center hover:bg-[#C8341F] hover:border-[#C8341F] hover:text-white font-mono font-bold view-all-btn" data-copy-target="works.view_all" data-lvt-eid="bbf94d1384">全部项目 All Works</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="py-32 relative" data-lvt-eid="204108b27a">
+      <div class="timeline-line" data-lvt-eid="a3e369b8c0"></div><div class="timeline-progress" id="scroll-line" data-lvt-eid="378decb1de"></div>
+      <div class="container mx-auto px-6 max-w-4xl relative z-10" data-lvt-eid="3390b4934c">
+        <div class="text-center mb-20" data-lvt-eid="667d4c8809"><h2 class="text-4xl font-bold bg-[#F4F1EA] inline-block px-4" data-copy-target="skills.title" data-lvt-eid="29835b6daa">核心能力 / Core Skills</h2></div>
+        <div class="space-y-24" data-lvt-eid="ea75972976">
+          <article class="service-item" data-gsap="service-item" data-lvt-eid="64d3da7380"><div class="service-card" data-lvt-eid="566deb0a0f"><i class="ri-code-s-slash-fill" data-lvt-eid="6754173771"></i><h3 data-copy-target="skill.1.title" data-lvt-eid="78a01541dd">视觉设计 / Visual Design</h3><p data-copy-target="skill.1.body" data-lvt-eid="cb8a2ab900">KV 主视觉、平面与图形设计、版式设计、视觉延展，以及出版物与包装设计。</p></div><i class="service-node" data-lvt-eid="86a7f30824"></i><p data-copy-target="skill.1.list" data-lvt-eid="5fb1322cf9">KV主视觉 · 版式设计 · 视觉延展 · 出版物包装</p></article>
+          <article class="service-item service-item--reverse" data-gsap="service-item" data-lvt-eid="2af574feac"><div class="service-card" data-lvt-eid="80097a7556"><i class="ri-layout-2-fill" data-lvt-eid="fe343a4125"></i><h3 data-copy-target="skill.2.title" data-lvt-eid="675c9ff6de">AI创作与工作流 / AI Creation</h3><p data-copy-target="skill.2.body" data-lvt-eid="3e1949bddc">文生图、图生图、角色设计与视觉风格探索，产品场景生成、广告视觉与 AI 视频动态生成；搭建 ComfyUI 工作流，应用 Stable Diffusion 与 Flux 模型、ControlNet 参考图控制、LoRA 训练及批量生成优化。</p></div><i class="service-node" data-lvt-eid="336f007e4c"></i><p data-copy-target="skill.2.list" data-lvt-eid="ce24554f51">ComfyUI · Stable Diffusion · Flux · ControlNet · LoRA训练</p></article>
+          <article class="service-item" data-gsap="service-item" data-lvt-eid="eec1ad9fb1"><div class="service-card" data-lvt-eid="c92fa7211d"><i class="ri-pen-nib-fill" data-lvt-eid="0ff4f2095b"></i><h3 data-copy-target="skill.3.title" data-lvt-eid="6244cf1d3f">后期与印制 / Post &amp; Print</h3><p data-copy-target="skill.3.body" data-lvt-eid="7f332f2580">AI 生成图像精修、Photoshop 图像合成、画面优化、视觉整合及商业化输出；印前文件制作、印刷工艺应用、打样校色、供应商沟通与成品验收。</p></div><i class="service-node" data-lvt-eid="ddadc3d7bb"></i><p data-copy-target="skill.3.list" data-lvt-eid="c4d019b73b">图像精修 · PS合成 · 印前文件 · 打样校色</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="works-wall" aria-label="作品墙 / Works Wall">
+      <div class="wall-row">
+        <div class="wall-track">
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/qw4mRnLcn4BmmqR6.png" alt="作品墙作品 01 / Works wall piece 01"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/hryvMF4sgj7GvA5l.png" alt="作品墙作品 02 / Works wall piece 02"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/F3Ee125jQlCkVzXF.png" alt="作品墙作品 03 / Works wall piece 03"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/cKm9tEC4rP3ImJAx.png" alt="作品墙作品 04 / Works wall piece 04"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/I6Um1xB92vGInEAf.png" alt="作品墙作品 05 / Works wall piece 05"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/RWgJIRiBR9KqAFL4.png" alt="作品墙作品 06 / Works wall piece 06"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/bf0ab62OR0JzGZRL.png" alt="作品墙作品 07 / Works wall piece 07"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/gObsZ04S6FCDcKFL.png" alt="作品墙作品 08 / Works wall piece 08"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/N4P9F04sACJixkUr.png" alt="作品墙作品 09 / Works wall piece 09"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/SO78nzSI0gFwFamG.png" alt="作品墙作品 10 / Works wall piece 10"></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/qw4mRnLcn4BmmqR6.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/hryvMF4sgj7GvA5l.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/F3Ee125jQlCkVzXF.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/cKm9tEC4rP3ImJAx.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/I6Um1xB92vGInEAf.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/RWgJIRiBR9KqAFL4.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/bf0ab62OR0JzGZRL.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/gObsZ04S6FCDcKFL.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/N4P9F04sACJixkUr.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/SO78nzSI0gFwFamG.png" alt=""></div>
+        </div>
+      </div>
+      <div class="wall-row wall-row--reverse">
+        <div class="wall-track">
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/uT4OdSoet82SFT1M.png" alt="作品墙作品 11 / Works wall piece 11"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/kj4muFvsnr7X8dJ7.png" alt="作品墙作品 12 / Works wall piece 12"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/QcYvVJ2IqPDsclVc.png" alt="作品墙作品 13 / Works wall piece 13"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/bmcBPZCrbxImUjXW.png" alt="作品墙作品 14 / Works wall piece 14"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/qDnoh4kpT0KVwGfX.png" alt="作品墙作品 15 / Works wall piece 15"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/Y21hBcDY9Q1Lbepr.png" alt="作品墙作品 16 / Works wall piece 16"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/GQCygXDSVg1PkBjx.png" alt="作品墙作品 17 / Works wall piece 17"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/M60PAOtTGQ5hq9FP.png" alt="作品墙作品 18 / Works wall piece 18"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/96fCbevWqwE6WD7k.png" alt="作品墙作品 19 / Works wall piece 19"></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/uT4OdSoet82SFT1M.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/kj4muFvsnr7X8dJ7.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/QcYvVJ2IqPDsclVc.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/bmcBPZCrbxImUjXW.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/qDnoh4kpT0KVwGfX.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/Y21hBcDY9Q1Lbepr.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/GQCygXDSVg1PkBjx.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/M60PAOtTGQ5hq9FP.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="https://a.lovart.ai/artifacts/user/96fCbevWqwE6WD7k.png" alt=""></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="py-32 bg-[#17181A] text-white relative overflow-hidden" data-lvt-eid="12603632d5">
+      <div class="contact-texture absolute inset-0 opacity-10" data-lvt-eid="151bd25413"></div>
+      <div class="container mx-auto px-6 relative z-10 flex flex-col items-center text-center" data-lvt-eid="b979a16c04">
+        <p class="font-mono text-xs tracking-[.25em] text-gray-500 mb-6" data-copy-target="contact.eyebrow" data-lvt-eid="c8ab07ce71">有项目想聊聊？ / Have a project in mind?</p>
+        <h2 class="text-6xl md:text-9xl font-black mb-10" data-copy-target="contact.heading" data-lvt-eid="b3518c4fdd">开始合作 / Let's Talk</h2>
+        <p class="max-w-2xl text-gray-400 mb-12" data-copy-target="contact.statement" data-lvt-eid="d965b5002b">接受品牌视觉、卡牌与出版物类项目合作，也欢迎先聊方向与排期。邮箱 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9faeafafadabacabadabaedfeeeeb1fcf0f2">[email&#160;protected]</a> / 电话 13910762005。</p>
+        <a href="/cdn-cgi/l/email-protection#1b2a2b2b292f282f292f2a5b6a6a35787476" class="magnetic-btn contact-email" data-copy-target="contact.email" data-lvt-eid="7971d82fa5"><span class="__cf_email__" data-cfemail="b180818183858285838580f1c0c09fd2dedc">[email&#160;protected]</span></a>
+        <div class="w-full max-w-2xl border-t border-gray-800 pt-8 mt-20 flex flex-col md:flex-row justify-between text-gray-500 font-mono text-xs" data-lvt-eid="13b7e38750">
+          <p data-copy-target="footer.copyright" data-lvt-eid="da17368c6b">© 2026 张浩 Juzior. All rights reserved.</p><p data-copy-target="footer.credit" data-lvt-eid="9c42bd0268">张浩 Juzior · AI-Enhanced Visual Designer · 北京 Beijing</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 六个项目详情覆盖层（同页全屏、hash 路由 #/work/<key>；配色沿用站点三色；层内图片除首图外 lazy、自然比例不裁切） -->
+  <section class="work-overlay" id="work-overlay-collector" data-work-key="collector" role="dialog" aria-modal="true" aria-labelledby="wo-title-collector" aria-hidden="true" data-lvt-eid="e1c9d934a8">
+    <button class="wo-close" type="button" aria-label="关闭项目详情 Close project" data-lvt-eid="cdffe5f5aa"><i class="ri-close-line" aria-hidden="true" data-lvt-eid="20763b7f8f"></i></button>
+    <div class="wo-scroll" data-lvt-eid="a4e84f97db">
+      <div class="wo-sheet" data-lvt-eid="f2a946462e">
+        <header class="wo-head" data-lvt-eid="6071ca9db2">
+          <div class="wo-head-top" data-lvt-eid="df4e39554c"><span class="wo-index" data-lvt-eid="9248e0b22c">01</span><span class="wo-tag" data-lvt-eid="cbcacac773">品牌视觉合集 · Brand Collection</span></div>
+          <h2 class="wo-title" id="wo-title-collector" data-lvt-eid="1fa7ac6ac4">商业海报与视觉延展合集</h2>
+          <p class="wo-sub" data-lvt-eid="924a2e5264">Commercial Poster &amp; Visual Extension Collection</p>
+        </header>
+        <div class="wo-cols" data-lvt-eid="1c296178c5">
+          <div class="wo-overview" data-lvt-eid="f4980f81f4">
+            <h3 class="wo-h" data-lvt-eid="f09cfeb5b0">项目概述 / Overview</h3>
+            <p data-lvt-eid="06798113b4">覆盖餐饮品牌从菜单版式到线上活动页、从饮品主视觉到门店横幅的完整落地。肯德基 KCOFFEE 线包含早餐 DAZE 与下午茶等分时段菜单、以及三丽鸥联名套餐的移动端活动页；爷爷自在茶线包含三款季节饮品主视觉与三款门店 Banner，并配套原创食材插画。</p>
+          </div>
+          <div class="wo-facts" data-lvt-eid="036c8ccff1">
+            <h3 class="wo-h" data-lvt-eid="5d8da764c3">事实要点 / Facts</h3>
+            <ul data-lvt-eid="49303aedd6">
+              <li data-lvt-eid="0753f78b73"><b data-lvt-eid="83a7a098ae">菜单设计</b><i class="wo-sep" data-lvt-eid="125a2117a1"> · </i><span data-lvt-eid="3339622f0b">分时段版式与价格信息层级</span></li>
+              <li data-lvt-eid="1626a23208"><b data-lvt-eid="be5be6c079">活动页</b><i class="wo-sep" data-lvt-eid="04f9efc39d"> · </i><span data-lvt-eid="bbaf21d3fe">KCOFFEE × 三丽鸥联名移动端承接</span></li>
+              <li data-lvt-eid="24b072b3aa"><b data-lvt-eid="321a9f3230">KV 主视觉</b><i class="wo-sep" data-lvt-eid="d8e46c5cb0"> · </i><span data-lvt-eid="86bd586094">蓝莓米乳 / 柿子「喝遇好事」/ 胡萝卜「一口脆甜」</span></li>
+              <li data-lvt-eid="563f0add48"><b data-lvt-eid="d1959f8e38">Banner 延展</b><i class="wo-sep" data-lvt-eid="004ccbd30e"> · </i><span data-lvt-eid="6467f1612d">红豆 / 墨红玫瑰 / 青团&amp;青麻糍</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="wo-gallery">
+          <h3 class="wo-h">项目图集 / Gallery</h3>
+          <!-- 五段分段索引（静态普通内容：无 data-gsap / reveal class / IO 依赖，关 JS 亦可见）；长图本体不裁切，仅在下方完整单列展示 -->
+          <ol class="wo-sections">
+            <li><i class="wo-sec-n">01</i><b>菜单设计</b> · <span>分时段版式与价格信息层级的排版。</span></li>
+            <li><i class="wo-sec-n">02</i><b>活动页设计</b> · <span>KCOFFEE × 三丽鸥联名套餐的移动端承接页面。</span></li>
+            <li><i class="wo-sec-n">03</i><b>KV 主视觉</b> · <span>三款季节饮品的主视觉海报。</span></li>
+            <li><i class="wo-sec-n">04</i><b>Banner 延展</b> · <span>三款门店横幅的媒介适配与延展。</span></li>
+            <li><i class="wo-sec-n">05</i><b>插画设计</b> · <span>配套原创食材插画与角色形象。</span></li>
+          </ol>
+          <div class="wo-figs wo-figs--long">
+            <figure data-lvt-eid="1f3e79b8ae"><img loading="lazy" data-src="https://assets-persist.lovart.ai/pdf_extracts/28db0ec8ba4cb265/images/page1_img1.jpeg" data-fallback="https://assets-persist.lovart.ai/pdf_extracts/28db0ec8ba4cb265/pages/page_1.jpg" alt="商业海报与视觉延展案例合集长图：菜单设计、活动页设计、KV 设计、Banner 设计、插画设计五段" data-lvt-eid="98d4f94f8b"><figcaption data-lvt-eid="59b1c3a4d9">整案长图，按菜单设计、活动页设计、KV 设计、Banner 设计、插画设计五段顺序排布。</figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="work-overlay" id="work-overlay-andersen-forest" data-work-key="andersen-forest" role="dialog" aria-modal="true" aria-labelledby="wo-title-andersen-forest" aria-hidden="true" data-lvt-eid="cc2f409d6f">
+    <button class="wo-close" type="button" aria-label="关闭项目详情 Close project" data-lvt-eid="29706526e9"><i class="ri-close-line" aria-hidden="true" data-lvt-eid="05ab5ef38c"></i></button>
+    <div class="wo-scroll" data-lvt-eid="7487e70289">
+      <div class="wo-sheet" data-lvt-eid="7452aebc07">
+        <header class="wo-head" data-lvt-eid="03261ecf75">
+          <div class="wo-head-top" data-lvt-eid="d47cfacbdd"><span class="wo-index" data-lvt-eid="10ef349186">02</span><span class="wo-tag" data-lvt-eid="221e495c6d">桌游视觉 · Board Game</span></div>
+          <h2 class="wo-title" id="wo-title-andersen-forest" data-lvt-eid="80d03fa476">《安徒生世界-童话林》图鉴设计</h2>
+          <p class="wo-sub" data-lvt-eid="196db09368">Andersen World · Fairy Tale Forest Board Game</p>
+        </header>
+        <figure class="wo-hero" data-lvt-eid="3cc2818031">
+          <img data-src="https://a.lovart.ai/artifacts/user/vp8mJ7ImFH2nCqDL.jpg" alt="安徒生世界童话林横版主视觉" data-lvt-eid="25a551d8db">
+          <figcaption data-lvt-eid="389db0e0f6">横版主视觉：项目 Logo 字效、副标题与散落的卡牌元素。</figcaption>
+        </figure>
+        <div class="wo-cols" data-lvt-eid="7322b49424">
+          <div class="wo-overview" data-lvt-eid="4a4b7d71bf">
+            <h3 class="wo-h" data-lvt-eid="bd394bc55b">项目概述 / Overview</h3>
+            <p data-lvt-eid="364eb12dc2">一款亲子轻策略桌游的整体视觉与图鉴设计。玩家进入迷雾森林的四个场景——雾径入口、菌环空地、月下湖湾、古树书洞，收集线索、完成邂逅，找回发光童话书散落的书页。视觉体系需要在七位角色、六类邂逅卡与五类线索印之间建立可辨识的分类语言，同时保持面向家庭的温和调性。</p>
+          </div>
+          <div class="wo-facts" data-lvt-eid="a76287b85f">
+            <h3 class="wo-h" data-lvt-eid="dbbc8e7737">事实要点 / Facts</h3>
+            <ul data-lvt-eid="196d384f58">
+              <li data-lvt-eid="b23c06cb39"><b data-lvt-eid="3e052200bb">正版授权</b><i class="wo-sep" data-lvt-eid="9017d7e101"> · </i><span data-lvt-eid="7844647b8a">安徒生文化正版独家授权</span></li>
+              <li data-lvt-eid="b161cf8f6f"><b data-lvt-eid="c8cd6bb19e">角色卡</b><i class="wo-sep" data-lvt-eid="8d9fc49618"> · </i><span data-lvt-eid="8cfe92ae1a">七位双面角色：卖火柴的小女孩、坚定的锡兵、白雪皇后、夜莺、丑小鸭、豌豆公主、小美人鱼</span></li>
+              <li data-lvt-eid="64767cfe05"><b data-lvt-eid="d40314538a">卡牌构成</b><i class="wo-sep" data-lvt-eid="4bf9a09fdd"> · </i><span data-lvt-eid="674317efb1">47 张邂逅卡分 6 类，15 个线索印分 5 类</span></li>
+              <li data-lvt-eid="9db1752c05"><b data-lvt-eid="4eba446de9">游玩规格</b><i class="wo-sep" data-lvt-eid="e46868fee0"> · </i><span data-lvt-eid="a455fec30b">7 岁以上，2–5 人，15 分钟上手</span></li>
+              <li data-lvt-eid="287f9bbb8a"><b data-lvt-eid="f0c7edbdfb">机制取向</b><i class="wo-sep" data-lvt-eid="5863807b20"> · </i><span data-lvt-eid="c15993e723">无强淘汰，上一局输家先手</span></li>
+              <li data-lvt-eid="7ffcd12f1a"><b data-lvt-eid="1cd95d2f5c">图形语言</b><i class="wo-sep" data-lvt-eid="81cd76eb77"> · </i><span data-lvt-eid="e4c3cbf151">卡牌颜色对应思维训练：绿=分类归纳，蓝=数量对等，黄=数值比较，红/紫/青=特定条件锁定</span></li>
+            </ul>
+            <p class="wo-note" data-lvt-eid="04a558a438">由北京轶视文化研发。</p>
+          </div>
+        </div>
+        <div class="wo-gallery" data-lvt-eid="079a78f2b8">
+          <h3 class="wo-h" data-lvt-eid="a158738fa5">项目图集 / Gallery</h3>
+          <div class="wo-figs wo-figs--long" data-lvt-eid="03aa38c6ba">
+            <figure data-lvt-eid="6dd20968d1"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/LPEP8Vg9JL9UWSzN.jpg" alt="安徒生世界童话林图鉴整案高清长图" data-lvt-eid="58d36f5460"><figcaption data-lvt-eid="7d3d238d77">图鉴整案长图：主视觉、卡牌阵列、角色卡与玩法说明的完整排版。</figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="work-overlay" id="work-overlay-vegetable-sprite" data-work-key="vegetable-sprite" role="dialog" aria-modal="true" aria-labelledby="wo-title-vegetable-sprite" aria-hidden="true" data-lvt-eid="78bbd947ee">
+    <button class="wo-close" type="button" aria-label="关闭项目详情 Close project" data-lvt-eid="873c893631"><i class="ri-close-line" aria-hidden="true" data-lvt-eid="fdf232d0e0"></i></button>
+    <div class="wo-scroll" data-lvt-eid="c34ff4b331">
+      <div class="wo-sheet" data-lvt-eid="f77f80758e">
+        <header class="wo-head" data-lvt-eid="e11b0ddade">
+          <div class="wo-head-top" data-lvt-eid="f0d53d5bbc"><span class="wo-index" data-lvt-eid="12fc5c7960">03</span><span class="wo-tag" data-lvt-eid="ef4fbfd17e">收藏卡牌 · Trading Cards</span></div>
+          <h2 class="wo-title" id="wo-title-vegetable-sprite" data-lvt-eid="304607c1e2">「恭喜發菜」蔬菜精灵收藏卡</h2>
+          <p class="wo-sub" data-lvt-eid="998e14921a">Vegetable Sprite Collectible Cards · dodowo × DOMIKA</p>
+        </header>
+        <figure class="wo-hero" data-lvt-eid="2a27e6a5d9">
+          <img data-src="https://a.lovart.ai/artifacts/user/jkxhd1AGgmARmPQ2.png" alt="恭喜發菜蔬菜精灵系列官方纪念收藏卡主视觉海报" data-lvt-eid="90142b9502">
+          <figcaption data-lvt-eid="8e91e11257">系列主视觉海报：蔬菜精灵角色群像与套装信息。</figcaption>
+        </figure>
+        <div class="wo-cols" data-lvt-eid="eb8664c858">
+          <div class="wo-overview" data-lvt-eid="2397167ee7">
+            <h3 class="wo-h" data-lvt-eid="24060dc890">项目概述 / Overview</h3>
+            <p data-lvt-eid="10967d8781">dodowo × DOMIKA 联名的蔬菜精灵系列官方纪念收藏卡。以「恭喜發菜」为主题，围绕绿色菜狗等一批蔬菜精灵角色，建立了从主视觉、全系列卡牌图鉴到周边与社媒预热的一致视觉。角色形象在卡面、礼盒与线上物料中保持同一套造型与撞色关系。</p>
+          </div>
+          <div class="wo-facts" data-lvt-eid="aacaf30eae">
+            <h3 class="wo-h" data-lvt-eid="448f85ff68">事实要点 / Facts</h3>
+            <ul data-lvt-eid="a420bf3152">
+              <li data-lvt-eid="4246d74d61"><b data-lvt-eid="fe0d59f424">联名</b><i class="wo-sep" data-lvt-eid="26332b6035"> · </i><span data-lvt-eid="ae2e8f693b">dodowo × DOMIKA</span></li>
+              <li data-lvt-eid="7d1344a763"><b data-lvt-eid="cae5c32e1b">规格</b><i class="wo-sep" data-lvt-eid="709150b28e"> · </i><span data-lvt-eid="cf566f78d1">24 盒/箱，10 包/盒，4 张/包</span></li>
+              <li data-lvt-eid="8f14667474"><b data-lvt-eid="0496de000e">品类</b><i class="wo-sep" data-lvt-eid="428367a766"> · </i><span data-lvt-eid="853524e742">全系列卡牌图鉴清单，含隐藏款与惊喜掉落</span></li>
+              <li data-lvt-eid="1e80a5aeba"><b data-lvt-eid="4211a73a56">延展</b><i class="wo-sep" data-lvt-eid="b13978f5c7"> · </i><span data-lvt-eid="f6c96bde80">蛋仔派对 × 蔬菜精灵 直播间活动物料与 2025 新品预热</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="wo-gallery" data-lvt-eid="247b1f84a6">
+          <h3 class="wo-h" data-lvt-eid="b59103c304">项目图集 / Gallery</h3>
+          <div class="wo-figs" data-lvt-eid="22bd743b3e">            <figure data-lvt-eid="d32236d005"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/RyFbgToPr898VSCp.png" alt="蔬菜精灵全系列卡牌品类图鉴清单" data-lvt-eid="ba027a2159"><figcaption data-lvt-eid="194fc6ce5b">全系列卡牌品类图鉴，逐格标注卡种与数量，底部为惊喜掉落区。</figcaption></figure>
+            <figure data-lvt-eid="650cde32d1"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/bDRQbnqfRm608iOR.jpg" alt="蛋仔派对 × 蔬菜精灵 直播间免费抽官方纪念收藏卡横版宣传图" data-lvt-eid="7b8e222039"><figcaption data-lvt-eid="e6bf25ce4b">直播间免费抽官方纪念收藏卡的横版宣传图。</figcaption></figure>
+            <figure data-lvt-eid="6adb50702c"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/96JYJF1EtTKAB7VE.png" alt="恭喜發菜 2025 新品预告社媒预热海报" data-lvt-eid="fb036b3764"><figcaption data-lvt-eid="d6ed99e215">新品预告海报：圆形取景框内置角色群像，两侧为线索标签。</figcaption></figure>
+          </div>
+          <div class="wo-figs wo-figs--long">
+            <figure data-lvt-eid="a91c47e2b6"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/1QTxUPXG4fGDaUOM.png" alt="蔬菜精灵菜狗系列图鉴长图" data-lvt-eid="b37d15f8a2"><figcaption data-lvt-eid="c64e92a1d8">菜狗系列图鉴长图。</figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="work-overlay" id="work-overlay-waves" data-work-key="waves" role="dialog" aria-modal="true" aria-labelledby="wo-title-waves" aria-hidden="true" data-lvt-eid="5885998d4b">
+    <button class="wo-close" type="button" aria-label="关闭项目详情 Close project" data-lvt-eid="5ce7879c6b"><i class="ri-close-line" aria-hidden="true" data-lvt-eid="eaf728c217"></i></button>
+    <div class="wo-scroll" data-lvt-eid="2ce32b4560">
+      <div class="wo-sheet" data-lvt-eid="030048f0b2">
+        <header class="wo-head" data-lvt-eid="8b296f9dcc">
+          <div class="wo-head-top" data-lvt-eid="aca18df361"><span class="wo-index" data-lvt-eid="d2e56cf5fe">04</span><span class="wo-tag" data-lvt-eid="03b4dab3a6">收藏卡牌 · Trading Cards</span></div>
+          <h2 class="wo-title" id="wo-title-waves" data-lvt-eid="69f227a05b">WAVES 杂志卡牌视觉体系</h2>
+          <p class="wo-sub" data-lvt-eid="91a6cba6f9">WAVES Magazine Trading Card System</p>
+        </header>
+        <div class="wo-cols wo-cols--lead" data-lvt-eid="6465c87ae5">
+          <div class="wo-overview" data-lvt-eid="70b762aa0e">
+            <h3 class="wo-h" data-lvt-eid="c546b5b130">项目概述 / Overview</h3>
+            <p data-lvt-eid="e162494514">为时尚杂志题材的收藏卡建立的分品类视觉体系。十余个品类各自承担不同的质感语言：撕纸边缘、全息镭射与异形边框、波浪黑金、复古油画边缘、报纸拼贴与动态模糊走秀、黑胶复古、电影胶片光影鎏金、彩色泼墨、拍立得相纸边框，以及嵌入实物切片的单窗与双窗物料卡。品类之间靠质感与边框层级区分稀有度，统一在杂志封面的排版语法之下。</p>
+          </div>
+          <div class="wo-facts" data-lvt-eid="6bbe56aa58">
+            <h3 class="wo-h" data-lvt-eid="4b07d6b57c">品类清单 / Categories</h3>
+            <div class="wo-groups" data-lvt-eid="97b4ea4312">
+              <div class="wo-group" data-lvt-eid="9a9bcc03ce"><h4 data-lvt-eid="799c61c638">组一 封面与人物</h4><p data-lvt-eid="dfc7295fff">人物卡 · 杂志卡 1 · 杂志卡 2 · 定格魅力卡 · 星光永恒卡</p></div>
+              <div class="wo-group" data-lvt-eid="523aa78146"><h4 data-lvt-eid="e09bcf2cec">组二 质感与工艺</h4><p data-lvt-eid="77903a63c1">璀璨星耀卡（波浪黑金 / 复古油画边缘） · 走秀卡（报纸拼贴 / 动态模糊） · 复古卡 · 光影鎏金卡 · 泼墨卡 · 撕撕乐</p></div>
+              <div class="wo-group" data-lvt-eid="e126c79e24"><h4 data-lvt-eid="935d27d403">组三 形态与结构</h4><p data-lvt-eid="7a73f8e7cd">拍立得卡 · 拍立得小书卡 · 霸总卡 · 女王卡 · 单窗物料卡 · 双窗物料卡</p></div>
+            </div>
+            <p class="wo-note" data-lvt-eid="be32fa3e13">各品类统一背面版式，正面为人物肖像与系列名，背面为祝贺语与卡牌类型说明。</p>
+          </div>
+        </div>
+        <div class="wo-gallery" data-lvt-eid="ad7e413856">
+          <h3 class="wo-h" data-lvt-eid="8ce8ba6e8c">项目图集 / Gallery</h3>
+          <div class="wo-figs wo-figs--long" data-lvt-eid="d06f084ec3">
+            <figure data-lvt-eid="321d670ac6"><img data-src="https://a.lovart.ai/artifacts/user/9a5UzFoAXJJsRIIQ.jpg" alt="漫潮设计初稿全品类高清长图" data-lvt-eid="c2ae53e9c3"><figcaption data-lvt-eid="33042e0fea">全品类设计初稿长图：各卡种的正面、反面与颜色变体按品类分区排布。</figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="work-overlay" id="work-overlay-andersen-chars" data-work-key="andersen-chars" role="dialog" aria-modal="true" aria-labelledby="wo-title-andersen-chars" aria-hidden="true" data-lvt-eid="c09df70a0c">
+    <button class="wo-close" type="button" aria-label="关闭项目详情 Close project" data-lvt-eid="69fb54411e"><i class="ri-close-line" aria-hidden="true" data-lvt-eid="aa8a814df6"></i></button>
+    <div class="wo-scroll" data-lvt-eid="79b7dd7ecd">
+      <div class="wo-sheet" data-lvt-eid="85d2b36d30">
+        <header class="wo-head" data-lvt-eid="168bf5164d">
+          <div class="wo-head-top" data-lvt-eid="07cd5e817d"><span class="wo-index" data-lvt-eid="833fd43d75">05</span><span class="wo-tag" data-lvt-eid="77bfdfc110">角色设定 · Character Design</span></div>
+          <h2 class="wo-title" id="wo-title-andersen-chars" data-lvt-eid="64007f87aa">安徒生人物形象设计</h2>
+          <p class="wo-sub" data-lvt-eid="555e2d6449">Andersen Character Design</p>
+        </header>
+        <div class="wo-cols wo-cols--lead" data-lvt-eid="7401ad7e9a">
+          <div class="wo-overview" data-lvt-eid="bfa9228dfe">
+            <h3 class="wo-h" data-lvt-eid="73d4652dd7">项目概述 / Overview</h3>
+            <p data-lvt-eid="9a2966550f">一组安徒生童话气质的 Q 版角色形象。全系列统一采用紧凑头身比、细线描边与低饱和水彩晕染，在人物、动物与物件拟人三类角色之间保持同一套造型逻辑与上色密度，使形象库可以按篇目持续扩展而不失整体性。</p>
+          </div>
+          <div class="wo-facts" data-lvt-eid="c673867e8a">
+            <h3 class="wo-h" data-lvt-eid="aac62c5158">事实要点 / Facts</h3>
+            <ul data-lvt-eid="e88bec9869">
+              <li data-lvt-eid="2fd0f7faa7"><b data-lvt-eid="fb8995187b">造型体系</b><i class="wo-sep" data-lvt-eid="4ebe963c39"> · </i><span data-lvt-eid="5f376a5b22">紧凑头身比 + 细线描边 + 水彩晕染</span></li>
+              <li data-lvt-eid="63ff0136d9"><b data-lvt-eid="fc06f20db4">角色类型</b><i class="wo-sep" data-lvt-eid="e1fc8f4348"> · </i><span data-lvt-eid="fcfe3eb689">人物、动物、物件拟人三条支线</span></li>
+              <li data-lvt-eid="66e5b4cf70"><b data-lvt-eid="b1272142eb">产出规模</b><i class="wo-sep" data-lvt-eid="ca4bc4aa69"> · </i><span data-lvt-eid="0455059fc2">13 张角色形象，同一风格体系内</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="wo-gallery" data-lvt-eid="f151493a46">
+          <h3 class="wo-h" data-lvt-eid="cbc8c2f23b">项目图集 / Gallery</h3>
+          <p class="wo-note wo-note--lead" data-lvt-eid="1db6d2441e">13 张形象按自然比例平铺，不做统一裁切，保留每张原有的构图与留白。</p>
+          <div class="wo-figs wo-figs--masonry" data-lvt-eid="0ab7d75bbd">
+            <figure data-lvt-eid="3dc80be29d"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/ao0FTUowx26fvTDw.png" alt="红卷发少女与红玫瑰" data-lvt-eid="21d18cfeb8"><figcaption data-lvt-eid="3eb340108c">红卷发少女与红玫瑰</figcaption></figure>
+            <figure data-lvt-eid="1b32f60f59"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/2yYL2yCxNELXf4Eo.png" alt="天鹅与戴冠少女" data-lvt-eid="8932fdd0b1"><figcaption data-lvt-eid="ae12c73d6c">天鹅与戴冠少女 · 《野天鹅》</figcaption></figure>
+            <figure data-lvt-eid="e62f2bd79f"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/1w4eKHtmNKFXI8vz.png" alt="枝头的蓝白雏鸟" data-lvt-eid="c49df7f421"><figcaption data-lvt-eid="af424d94c5">枝头的蓝白雏鸟 · 《夜莺》</figcaption></figure>
+            <figure data-lvt-eid="f31a82344a"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/vZwM8Q3FqO4gHvRE.png" alt="玻璃瓶中的液体精灵" data-lvt-eid="832c388fc9"><figcaption data-lvt-eid="459fe714ca">玻璃瓶中的液体精灵</figcaption></figure>
+            <figure data-lvt-eid="3078b355ba"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/hHxPQPEwe8VlHvJP.png" alt="骑在绵羊背上的少年" data-lvt-eid="0f89c9df4b"><figcaption data-lvt-eid="a4f883432f">骑在绵羊背上的少年</figcaption></figure>
+            <figure data-lvt-eid="5cea6202cf"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/KY8choTPdS7dUMjN.png" alt="路灯里的光团笑脸" data-lvt-eid="fcd465bc10"><figcaption data-lvt-eid="8a9c6c45d0">路灯里的光团笑脸</figcaption></figure>
+            <figure data-lvt-eid="7b7c42f761"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/qVfMF8WgqlGv5c2I.png" alt="向日葵上的长金发少女" data-lvt-eid="bee807ad23"><figcaption data-lvt-eid="49d47f093f">向日葵上的长金发少女</figcaption></figure>
+            <figure data-lvt-eid="5dbf97c539"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/Cn0oVCIUPKHmxFvT.png" alt="宫廷场景中的军装少年" data-lvt-eid="2edd4e1fd1"><figcaption data-lvt-eid="20661a793a">宫廷场景中的军装少年 · 《坚定的锡兵》</figcaption></figure>
+            <figure data-lvt-eid="13821701c9"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/ZOhqStXjeMLw0MCe.png" alt="花窗前起舞的白裙红鞋" data-lvt-eid="61ee3170ad"><figcaption data-lvt-eid="8edacbbb9d">花窗前起舞的白裙红鞋</figcaption></figure>
+            <figure data-lvt-eid="067a7ac67e"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/wiSrOeG1DBKOd9hp.png" alt="雪夜火堆旁的斗篷少女" data-lvt-eid="2c0780fdcf"><figcaption data-lvt-eid="a05251cb1d">雪夜火堆旁的斗篷少女</figcaption></figure>
+            <figure data-lvt-eid="4457cea1a2"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/hwEU5gsOBbKCrJue.png" alt="带翅的蓝紫水彩精灵" data-lvt-eid="afb01e00de"><figcaption data-lvt-eid="9a55dc11ad">带翅的蓝紫水彩精灵</figcaption></figure>
+            <figure data-lvt-eid="16d515999a"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/Daa1y5iGd8623lde.png" alt="戴礼帽的雪人" data-lvt-eid="a4601bcc7e"><figcaption data-lvt-eid="ba741b6fb8">戴礼帽的雪人 · 《雪之女王》</figcaption></figure>
+            <figure data-lvt-eid="18a1acf791"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/8OQYuC0uGt7YfxbM.png" alt="手持苹果的先生" data-lvt-eid="ee319e6f8e"><figcaption data-lvt-eid="237cfc3cd4">手持苹果的先生</figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="work-overlay" id="work-overlay-tiantan" data-work-key="tiantan" role="dialog" aria-modal="true" aria-labelledby="wo-title-tiantan" aria-hidden="true" data-lvt-eid="d1f6a83c49">
+    <button class="wo-close" type="button" aria-label="关闭项目详情 Close project" data-lvt-eid="e4a72b5c81"><i class="ri-close-line" aria-hidden="true" data-lvt-eid="f7b15d9e23"></i></button>
+    <div class="wo-scroll" data-lvt-eid="a9c24e1f56">
+      <div class="wo-sheet" data-lvt-eid="b2d57f3a84">
+        <header class="wo-head" data-lvt-eid="c6e81a4d29">
+          <div class="wo-head-top" data-lvt-eid="d8f13b7c52"><span class="wo-index" data-lvt-eid="e1a46c8d37">06</span><span class="wo-tag" data-lvt-eid="f4b79d2e61">文博卡牌 · Cultural Cards</span></div>
+          <h2 class="wo-title" id="wo-title-tiantan" data-lvt-eid="a7c12e5f93">天坛「祥云瑞彩」收藏卡</h2>
+          <p class="wo-sub" data-lvt-eid="b9d45f1a26">Temple of Heaven · Auspicious Clouds Collectible Cards</p>
+        </header>
+        <figure class="wo-hero wo-hero--tall" data-lvt-eid="c2e78a4d15">
+          <img data-src="https://a.lovart.ai/artifacts/user/2PVcTB6dIuJafaCv.png" alt="天坛「祥云瑞彩」官方纪念收藏卡主视觉海报" data-lvt-eid="d5f19b7c38">
+          <figcaption data-lvt-eid="e8a42c1d64">主视觉：祈年殿与金色凤凰圆形纹样、多层祥云与书法标题的组合。</figcaption>
+        </figure>
+        <div class="wo-cols" data-lvt-eid="f1b75d3e92">
+          <div class="wo-overview" data-lvt-eid="a4c88e2f17">
+            <h3 class="wo-h" data-lvt-eid="b7d21f5a49">项目概述 / Overview</h3>
+            <p data-lvt-eid="c9e54a8d73">天坛官方纪念收藏卡的整体视觉。主视觉以祈年殿为中心，背后是一枚金色凤凰的圆形纹样，四周由多层祥云与卷草边饰托起；标题「祥云瑞彩」采用书法体并配朱红印章，下方为「官方纪念收藏卡」。系列卡面按工艺与题材分区，统一在同一套深蓝底色、金色纹样与东方色彩关系之下，形成可继续延展的文博卡牌视觉。</p>
+          </div>
+          <div class="wo-facts" data-lvt-eid="d2f87b1c46">
+            <h3 class="wo-h" data-lvt-eid="e5a19c4d82">事实要点 / Facts</h3>
+            <ul data-lvt-eid="f8b42d7e13">
+              <li data-lvt-eid="a1c75e2f96"><b data-lvt-eid="b4d18f5a27">项目名称</b><i class="wo-sep" data-lvt-eid="c7e41a8d59"> · </i><span data-lvt-eid="d9f74b1c32">祥云瑞彩</span></li>
+              <li data-lvt-eid="e2a97c4d68"><b data-lvt-eid="f5b21d7e94">出品</b><i class="wo-sep" data-lvt-eid="a8c54e1f27"> · </i><span data-lvt-eid="b1d87f4a53">天坛官方纪念收藏卡</span></li>
+              <li data-lvt-eid="c4e19a7d86"><b data-lvt-eid="d7f42b1c19">主体元素</b><i class="wo-sep" data-lvt-eid="e9a75c4d32"> · </i><span data-lvt-eid="f2b18d7e64">祈年殿与金色凤凰圆形纹样</span></li>
+              <li data-lvt-eid="a5c41e2f97"><b data-lvt-eid="b8d74f5a13">色彩</b><i class="wo-sep" data-lvt-eid="c1e17a8d46"> · </i><span data-lvt-eid="d4f49b1c72">深蓝底色 + 金色纹样 + 朱红印章</span></li>
+              <li data-lvt-eid="e7a12c4d58"><b data-lvt-eid="f1b45d7e93">标题字</b><i class="wo-sep" data-lvt-eid="a3c78e2f16"> · </i><span data-lvt-eid="b6d11f5a49">书法体「祥云瑞彩」配印章</span></li>
+            </ul>
+            <p class="wo-note" data-lvt-eid="c9e44a8d72">各卡种的名称、工艺与规格以图鉴长图所示为准。</p>
+          </div>
+        </div>
+        <div class="wo-gallery" data-lvt-eid="d2f77b1c45">
+          <h3 class="wo-h" data-lvt-eid="e5a19c4d71">项目图集 / Gallery</h3>
+          <div class="wo-figs wo-figs--long" data-lvt-eid="f8b42d7e94">
+            <figure data-lvt-eid="a1c75e2f27"><img loading="lazy" data-src="https://a.lovart.ai/artifacts/user/K9toZJqoeL1if2R9.png" alt="天坛祥云瑞彩收藏卡卡种分区高清长图" data-lvt-eid="b4d18f5a59"><figcaption data-lvt-eid="c7e41a8d92">卡种分区图鉴长图：各系列卡种的分区排版与正反面工艺示意。</figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/work-overlay.js"></script>
+
+
+</body></html>
