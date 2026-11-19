@@ -191,13 +191,35 @@ html.overlay-open{overflow:hidden}
    平行四边形外观用 clip-path 裁 tile（不 skew 图片本体，避免内容变形）；图片 object-fit:cover 焦点 50% 50%。
    行一向左、行二向右（--reverse）；prefers-reduced-motion 停动画（内容仍可见，首序列铺满视口）。
    38 个 img 初始无 src（data-wall-src），由 main.js initWorksWall() 在墙临近视口时注入，控首屏/渲染预算。 */
-#works-wall{background:var(--bg-color);padding:clamp(28px,4vw,56px) 0;border-top:1px solid var(--paper-line);border-bottom:1px solid var(--paper-line);overflow:hidden}
-.wall-row{overflow:hidden}
+#works-wall{background:var(--bg-color);padding:clamp(28px,4vw,56px) 0;border-top:1px solid var(--paper-line);border-bottom:1px solid var(--paper-line);overflow:hidden;overflow:clip;overflow-clip-margin:clamp(28px,3vw,36px)}
+.wall-row{overflow:hidden;overflow:clip;overflow-clip-margin:clamp(28px,3vw,36px)}
 .wall-row + .wall-row{margin-top:20px}
-.wall-track{display:flex;width:max-content;animation:wall-left 52s linear infinite}
+.wall-track{position:relative;display:flex;width:max-content;animation:wall-left 52s linear infinite}
 .wall-row--reverse .wall-track{animation-name:wall-right}
-.wall-tile{flex:none;width:clamp(200px,24vw,340px);aspect-ratio:4/3;margin-right:20px;background:#E6E0D2;clip-path:polygon(7% 0,100% 0,93% 100%,0 100%)}
+.wall-tile{position:relative;flex:none;width:clamp(200px,24vw,340px);aspect-ratio:4/3;margin-right:20px;background:#E6E0D2;clip-path:polygon(7% 0,100% 0,93% 100%,0 100%);transition:clip-path .4s cubic-bezier(.22,.61,.36,1),transform .4s cubic-bezier(.22,.61,.36,1),box-shadow .4s cubic-bezier(.22,.61,.36,1)}
 .wall-tile img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
 @keyframes wall-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes wall-right{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 @media(prefers-reduced-motion:reduce){.wall-track{animation:none}}
+
+/* ===== 2026-11-19 本轮（B 组）：作品墙悬停暂停 + 原地展开完整图片 =====
+   用户原话「鼠标放上去时候停止滚动并展开完整图片」+ 追问确认「原地展开边缘，整体略微放大」（非浮层大图、非灯箱）。纯 CSS，未新增 GSAP/Lenis/任何 JS 依赖，main.js 的 initWorksWall() 与 data-wall-src 注入机制零改动。
+   四个要素：① .wall-row:hover .wall-track{animation-play-state:paused} —— 指针落在该行任一 tile 或 tile 间隙（间隙属 row 自身盒子）即暂停该行，离开后从暂停处继续（不跳回起点、不重载图片），另一行不受影响；
+   ② 悬停态解除平行四边形斜切，恢复矩形完整边缘；③ img 由 cover（裁切）改为 contain 完整可见，不拉伸不变形；tile 的布局尺寸（width:clamp(200px,24vw,340px) 与 aspect-ratio:4/3）完全不变 —— 展开只走 transform，不占布局、不推挤邻居；
+   ④ scale(1.08) + z-index 抬起 + 柔和投影。因各图原始比例与 4:3 不同而产生的留白，由 tile 现有底色 #E6E0D2 自然承接（未引入新色相，投影取石墨黑系低透明度中性阴影，未用朱红）。
+   裁切链：#works-wall 与 .wall-row 两层原为 overflow:hidden，会把放大与投影裁掉，改为 overflow:clip + overflow-clip-margin:clamp(28px,3vw,36px)（tile 悬停态向外的最大视觉延伸 ≈16px 垂直（投影下沿 15px × scale 1.08）/ ≈14px 水平（scale 外扩），28–36px 的 clip-margin 留有充分余量且随视口自适应）；
+   仍写 overflow:hidden 在前作回落（不支持 clip 的老浏览器解析时丢弃无效声明 → 落回 hidden，而不会变成 visible 破坏跑马灯并产生横向滚动条）；.wall-track 的 width:max-content 水平溢出仍被两层 clip 裁住，多露出的 28–36px 落在视口外、由 body overflow-x:hidden（传播至 viewport）裁掉 → 无页面横向滚动条。
+   降级（可接受，不加 polyfill / 不加 JS 兜底 / 不把 overflow 改回 visible）：不支持 overflow-clip-margin 的浏览器中暂停与展开仍生效，只是放大出的边缘与投影被裁。
+   clip-path 为何不写 none 而写外扩 polygon：① 与静息态同为 4 点 polygon → 可逐点插值（斜边平滑展开成矩形，none 会瞬切）；② clip-path 会连带裁掉元素自身的 box-shadow，需留净空。
+   外扩量按「刚好覆盖阴影净空、又不侵占相邻命中区」反推（tile 尺寸 clamp(200px,24vw,340px) × 4:3 → 高 150–255px）：左右各 2%（4–6.8px，两邻合计 8–13.6px < 20px tile 间距 → 悬停命中区互不侵占，不会出现「鼠标已移到左邻但右邻仍卡在展开态」）；
+   上 5%（7.5–12.75px，覆盖阴影向上的极淡尾部 11px）；下 10%（15–25.5px，恰好覆盖阴影向下 15px 的最大延伸，且只在最大 tile 时越过 20px 行间距 5.5px → 不会在行与行之间造出大块悬停死区）。
+   投影取 0 14px 26px -12px rgba(23,24,26,.34)：负 spread 使其横向零溢出、只向下沉 15px，落在上方 clip-path 预留的净空内，读起来像纸面被抬起而非霓虹发光。
+   z-index 分两级：.wall-track 常态 position:relative（animation 的 transform 使其成为层叠上下文，tile 的 z-index 只在 track 内有效），被悬停行的 track 提到 z-index:3 —— 否则上一行 tile 向下溢出的部分会被下一行 track 盖住；tile 自身 z-index:4 只用于压过同行邻居。
+   触屏：整块包在 @media(hover:hover) 内 —— 无指针悬停的设备保持静息外观与原生滚动，不会长期卡在展开态；aria-hidden 的克隆份同样命中这些规则（选择器按 class，与 aria 无关），行为与原件一致。 */
+@media(hover:hover){
+.wall-row:hover .wall-track{animation-play-state:paused;z-index:3}
+.wall-tile:hover{z-index:4;transform:scale(1.08);clip-path:polygon(-2% -5%,102% -5%,102% 110%,-2% 110%);box-shadow:0 14px 26px -12px rgba(23,24,26,.34)}
+.wall-tile:hover img{object-fit:contain}
+}
+/* prefers-reduced-motion：滚动动画沿用上方 animation:none；悬停的放大与展开仍要生效（用户主动触发的反馈），只把过渡时长取消 */
+@media(hover:hover) and (prefers-reduced-motion:reduce){.wall-tile{transition-duration:.01ms,.01ms,.01ms}}
