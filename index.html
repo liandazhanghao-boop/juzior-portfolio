@@ -1,5 +1,30 @@
 <!DOCTYPE html><html lang="zh-CN" class="lenis lenis-smooth" data-lvt-canonical="1"><head>
   <!--
+  Preamble（2026-11-19 本轮：纯 <head> 域名元数据补齐 —— canonical + og:url 两条；<body> 与 assets/ 下 css·js 零写入）
+  Canvas: 响应式单页作品集；顶层区块顺序与数量不变；作品画廊 6 卡不变；覆盖层 6 层不变；01 层五条分段索引与 05 层 13 张 masonry 不变；本轮零布局、零视觉、零素材变更
+  Design given: 本轮不涉及任何可见设计。用户原话「这个是拿到的，https://juzior.pages.dev/」—— 部署域名确认，上一轮明确留白的两条域名相关元数据现补齐。
+  Content map（逐字，两处必须字节级一致）:
+    <link rel="canonical" href="https://juzior.pages.dev/"> —— 位于既有 <meta name="description"> 之后、三条 icon 声明之前（head 元数据同区），且在任何 CDN <script>/<link> 之前；
+      值 = https、全小写域名、结尾带斜杠、不带 index.html、无 query、无 hash；带一行说明性注释，不带 data-copy-target。
+    <meta property="og:url" content="https://juzior.pages.dev/"> —— 位于 og 组内、紧随 og:type 之后、og:site_name 之前（og 常规次序 type → url → title → image…）；property 形式；
+      值与 canonical 字节级一致；不带 data-copy-target。
+  Assumptions（brief 未指明处的最朴素选择）:
+    1) canonical 取 brief 允许的首选项（description 之后、icon 之前），未重排任何既有 head 标签、未改 <title> / lang / charset / viewport / description / theme-color / 三条 icon / og 其余八条 / twitter 五条 / CDN 引用的一个字符；
+    2) 同步更新第 249 行那条已过时的 HTML 注释（原文写「站点未部署，按 brief 不写 og:url / canonical」），仅改注释文字，不动任何标签；
+    3) 两条标签均为纯元数据，不参与渲染，不影响 gsap/lenis/remixicon/styles.css 的加载顺序与首屏。
+  本轮明确未加: hash 深链（#/work/collector 等六层）的第二条 canonical 或 og:url（hash 由浏览器端解析，爬虫视作同一 URL，一条足够）；
+    og:image:secure_url / og:determiner / og:article:* / al:*（App Links）/ hreflang（本站为中英混排单页，无独立语言版本）/ robots / JSON-LD / site.webmanifest / PWA manifest /
+    twitter:site / twitter:creator（用户尚无已确认的社媒句柄）/ author / keywords / 任何第三方 analytics 统计脚本；og:image 与 twitter:image 仍为 a.lovart.ai 绝对 https URL，未改为 juzior.pages.dev 地址、未改为本地路径。
+  本轮未动: <body> 全部 DOM·文案·图片 URL·data-src 注入机制·object-position 焦点·单列 1000px 长图规格·01 层五条分段索引·05 层 13 张 masonry 与 4 条篇目图注；
+    assets/css/styles.css、assets/js/main.js、assets/js/work-overlay.js 本轮零写入；gsap/lenis runtime、hash 路由、开闭三通道、层内滚轮/键盘/触摸接管、横向画廊 pin、打字机、
+    自定义光标、磁吸按钮、计时器、跑马灯、Loader、hero-reveal、#map-pin 与 .map-radar、data-copy-target 与 data-slot 的 id 体系全部保持；未引用工作区任何 qa-*.html 遗留临时文件。
+  QA risks: ① 两条值是否字节级等于 https://juzior.pages.dev/（含结尾斜杠、无 index.html）-> 源码逐字比对；
+    ② canonical 与 og:url 是否一致、是否只各有一条（无多条 canonical）-> 全文检索计数；
+    ③ 既有 head 标签数量是否未减少、内容是否未被改动 -> 逐条核对（title/lang/charset/viewport/description/theme-color/3 条 icon/og 9 条含新增/twitter 5 条/3 条 CDN）；
+    ④ head 追加是否影响脚本加载顺序导致 Loader / 画廊 pin / hash 路由回归 -> 交付前回归六卡点击开层、层内滚轮、Hero 两条 CTA 锚点跳转；
+    ⑤ body 与 css/js 是否零改动 -> 行数与 diff 确认。
+  -->
+  <!--
   Preamble（2026-11-19 本轮：纯 <head> 元数据补齐 —— description / theme-color / favicon 三件套 / Open Graph + Twitter Card；<body> 与 assets/ 下 css·js 零改动）
   Canvas: 响应式单页作品集；顶层区块顺序与数量不变；作品画廊 6 卡不变；覆盖层 6 层不变；本轮零新增/零替换 body 内素材，零布局改动
   Design given: 本轮只涉及 head 元数据与图标图形本身；图标设计语言 = 暖白 #F4F1EA 满幅底 + 石墨黑 #17181A「JZ」紧排字母 + 右下角一小块朱红 #C8341F 实心方块作签名，
@@ -23,7 +48,8 @@
     1) head 内标签插入位置：description 与 theme-color 紧随 <title> 之后，三条 icon 声明次之，og/twitter 一组放在最后，tailwind / remixicon / styles.css 三条既有标签原位不动 —— 纯元数据，不参与渲染，顺序对脚本加载与首屏无影响；
     2) og:image:alt 与 twitter:image:alt 采用 brief 给定同一句文案；og:image 的 property 与 twitter:image 的 name 分别按 brief 指定的属性形式书写；
     3) favicon PNG 兜底与 apple-touch-icon 复用同一张 512×512 资源（brief 明确指定），未生成多尺寸、未建 site.webmanifest。
-  本轮明确未加（域名/句柄未知，加了即编造）: og:url、<link rel="canonical">（部署拿到域名后再补，留给用户一步）、twitter:site、twitter:creator、robots、author、keywords、
+  本轮明确未加（域名/句柄未知，加了即编造）: og:url、<link rel="canonical">（部署拿到域名后再补，留给用户一步；2026-11-19 域名确认后两条已补齐，见文件首条 preamble）、
+    twitter:site、twitter:creator、robots、author、keywords、
     og:video、og:audio、article:*、apple-touch-icon-precomposed、PWA manifest、JSON-LD 结构化数据、任何第三方 analytics/统计脚本；未从天坛/WAVES/安徒生长图画面转录卡种名·工艺名·规格·数量；
     未添加社媒句柄·门牌地址·获奖列表·客户评价·量化口径·报价。
   本轮未动: <body> 全部 DOM·文案·图片 URL·data-src 注入机制·object-position 焦点·单列 1000px 长图规格·01 层五条分段索引·05 层 13 张 masonry 与 4 条篇目图注；
@@ -241,13 +267,16 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title data-copy-target="page.title">张浩 Juzior — AI-Enhanced Visual Designer｜平面·卡牌·AI 设计作品集</title>
   <meta name="description" content="张浩（JUZIOR），常驻北京的 AI-Enhanced Visual Designer。3 年平面及视觉设计经验，覆盖 KV 主视觉、平面与出版物设计、卡牌产品整体视觉与印前落地，并熟悉 ComfyUI、Stable Diffusion、Flux、ControlNet 与 LoRA 的 AI 视觉创作流程。">
+  <!-- Canonical：线上正式域名（用户 2026-11-19 提供）；值 https、全小写域名、结尾带斜杠、不带 index.html、无 query / hash -->
+  <link rel="canonical" href="https://juzior.pages.dev/">
   <meta name="theme-color" content="#F4F1EA">
   <!-- Favicon：内联 SVG data URI（暖白底 + 石墨黑 JZ + 朱红方块），无独立文件、无本地路径、无 404 风险 -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20fill='%23F4F1EA'/%3E%3Ctext%20x='16'%20y='23.2'%20font-family='Arial,Helvetica,sans-serif'%20font-size='19'%20font-weight='700'%20letter-spacing='-0.8'%20fill='%2317181A'%20text-anchor='middle'%3EJZ%3C/text%3E%3Crect%20x='21.5'%20y='21.5'%20width='4.5'%20height='4.5'%20fill='%23C8341F'/%3E%3C/svg%3E">
   <link rel="icon" type="image/png" sizes="512x512" href="https://a.lovart.ai/artifacts/agent/dUxVIPN8a167GdXh.png">
   <link rel="apple-touch-icon" href="https://a.lovart.ai/artifacts/agent/dUxVIPN8a167GdXh.png">
-  <!-- 社交分享卡片：Open Graph + Twitter Card（站点未部署，按 brief 不写 og:url / canonical / twitter:site / twitter:creator） -->
+  <!-- 社交分享卡片：Open Graph + Twitter Card（域名已确认，og:url 与 canonical 同值；按 brief 仍不写 twitter:site / twitter:creator） -->
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://juzior.pages.dev/">
   <meta property="og:site_name" content="张浩 Juzior 作品集">
   <meta property="og:title" content="张浩 Juzior — AI-Enhanced Visual Designer">
   <meta property="og:description" content="平面 · 卡牌 · AI 设计。六个代表项目：商业海报与视觉延展、《安徒生世界-童话林》图鉴、「恭喜發菜」蔬菜精灵收藏卡、WAVES 杂志卡牌、安徒生人物形象设计、天坛「祥云瑞彩」收藏卡。">
@@ -471,8 +500,8 @@
       <div class="container mx-auto px-6 relative z-10 flex flex-col items-center text-center" data-lvt-eid="b979a16c04">
         <p class="font-mono text-xs tracking-[.25em] text-gray-500 mb-6" data-copy-target="contact.eyebrow" data-lvt-eid="c8ab07ce71">有项目想聊聊？ / Have a project in mind?</p>
         <h2 class="text-6xl md:text-9xl font-black mb-10" data-copy-target="contact.heading" data-lvt-eid="b3518c4fdd">开始合作 / Let's Talk</h2>
-        <p class="max-w-2xl text-gray-400 mb-12" data-copy-target="contact.statement" data-lvt-eid="d965b5002b">接受品牌视觉、卡牌与出版物类项目合作，也欢迎先聊方向与排期。邮箱 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9faeafafadabacabadabaedfeeeeb1fcf0f2">[email&#160;protected]</a> / 电话 13910762005。</p>
-        <a href="/cdn-cgi/l/email-protection#1b2a2b2b292f282f292f2a5b6a6a35787476" class="magnetic-btn contact-email" data-copy-target="contact.email" data-lvt-eid="7971d82fa5"><span class="__cf_email__" data-cfemail="b180818183858285838580f1c0c09fd2dedc">[email&#160;protected]</span></a>
+        <p class="max-w-2xl text-gray-400 mb-12" data-copy-target="contact.statement" data-lvt-eid="d965b5002b">接受品牌视觉、卡牌与出版物类项目合作，也欢迎先聊方向与排期。邮箱 1002434241@qq.com / 电话 13910762005。</p>
+        <a href="mailto:1002434241@qq.com" class="magnetic-btn contact-email" data-copy-target="contact.email" data-lvt-eid="7971d82fa5">1002434241@qq.com</a>
         <div class="w-full max-w-2xl border-t border-gray-800 pt-8 mt-20 flex flex-col md:flex-row justify-between text-gray-500 font-mono text-xs" data-lvt-eid="13b7e38750">
           <p data-copy-target="footer.copyright" data-lvt-eid="da17368c6b">© 2026 张浩 Juzior. All rights reserved.</p><p data-copy-target="footer.credit" data-lvt-eid="9c42bd0268">张浩 Juzior · AI-Enhanced Visual Designer · 北京 Beijing</p>
         </div>
@@ -726,7 +755,7 @@
     </div>
   </section>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
