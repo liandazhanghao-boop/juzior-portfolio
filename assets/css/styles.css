@@ -49,6 +49,19 @@ body{font-family:Inter,"Noto Sans SC","PingFang SC","Hiragino Sans GB",sans-seri
 .service-node{background:var(--accent);border-color:var(--bg-color)}
 .contact-email{border-color:#55565A}
 .contact-email:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+/* ===== 2026-11-20 本轮（B 组）：contact.statement 段落内电话号码的行内链接样式 =====
+   用户原话「手机号改为链接」；index.html 已把 <p data-copy-target="contact.statement"> 里的 13910762005 包成 <a href="tel:13910762005">。
+   这是深色 #17181A 底上 text-gray-400 段落里的行内链接，必须可辨识为可点 —— 取最朴素处理：
+   仅下划线（text-decoration:underline + text-underline-offset:3px 拉开一点避免贴字 + text-decoration-thickness:1px），
+   color:inherit 沿用段落现有灰色（Tailwind Preflight 已把 a 设为 inherit，此处显式锁住，避免 UA/工具类默认蓝）—— 不引入任何新色值、不做成按钮、不加图标、不改字号、不套 magnetic-btn 那套按钮样式。
+   选择器用 p[data-copy-target="contact.statement"] a 提高特异性以压过工具类，且只命中该段落内链接，不影响下方 contact.email 那个既有 <a>。
+   hover / focus-visible 只做下划线 1px→2px 的极轻反馈（不改色、不位移、无 transition，符合「B 组行内链接不加任何动效」）；focus-visible 另加 outline 保可访问性。
+   移动端可点面积：行内链接不做 44px 方块；375px 下号码 11 字符前有空格、后接句号，行高为 Tailwind 默认（约 1.5–1.625）→ 上下净空已足够，故未加 padding（padding 会把下划线/背景撑到相邻文字上，反而更脏）。
+   未写 cursor:pointer：桌面 body{cursor:none} 靠自定义光标（.cursor-dot/.cursor-outline）接管指针，在链接上单独抬回原生箭头会出现「自定义光标 + 原生箭头」双光标；
+     且同类行内入口 .contact-email 也未写 cursor，保持一致。可点辨识完全由下划线承担，不依赖指针形状。 */
+p[data-copy-target="contact.statement"] a{color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+p[data-copy-target="contact.statement"] a:hover,p[data-copy-target="contact.statement"] a:focus-visible{text-decoration-thickness:2px}
+p[data-copy-target="contact.statement"] a:focus-visible{outline:1px solid currentColor;outline-offset:2px}
 /* 图片焦点（image_fit ADAPTIVE）：2026-11 素材批量更新轮按 brief 给定焦点重置——
    卡1 50% 50%：桑葚米乳茶 KV 完稿 1920×1080（16:9）入 16:10 卡面，cover，几乎无裁切；
    卡2 50% 50%：安徒生童话林横版主视觉 2048×1152，cover，Logo 字效与卡牌阵列居中入窗；
@@ -191,35 +204,191 @@ html.overlay-open{overflow:hidden}
    平行四边形外观用 clip-path 裁 tile（不 skew 图片本体，避免内容变形）；图片 object-fit:cover 焦点 50% 50%。
    行一向左、行二向右（--reverse）；prefers-reduced-motion 停动画（内容仍可见，首序列铺满视口）。
    38 个 img 初始无 src（data-wall-src），由 main.js initWorksWall() 在墙临近视口时注入，控首屏/渲染预算。 */
-#works-wall{background:var(--bg-color);padding:clamp(28px,4vw,56px) 0;border-top:1px solid var(--paper-line);border-bottom:1px solid var(--paper-line);overflow:hidden;overflow:clip;overflow-clip-margin:clamp(28px,3vw,36px)}
-.wall-row{overflow:hidden;overflow:clip;overflow-clip-margin:clamp(28px,3vw,36px)}
+#works-wall{background:var(--bg-color);padding:clamp(28px,4vw,56px) 0;border-top:1px solid var(--paper-line);border-bottom:1px solid var(--paper-line);overflow:hidden}
+.wall-row{overflow:hidden}
 .wall-row + .wall-row{margin-top:20px}
-.wall-track{position:relative;display:flex;width:max-content;animation:wall-left 52s linear infinite}
+.wall-track{display:flex;width:max-content;animation:wall-left 52s linear infinite}
 .wall-row--reverse .wall-track{animation-name:wall-right}
-.wall-tile{position:relative;flex:none;width:clamp(200px,24vw,340px);aspect-ratio:4/3;margin-right:20px;background:#E6E0D2;clip-path:polygon(7% 0,100% 0,93% 100%,0 100%);transition:clip-path .4s cubic-bezier(.22,.61,.36,1),transform .4s cubic-bezier(.22,.61,.36,1),box-shadow .4s cubic-bezier(.22,.61,.36,1)}
+.wall-tile{flex:none;width:clamp(200px,24vw,340px);aspect-ratio:4/3;margin-right:20px;background:#E6E0D2;clip-path:polygon(7% 0,100% 0,93% 100%,0 100%)}
 .wall-tile img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
 @keyframes wall-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes wall-right{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 @media(prefers-reduced-motion:reduce){.wall-track{animation:none}}
 
-/* ===== 2026-11-19 本轮（B 组）：作品墙悬停暂停 + 原地展开完整图片 =====
-   用户原话「鼠标放上去时候停止滚动并展开完整图片」+ 追问确认「原地展开边缘，整体略微放大」（非浮层大图、非灯箱）。纯 CSS，未新增 GSAP/Lenis/任何 JS 依赖，main.js 的 initWorksWall() 与 data-wall-src 注入机制零改动。
-   四个要素：① .wall-row:hover .wall-track{animation-play-state:paused} —— 指针落在该行任一 tile 或 tile 间隙（间隙属 row 自身盒子）即暂停该行，离开后从暂停处继续（不跳回起点、不重载图片），另一行不受影响；
-   ② 悬停态解除平行四边形斜切，恢复矩形完整边缘；③ img 由 cover（裁切）改为 contain 完整可见，不拉伸不变形；tile 的布局尺寸（width:clamp(200px,24vw,340px) 与 aspect-ratio:4/3）完全不变 —— 展开只走 transform，不占布局、不推挤邻居；
-   ④ scale(1.08) + z-index 抬起 + 柔和投影。因各图原始比例与 4:3 不同而产生的留白，由 tile 现有底色 #E6E0D2 自然承接（未引入新色相，投影取石墨黑系低透明度中性阴影，未用朱红）。
-   裁切链：#works-wall 与 .wall-row 两层原为 overflow:hidden，会把放大与投影裁掉，改为 overflow:clip + overflow-clip-margin:clamp(28px,3vw,36px)（tile 悬停态向外的最大视觉延伸 ≈16px 垂直（投影下沿 15px × scale 1.08）/ ≈14px 水平（scale 外扩），28–36px 的 clip-margin 留有充分余量且随视口自适应）；
-   仍写 overflow:hidden 在前作回落（不支持 clip 的老浏览器解析时丢弃无效声明 → 落回 hidden，而不会变成 visible 破坏跑马灯并产生横向滚动条）；.wall-track 的 width:max-content 水平溢出仍被两层 clip 裁住，多露出的 28–36px 落在视口外、由 body overflow-x:hidden（传播至 viewport）裁掉 → 无页面横向滚动条。
-   降级（可接受，不加 polyfill / 不加 JS 兜底 / 不把 overflow 改回 visible）：不支持 overflow-clip-margin 的浏览器中暂停与展开仍生效，只是放大出的边缘与投影被裁。
-   clip-path 为何不写 none 而写外扩 polygon：① 与静息态同为 4 点 polygon → 可逐点插值（斜边平滑展开成矩形，none 会瞬切）；② clip-path 会连带裁掉元素自身的 box-shadow，需留净空。
-   外扩量按「刚好覆盖阴影净空、又不侵占相邻命中区」反推（tile 尺寸 clamp(200px,24vw,340px) × 4:3 → 高 150–255px）：左右各 2%（4–6.8px，两邻合计 8–13.6px < 20px tile 间距 → 悬停命中区互不侵占，不会出现「鼠标已移到左邻但右邻仍卡在展开态」）；
-   上 5%（7.5–12.75px，覆盖阴影向上的极淡尾部 11px）；下 10%（15–25.5px，恰好覆盖阴影向下 15px 的最大延伸，且只在最大 tile 时越过 20px 行间距 5.5px → 不会在行与行之间造出大块悬停死区）。
-   投影取 0 14px 26px -12px rgba(23,24,26,.34)：负 spread 使其横向零溢出、只向下沉 15px，落在上方 clip-path 预留的净空内，读起来像纸面被抬起而非霓虹发光。
-   z-index 分两级：.wall-track 常态 position:relative（animation 的 transform 使其成为层叠上下文，tile 的 z-index 只在 track 内有效），被悬停行的 track 提到 z-index:3 —— 否则上一行 tile 向下溢出的部分会被下一行 track 盖住；tile 自身 z-index:4 只用于压过同行邻居。
-   触屏：整块包在 @media(hover:hover) 内 —— 无指针悬停的设备保持静息外观与原生滚动，不会长期卡在展开态；aria-hidden 的克隆份同样命中这些规则（选择器按 class，与 aria 无关），行为与原件一致。 */
-@media(hover:hover){
-.wall-row:hover .wall-track{animation-play-state:paused;z-index:3}
-.wall-tile:hover{z-index:4;transform:scale(1.08);clip-path:polygon(-2% -5%,102% -5%,102% 110%,-2% 110%);box-shadow:0 14px 26px -12px rgba(23,24,26,.34)}
-.wall-tile:hover img{object-fit:contain}
+/* ===== 2026-11-19 本轮（A 组）：上方 B 组「作品墙悬停暂停 + 原地展开」已按用户要求整组撤销 =====
+   用户原话「最下方的滚动图片回复原先的样式，不要点击功能了」。上一段注释作为可追溯记录原样保留，其描述的规则本轮已全部删除，现状以本条为准：
+   已删除 —— #works-wall 与 .wall-row 的 overflow:clip / overflow-clip-margin（overflow:hidden 打底声明保留）；.wall-track 的 position:relative 与 z-index；
+     .wall-tile 的 position:relative / transition / z-index；.wall-row:hover .wall-track{animation-play-state:paused}；
+     .wall-tile:hover 的外扩 clip-path polygon / transform:scale(1.08) / box-shadow / z-index:4；.wall-tile:hover img{object-fit:contain}；
+     整个 @media(hover:hover) 悬停规则块；(hover:hover) and (prefers-reduced-motion:reduce) 中专为悬停加的 transition-duration 收束规则。
+   已保留 —— @keyframes wall-left / wall-right 本体、prefers-reduced-motion 下 .wall-track{animation:none} 的原有规则、
+     tile 静息平行四边形 clip-path:polygon(7% 0,100% 0,93% 100%,0 100%)、object-fit:cover + object-position:50% 50%、
+     aspect-ratio:4/3、底色 #E6E0D2、margin-right:20px（不用 gap）的间距方式、.wall-row + .wall-row{margin-top:20px}。
+   结果：作品墙观感与交互回到悬停功能加入之前 —— 只有无缝循环滚动 + 斜切静息外观，鼠标悬停不停止、不展开、不放大、无投影、无层级抬起。 */
+
+/* ===== 2026-11-19 本轮（B 组）：作品墙两行 → 三行、19 张唯一素材 → 30 个唯一位置（DOM 60 tile） =====
+   结构与分配（逐字按 brief）：行一 wall-01…wall-10（向左 wall-left）；行二 wall-11…wall-19 + wall-01（.wall-row--reverse + wall-right）；
+   行三 wall-02 / wall-11 / wall-03 / wall-12 / wall-04 / wall-13 / wall-05 / wall-14 / wall-06 / wall-15（向左 wall-left）—— 行三刻意与前两行错位，
+   避免三行左对齐时同一张图叠在同一列。每行 track 内把该 10 位序列重复两份（第二份 aria-hidden="true" + alt=""）做无缝循环 → 3 × 20 = 60 tile。
+   素材池仍只有 19 个唯一文件 assets/img/wall-01.png … wall-19.png，11 个位置为复用；同一行内无重复，19 张每张至少出现一次。
+   CSS 侧零新增规则：三行走的是既有 .wall-row / .wall-row--reverse / .wall-track / .wall-tile 与两个 @keyframes，
+   行间距沿用既有 .wall-row + .wall-row{margin-top:20px}（三行即两处命中），#works-wall 的 padding / 上下 border / background 未动。
+   JS 侧零改动：main.js initWorksWall() 以 wall.querySelectorAll("img[data-wall-src]") 通配取节点，38 → 60 天然覆盖，
+   IntersectionObserver（rootMargin 200px 400px、注入 src 后 unobserve）、data-wall-src 属性名、loading="lazy" / decoding="async" 一律未动，
+   也不需为 60 个 tile 调整（逐 tile 独立观察 + 注入后 unobserve + 注入后仍有 loading=lazy，在载并发量由视口决定而非总数决定，与 38 时同理）。
+   alt 沿用「作品墙作品 XX / Works wall piece XX」，XX 为该位置实际显示的文件编号（复用位置用被复用图的编号）。 */
+
+/* ===== 2026-11-20 本轮（A 组）：墙素材池 19 张复用 → 30 张互不相同（仅 index.html 改 data-wall-src/alt 编号，本文件零新增规则） =====
+   上一段注释作为可追溯记录原样保留，其「素材池仍只有 19 个唯一文件、11 个位置为复用」「行三刻意错位分配」等描述自本轮起作废，现状以本条为准：
+   用户原话「30张图片不重复。缺少的我后续直接替换上去」。三行结构、每行 10 位、DOM 60 tile、第二份 aria-hidden="true" + alt="" 的无缝循环机制全部不变，只换素材分配：
+     行一（wall-left）wall-01 … wall-10；行二（.wall-row--reverse + wall-right）wall-11 … wall-20；行三（wall-left）wall-21 … wall-30 —— 三行连号，
+     30 个位置对应 30 个互不相同的文件名，wall-01…wall-19 每张恰好出现一次（原 11 个复用位全部取消），同行与三行之间均无重复。
+   ⚠ wall-20.png … wall-30.png 共 11 个文件用户尚未提供、当前不存在，由用户自行放入部署仓库 assets/img/ 替换；
+     按 brief 明令未加 data-fallback / 占位图 / error 监听 / onerror，未回退复用现有 19 张，未生成新图，未引入任何非 assets/img/ 相对路径 —— 这 11 位裂图是已确认的待替换状态，不是缺陷。
+   本文件零新增/零修改规则：tile 静息 clip-path:polygon(7% 0,100% 0,93% 100%,0 100%)、aspect-ratio:4/3、底色 #E6E0D2、cover + 50% 50%、margin-right 间距、
+     @keyframes wall-left / wall-right、prefers-reduced-motion 下 animation:none、#works-wall 与 .wall-row 的 overflow:hidden（无 clip / overflow-clip-margin）、
+     以及下方 C 组移动档 #works-wall{padding:20px 0} / .wall-row+.wall-row{margin-top:12px} / .wall-tile{width:clamp(132px,36vw,200px);margin-right:12px} 全部原样；
+     墙图数量仍为每行 10 位、共 30 位（与上一轮同），故移动档数值无需微调。悬停仍无任何视觉变化（上方 A 组撤销成果未回退）。
+   JS 侧零改动：main.js initWorksWall() 以 wall.querySelectorAll("img[data-wall-src]") 通配取节点，60 个 tile 天然覆盖，IntersectionObserver 注入、loading="lazy" / decoding="async" 一律未动。 */
+
+/* ===== 2026-11-19 本轮（C 组）：整站移动端体检（375 / 390 / 768 三档）=====
+   断点统一：≤767px 为移动主档（与既有 .service-item / .work-item / .work-card / .wo-figs--masonry / .wo-close 的移动档同一断点）；
+   另设 768–1023px 平板收紧档，全站只有导航一处需要（该档 md: 导航链接开始显示，三组元素合计实测约 798px > 视口，胶囊会被 body overflow-x:hidden 裁掉右半）。
+   既有 ≤430px 的 .map-stage 档保留不动。全部新规则都包在 max-width 媒体查询内 → ≥1024px 桌面观感零变化。
+   实装边界：只做响应式排版与间距（媒体查询 / clamp / min / 栅格列数 / 字号档位 / 留白 / 折行控制）；
+   未新增任何 JS、汉堡菜单、抽屉、弹窗、第三方依赖、<picture>/srcset、loading 属性变更；未改任何 data-copy-target / data-slot 的 id 值与上屏文字；
+   未改 main.js / work-overlay.js 的任何逻辑与 selector；未改配色、未引入新色相、未删任何动效。
+   选择器策略：Tailwind 由 CDN 运行时注入（顺序不可控），故凡要压过工具类的一律用 id / 属性选择器提高特异性（如 #hero h1 span[data-copy-target="…"]），
+   与既有 line1 修复规则同一手法；HTML 的 class 与 DOM 结构一字未改。 */
+@media(max-width:767px){
+  /* 导航：既有 DOM 上四链接为 hidden md:flex —— 移动端整组不显示，About / Skills 两个区块就没有任何入口（只剩 Hero 两条 CTA）。
+     按 brief「不新增汉堡菜单或任何 JS 交互，用排版吸收（缩小字号、收紧间距、允许换行）」处理：纯 CSS 让这组链接在移动档显示并换行。
+     第一行 = brand「张浩 JUZIOR」(20px, ~116px) + 右侧胶囊 (~147px) = 263px < 327px 可用宽 → 单行不挤、不折行；
+     第二行 = 四链接 order:3 + width:100% + justify-content:space-between，字号 11px（每条 ~55px，合计 220px），
+     每个 a 给 min-height:44px 保证可点面积达标。align-items 改为 flex-start + 前两项 align-self:center，
+     使第一行高由较高的 brand 盒（44px）决定，不被第二行 44px 的 a 反向拉高 → 导航总高约 128px，hero 的 pt 同步抬高到 152px（见下）。
+     选择器用 .gap-8 而非 .font-mono：右侧胶囊也带 font-mono，用 font-mono 会误伤胶囊（把它也 order:3 + width:100% 挤到第二行）。
+     mix-blend-difference 与 text-white 未动，浅/深区块交界的可读性仍由既有混合模式保证。 */
+  #navbar{padding:16px 20px;align-items:flex-start;flex-wrap:wrap}
+  #navbar button[data-copy-target="brand.short"]{align-self:center;padding:10px 0;white-space:nowrap;line-height:1.2}
+  #navbar [data-copy-target="nav.availability"]{align-self:center;flex:none;white-space:nowrap;font-size:9.5px;padding:5px 10px;line-height:1.3}
+  #navbar div.gap-8{display:flex;order:3;width:100%;justify-content:space-between;gap:8px;margin-top:0;font-size:11px}
+  #navbar div.gap-8 a{display:flex;align-items:center;min-height:44px;white-space:nowrap}
+  /* Hero 三行大字：line1「张浩」的 clamp(64px,11.5vw,126px)+line-height:1.05 规则一字未动；
+     line2「JUZIOR」(text-stroke) 与 line3「DESIGNER」(实心) 原继承 Tailwind text-7xl(=4.5rem=72px)：
+     375px 下 DESIGNER 8 个大写字母墨迹约 8×0.67×72 ≈ 386px > 327px 可用宽，右端会被三个 overflow-hidden 包裹层切掉；
+     JUZIOR 约 289px 且大写顶边在 leading-[.8] 行盒内仅剩 ≈0.3px 净空，1px text-stroke 的上缘同样会被切。
+     → 移动端给随视口收缩的字号 clamp(34px,11vw,46px)（375px 取 41px → DESIGNER 约 221px，完整入窗）
+     + line-height:1.15（比 line1 的 1.05 再松一档：描边与大写字顶在回退字体度量下仍有 2–5px 墨迹余量不足，
+       自检扫描器对三行报了上下缘裁切候选，line1 规则按 brief 不动，line2/line3 为本轮自定规则，故在此加余量）。
+     hero-reveal class、三个 overflow-hidden 包裹层、内联 transform 全部未动，入场 transform 仍由 GSAP runtime 接管（未写死任何内联值）。 */
+  #hero{padding-top:152px;padding-bottom:128px}
+  #hero h1 span[data-copy-target="hero.name.line2"],
+  #hero h1 span[data-copy-target="hero.name.line3"]{font-size:clamp(34px,11vw,46px);line-height:1.15}
+  /* 旋转徽章：128px 在 375px 下其圆底与 line3「DESIGNER」（实测墨迹约 231px 宽）仅留 1px 净空 → 收到 96px 并上移到 top:-28px，
+     圆心 (279,20) r=48、底边 y=68，而 line3 顶边 y≈89 → 20px 净空；line2「JUZIOR」墨迹止于 x≈166，徽章左缘 231 → 无重叠。
+     字号收到 9.5px（Space Mono 0.6em → 「AI-ENHANCED」约 63px）以在 96px 圆内折两行居中；
+     仍 right-0、仍 animate-spin-slow + hero-reveal + rotate-12，class 与 DOM 未动 */
+  #hero [data-copy-target="hero.badge"]{width:96px;height:96px;top:-28px;font-size:9.5px;line-height:1.35;padding:0 8px}
+  /* Hero 在移动端内容高（约 1020px）> 100vh，此时 section 高度由内容决定，底部那条 absolute bottom-8 的滚动提示线（高 80px）
+     会压在 CTA 按钮上 → 给 hero 补一段底部留白把指示线让到自己的带里（桌面端内容矮于视口、由 justify-center 居中，本来不重叠，故只写在移动档）。
+     padding-top 152px 是为上面变成两行的导航让位（既有 pt-24 = 96px < 导航 128px）；两条 padding 已合并写在上方大字规则前 */
+  /* 肖像：4:5 容器 + polygon clip-path + object-position:50% 26% 全部未动，只给一个上限宽度避免在 767px 附近过大 */
+  #hero .hero-img-container{max-width:min(100%,380px)}
+  /* 打字机：既有 clamp(12px,1.55vw,24px) + white-space:nowrap 规则一字未动（按 brief「勿动」）。
+     复核：375px 下字号落到 12px 下限，终态满文本 = 10 个 CJK(10em) + 25 个拉丁(25×0.6em) = 25em = 300px，
+     加红点 8px + gap 8px = 316px < 327px 可用宽 → h-12 overflow-hidden 内不裁切，无需调整，故本轮未写任何 #typewriter 规则 */
+  /* 能力跑马灯：双轨结构与 @keyframes / xPercent 动画未动，只在窄屏收字号档位（375px 下 48px → 约 34px），
+     rotate(-2deg)+scale(105) 与父层 overflow-hidden 保持；选择器加 .marquee-track 前缀以压过 Tailwind text-5xl */
+  .marquee-track .marquee-source,.marquee-track .marquee-clone{font-size:clamp(32px,9vw,48px)}
+  /* 关于：≤1023px 本就是单栏（文字在上、地图在下，DOM 原序），此处只收纵向留白与字号档位 */
+  #about{padding-top:72px;padding-bottom:72px}
+  #about h2[data-gsap="slide-up"]{font-size:clamp(32px,9vw,48px)}
+  #about p[data-copy-target="about.body"]{font-size:clamp(15px,4.2vw,20px);margin-bottom:32px}
+  /* 两个数据位：保持并排两列（未改栅格列数），只收 gap / pl / 字号，使「年设计经验 / Years Experience」与「核心能力方向 / Skill Areas」
+     最多在斜杠后的空格处折成两行，不产生单字孤行；数值「5」与两条 label 文本零改动 */
+  #about .grid.grid-cols-2{gap:16px;margin-bottom:36px}
+  #about .border-l-2{padding-left:16px}
+  #about .border-l-2 > div:first-child{font-size:clamp(26px,7.4vw,32px)}
+  #about .border-l-2 > div:last-child{font-size:11.5px;line-height:1.55}
+  /* .map-stage 的 ≤430px 档（width:88% + aspect-ratio）与针/雷达的 left:48%/top:54% + 负 margin 一律未动 ——
+     百分比定位天然跨视口指向同一地理点，按 brief 不为移动端另写偏移档位 */
+  /* 计时器：六格 grid-cols-2（2 列 × 3 行）不变，只收格内边距与字号，保证「年 Years」等中英标签单行、#sec-bar 仍贴格底 */
+  #chronometer{padding-top:56px;padding-bottom:56px}
+  #chronometer .time-cell{padding:16px 14px}
+  #chronometer .time-cell b{font-size:clamp(28px,8vw,34px)}
+  #chronometer .time-cell span{font-size:10px;margin-top:6px;letter-spacing:.02em}
+  #chronometer .time-cell--active i{height:3px}
+  /* 「起点 Since 2021-07-01T00:00:00」实测 12px mono 约 207px < 327px 可用宽，单行即可容纳，ISO 串未被断行，故不改 */
+  /* 作品横向画廊：GSAP pin / scrub 机制与 6 卡 + 圆钮 DOM 全部未动，只调移动端尺寸与留白（pl-[20vw]=75px 收到 24px、gap-20=80px 收到 32px，
+     使单卡在 375px 下仍占约 82vw、屏侧留出下一张的边缘作为可滚提示；pin 距离由 wrapper.scrollWidth 动态算出，main.js 未动） */
+  #works-wrapper{gap:32px;padding-left:24px;padding-right:24px}
+  #works-container h2[data-copy-target="works.watermark"]{font-size:clamp(36px,12vw,60px);top:24px;left:20px}
+  #works .work-image{height:38%}
+  #works .work-card{padding:20px}
+  #works .work-card h3{font-size:clamp(22px,6.2vw,28px)}
+  #works .work-card p{font-size:11.5px;line-height:1.6}
+  #works .work-card footer b{font-size:28px}
+  /* 卡内纵向预算复核（375×667：.work-item 既有移动档 width:82vw=307px / height:64vh=427px → 被 min-height:500px 顶到 500px）：
+     卡内可用高 = 500 - 40(padding 20×2) = 460px。最长的卡02：图区 38% = 190 + mb 22 + h3 两行 64 + 正文六行 110 + footer 48 = 434px ✓（余 26px）。
+     若沿用既有移动档的 .work-image{height:48%}（240px），同一张卡为 484px > 460px → 正文会从 footer 上溢出（.work-card 无 overflow:hidden），
+     故本轮把图区收到 38%、正文收到 11.5px。图区仍是 cover + 既定焦点百分比（object-position 由 [data-slot] 驱动，未动），
+     04/06 两张 contain 卡的 object-fit:contain 与 grayscale / 静息 scale 豁免亦未动（只是容器矮一点，contain 仍等比完整）。
+     .work-item--offset 的 70px 错落在既有 ≤767px 档已归零（本轮沿用，未改回）。 */
+  /* 技能时间线：≤767px 既有档已取消左右交错（单列、node 居中、text-align:left）与 data-gsap="service-item" 揭示机制，
+     本轮只收纵向节奏与卡内留白，并把 skills.title 从 36px 收到 24px —— 原标题含 px-4 实测约 398px > 375px 视口，
+     会被 main 的 overflow-hidden 切掉两侧墨迹 */
+  #skills{padding-top:72px;padding-bottom:72px}
+  #skills h2[data-copy-target="skills.title"]{font-size:clamp(22px,6.4vw,30px);padding-left:12px;padding-right:12px}
+  #skills .space-y-24 > * + *{margin-top:48px;margin-block-start:48px}
+  /* space-y-24 在 Tailwind v4 下写的是 margin-block-end（且 :where() 特异性为 0），只改 margin-top 会被相邻外边距合并吞掉，
+     故同时把非末项的 block-end 归零，两处逻辑/物理属性都写以避开版本差异 */
+  #skills .space-y-24 > :not(:last-child){margin-bottom:0;margin-block-end:0}
+  #skills .service-card{padding:20px;max-width:none}
+  #skills .service-card > i{font-size:34px}
+  #skills .service-card h3{font-size:clamp(18px,5.2vw,22px)}
+  #skills .service-card p,#skills .service-item > p{font-size:13px;line-height:1.7}
+  /* skill.X.list 长顿号/间隔号串为 mono，只在空格与「 · 」处折行（overflow-wrap 保持 normal，不拆词），实测最长一条 420px 会折两行，不撑破容器 */
+  /* 作品墙三行：tile 从 clamp(200px,24vw,340px)（375px 取下限 200px，约占屏 53%）收到 clamp(132px,36vw,200px)，
+     行距与 tile 间距收到 12px，区块上下留白收到 20px → 三行总高约 367px（375×667 视口的 55%），
+     既读得出是「墙」，单张 135px 宽在手机上仍可辨认，又不至于吃掉半屏以上。静息 clip-path / 4:3 / cover / 底色 #E6E0D2 全部未动。 */
+  #works-wall{padding:20px 0}
+  .wall-row + .wall-row{margin-top:12px}
+  .wall-tile{width:clamp(132px,36vw,200px);margin-right:12px}
+  /* 联系与页脚：h2 既有 clamp(40px,8vw,128px) 在 375px 取 40px，「开始合作 / Let's Talk」折两行居中、不溢出，该规则未动；
+     .contact-email 既有 clamp(14px,2vw,20px) + padding 18px 30px → 375px 下按钮约 203×53px（≥44px 可点），邮箱串 17 字符无空格不会断字，故未动；
+     只收区块上下留白与页脚两行的间距（flex-col 堆叠，既有 md:flex-row 在 ≥768px 仍同行）。
+     注：DOM 中电话号码 13910762005 位于 contact.statement 段落纯文本内，并不存在 tel: 链接（只有邮箱是 mailto: 链接）；
+     新增 tel: 属于改 DOM / 改上屏文字，本轮 Pinned Content 禁止，故未动，已在总结中说明。 */
+  #contact{padding-top:72px;padding-bottom:72px}
+  #contact .border-t{margin-top:48px;padding-top:24px;gap:12px}
+  /* 覆盖层：.wo-cols / .wo-figs 默认即单栏（双栏只在 min-width:900px 生效），.wo-figs--masonry ≤767px 已是 1 列，
+     .wo-figs--long 的 min(100%,1000px) 移动端自然回落 100%，.wo-hero--tall 的 min(100%,460px) 同理 —— 长图五条规则一条未松：
+     仍独占一段、自上而下单列、等比、不裁切、不变形、无黑边、不多列、不切片，移动端只让容器宽度回落。
+     .wo-close 既有 46×46（≥44px 可点）+ top/right 12px 保留；.wo-scroll 既有 padding 64px 12px 48px 保留（顶部 64px 给关闭钮留净空）。
+     此处只收纸面阴影（14px 在 12px 内边距下会被 overflow-x:hidden 切掉一半，收到 8px 完整可见）与几处字号/间距档位。 */
+  .wo-sheet{box-shadow:8px 8px 0 rgba(23,24,26,.28)}
+  .wo-head-top{gap:10px;margin-bottom:14px}
+  .wo-tag{font-size:10px;padding:4px 10px}
+  .wo-title{font-size:clamp(24px,7vw,30px)}
+  /* .wo-tag 保持 white-space:nowrap：最长一条「品牌视觉合集 · Brand Collection」实测约 201px，加 wo-index 28px + gap 10px = 239px
+     < 309px 纸面内宽，不会把 .wo-head-top 撑破；.wo-facts li 与 .wo-sections li 的 flex-wrap 折行行为未动（折在「 · 」与空格处） */
 }
-/* prefers-reduced-motion：滚动动画沿用上方 animation:none；悬停的放大与展开仍要生效（用户主动触发的反馈），只把过渡时长取消 */
-@media(hover:hover) and (prefers-reduced-motion:reduce){.wall-tile{transition-duration:.01ms,.01ms,.01ms}}
+/* 768–1023px 平板档（全站仅导航与 Hero 两处需要）：md: 起中部四链接显示，brand(20px)+链接(14px,gap-8)+胶囊(12px) 合计约 798px > 768px 视口，
+   右侧胶囊会被裁 → 收紧链接字号/间距与胶囊字号，实测约 645px，单行放下且不折行。768–1200px 的 brand.short 20px 既有档未动。
+   Hero：该档仍为单列堆叠（lg: 才分两栏），内容高约 1280px > 视口，底部 absolute bottom-8 的滚动指示线会压到 CTA 区 →
+   与移动档同理补底部留白，把指示线让进自己的带里；≥1024px 两栏布局内容矮于视口、本来不重叠，不写。 */
+@media(min-width:768px) and (max-width:1023px){
+  #navbar{padding:20px 24px}
+  #navbar div.gap-8{gap:16px;font-size:12px}
+  #navbar [data-copy-target="nav.availability"]{font-size:10px;padding:4px 10px;white-space:nowrap;flex:none}
+  #hero{padding-bottom:128px}
+}
+/* 触摸设备（含 >767px 的触屏笔电）回落原生指针：既有 ≤767px 档已用 body,button{cursor:auto} + .cursor-dot/.cursor-outline{display:none!important}
+   与 HTML 上的 hidden md:block 三重隔离，此处补 hover:none / pointer:coarse 维度，避免宽屏触摸设备残留卡住的假光标。
+   纯 CSS，未改 main.js：initCursor() 的 matchMedia("(max-width: 767px)") 提前 return 原样保留。
+   磁吸（.magnetic-btn）只绑 mousemove / mouseleave，触摸不产生位移，故无需处理。 */
+@media(hover:none),(pointer:coarse){
+  body,button{cursor:auto}
+  .cursor-dot,.cursor-outline{display:none!important}
+}

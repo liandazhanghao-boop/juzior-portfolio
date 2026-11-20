@@ -1,4 +1,84 @@
 <!DOCTYPE html><html lang="zh-CN" class="lenis lenis-smooth" data-lvt-canonical="1"><head>
+<!--
+  Preamble（2026-11-20 本轮 task html_task_wall_unique30_tel_link_13：A 作品墙 30 位置改为 30 张互不相同的图 + B 联系电话改为 tel: 行内链接）
+  Canvas: 响应式单页作品集；顶层区块顺序与数量不变；画廊 6 卡、覆盖层 6 层、01 层五条分段索引、05 层 13 张 masonry、关于区数据位 2、技能组 3、计时器格 6 全部不变；
+    作品墙仍三行、每行 10 个位置、唯一位置 30 个、DOM tile 60 个（本轮只改素材分配，行数/位置数/tile 总数零变化）
+  Design given: 用户原话「30张图片不重复。缺少的我后续直接替换上去，手机号改为链接」（上一轮「增加到 30 张」被实现为 30 位置 / 19 张复用，本轮明确改为 30 张各不相同）
+  Asset map（A 组）: 墙素材池由 19 个唯一文件扩为 30 个唯一文件 assets/img/wall-01.png … wall-30.png，逐字按 brief 表格连号分配：
+    行一（wall-left 向左）wall-01 02 03 04 05 06 07 08 09 10；行二（.wall-row--reverse + wall-right）wall-11 12 13 14 15 16 17 18 19 20；行三（wall-left 向左）wall-21 22 23 24 25 26 27 28 29 30。
+    每行 track 内该 10 位序列重复两份（第二份 aria-hidden="true" + alt=""）→ 3 × 20 = 60 tile；30 个位置对应 30 个互不相同的文件名，
+    wall-01…wall-19 每张恰好出现一次（原有 11 个复用位全部取消），wall-20…wall-30 各出现一次；同行无重复、三行之间也无重复。
+    本轮实际改写的 data-wall-src：行二第 10 位 wall-01 → wall-20（原件 + 克隆份，共 2 处），行三 10 位整段重排为 wall-21…wall-30（原件 + 克隆份，共 20 处）；
+    行一 20 处、行二前 9 位 18 处保持原样。对应 alt 的编号同步改为该位置实际文件编号（两位补零）。
+    ⚠ wall-20.png … wall-30.png 共 11 个文件用户尚未提供、当前不存在，将自行放入部署仓库 assets/img/ 替换：
+      按 brief 明令未加 data-fallback、未加占位图、未加 error 监听 / onerror、未回退复用现有 19 张、未生成任何新图、未引入任何非 assets/img/ 相对路径的地址；
+      这 11 个位置的裂图是已确认的待替换状态，不是缺陷。工作区 assets/img/ 本就不存在 → 预览全墙裂图属既有预期。
+  Layout: A 组零布局改动（只换 22 处 data-wall-src 值与对应 alt 编号；tile 的 class / aria-hidden 分布 / 行结构 / @keyframes / initWorksWall() / loading="lazy" / decoding="async" /
+    data-wall-src 属性名 / 静息样式一律未动，styles.css 作品墙区块本轮零写入，C 组移动端墙档 clamp(132px,36vw,200px) 等数值原样保留，无需为 30 张不重复微调）；
+    B 组在既有段落内加一个行内 <a>，不改区块结构、不改栅格
+  Content map（B 组，本轮唯一一处上屏内容变更）: #contact 内 <p data-copy-target="contact.statement" class="max-w-2xl text-gray-400 mb-12"> 里的号码 13910762005 包成 <a href="tel:13910762005">13910762005</a>；
+    段落其余文字逐字保留 —— 「接受品牌视觉、卡牌与出版物类项目合作，也欢迎先聊方向与排期。邮箱 1002434241@qq.com / 电话 」+ 该链接 +「。」，未重排句子、未改标点、未删「电话」二字、
+    未动段落里那串邮箱纯文本（用户只要求电话，故未包 mailto:）；该 <p> 的 data-copy-target 属性名与值、class 均保留；下方既有 <a href="mailto:1002434241@qq.com" class="magnetic-btn contact-email" data-copy-target="contact.email"> 一行未动。
+  Palette/Typography: 全部沿用存量（暖白 #F4F1EA / 石墨黑 #17181A / 朱红 #C8341F / 卡面例外 #FFFFFF、#16305C / 墙 tile 底 #E6E0D2；Inter + Space Mono + Noto Sans SC）；
+    B 组行内链接不引入任何新色值（color:inherit 沿用段落既有 text-gray-400）、不新增字体族、不新增字号档位、不做成按钮、不加图标、不套 magnetic-btn
+  Assumptions（brief 未指明处的最朴素选择）:
+    1) 链接可辨识性：仅 text-decoration:underline + text-underline-offset:3px + text-decoration-thickness:1px，下划线色沿用 currentColor；
+       因 Tailwind Preflight 会把 a 的 color 设为 inherit，故显式写 color:inherit 锁住段落灰色，避免任何 UA/工具类默认蓝；
+       hover / focus-visible 只做 text-decoration-thickness 1px→2px 的极轻反馈（不改色、不移动、无 transition，符合 brief「不加任何动效」），focus-visible 另加 outline 以保可访问性；
+    2) 移动端可点面积：行内链接不做 44px 方块；375px 下该段落 max-w-2xl 收为容器宽，号码 11 字符前有空格、后接句号，行高为 Tailwind 默认（约 1.5–1.625）→ 上下净空已足够，
+       未加 padding（padding 会把下划线/背景撑到相邻文字上，反而更脏）；也未写 cursor:pointer —— 桌面 body{cursor:none} 由自定义光标接管指针，在链接上单独抬回原生箭头会出现双光标，
+       且同类行内入口 .contact-email 也未写 cursor，可点辨识完全由下划线承担；
+    3) 选择器写作 p[data-copy-target="contact.statement"] a：特异性足以压过 Tailwind 工具类，且只命中该段落内链接，不影响 contact.email 那个既有 <a>；
+       规则写在 styles.css 的 contact 主题覆盖段之后（.contact-email:hover 附近），带注释说明
+  本轮未动: <head> 全部声明（title / lang / charset / viewport / meta description / theme-color / canonical / 三条 icon / og·twitter 全字段）；
+    除上述 22 处 data-wall-src+alt 与 contact.statement 内 1 处 <a> 包裹外，<body> 全部 DOM·节点顺序·class/id·data-copy-target 与 data-slot 的 id 值·上屏文字·alt·figcaption·01 层索引·05 层 13 条图注；
+    data-career-start="2021-07-01T00:00:00" 与 #careerOrigin 内部文本两处逐字一致未动；计时器六格仍由 main.js 实时计算，全站无硬写年限；
+    assets/js/main.js 与 assets/js/work-overlay.js 一行未写（initWorksWall() 的 IntersectionObserver 注入、hash 路由、层内滚轮/键盘接管、data-fallback 回落全部保持）；
+    styles.css 除新增 B 组链接规则 1 条（含注释）外零写入，A 组悬停撤销成果与 C 组移动端体检数值原样；未新增任何第三方依赖 / analytics / robots / JSON-LD / manifest / hreflang / twitter:creator·site / 汉堡菜单 / 新 JS 交互；
+    既有全部历史 preamble 与 HTML 注释零字符改写（其中「素材池仍 19 个唯一文件、11 个位置为复用」等旧现状描述自本轮起作废，以本条为准）；未引用工作区 qa-*.html / qa-probe7-note.txt / 1309760997171208295/
+  QA risks: ① 30 个位置是否逐字符合表格、30 个文件名是否互不相同、wall-01…19 是否各恰好一次、wall-20…30 是否各一次、DOM tile 是否仍 60、克隆份是否 aria-hidden + alt="" -> 源码 grep 计数 + 去重比对；
+    ② 有无 data-fallback / onerror / 占位兜底被误加进墙 tile -> 全文检索（应仅在覆盖层长图处命中既有 long-01-fallback.jpg）；
+    ③ 悬停是否仍无任何视觉变化（上一轮撤销成果未回退）-> 检索 hover:hover / overflow-clip / animation-play-state:paused 应仅命中注释；
+    ④ B 组段落其余文字与标点是否逐字未变、contact.email 是否未被改动 -> 源码读回比对；
+    ⑤ 沙箱 check_design / preview_artifact 在本项目超时（61 个本地素材引用 + 多 CDN 依赖，工作区 assets/img/ 不存在，裂图属已确认预期），本轮按 brief 改以源码读回 + 计数校验 + 字宽预算完成验收，未新建任何探针文件；未经运行时实测的项已在总结中如实标注
+  -->
+  <!--
+  Preamble（2026-11-19 本轮 task html_task_wall_three_rows_mobile_audit_12：A 撤销作品墙悬停展开 + B 墙两行→三行/30 唯一位置 + C 整站移动端体检）
+  Canvas: 响应式单页作品集；顶层区块顺序与数量不变；画廊 6 卡、覆盖层 6 层、01 层五条分段索引、05 层 13 张 masonry、关于区数据位 2、技能组 3、计时器格 6 全部不变；
+    作品墙由两行改为三行，唯一位置 30 个、DOM tile 60 个（原两行/19 位/38 tile）
+  Design given: 用户原话「最下方的滚动图片回复原先的样式，不要点击功能了，但是改成三行」+ 追问「增加到 30 张」；「你看能不能匹配一下手机浏览」+ 追问「整站移动端体检」（375/390/768 三档，五判定标准：无横向溢出/无文字裁切/无元素重叠/点击目标不小/图片不变形）
+  Asset map: 本轮零新增/零替换/零生成图片。墙素材池仍 19 个唯一文件 assets/img/wall-01.png…wall-19.png，30 个唯一位置中 11 个为复用，逐字按 brief 表格：
+    行一 wall-01…wall-10（wall-left 向左）；行二 wall-11…wall-19 + wall-01（.wall-row--reverse + wall-right）；行三 wall-02/11/03/12/04/13/05/14/06/15（wall-left，刻意与前两行错位）；
+    每行 track 内序列重复两份（第二份 aria-hidden="true" + alt=""）→ 3×20 = 60 tile；同行无重复、19 张每张至少出现一次；alt 沿用「作品墙作品 XX / Works wall piece XX」（XX = 该位实际文件编号）；
+    工作区 assets/img/ 仍不存在 → 预览裂图属已确认预期，未新建任何探针文件、未改回任何远程地址
+  Layout（A 组）: styles.css 作品墙区块清理 —— 删 #works-wall/.wall-row 的 overflow:clip + overflow-clip-margin（hidden 打底保留）、.wall-track 的 position:relative/z-index、
+    .wall-tile 的 position:relative/transition/z-index、:hover 暂停与展开全组规则、@media(hover:hover) 整块、(hover:hover)+(prefers-reduced-motion) 的 transition-duration 收束条；
+    保留 @keyframes wall-left/right、prefers-reduced-motion 下 animation:none 原规则、静息 clip-path polygon(7% 0,100% 0,93% 100%,0 100%)、aspect-ratio:4/3、底色 #E6E0D2、cover+50% 50%、margin-right 间距 —— 悬停无任何视觉变化
+  Layout（B 组）: index.html 只改作品墙 section：行二末尾补 wall-01 一位（原件+克隆份），新增第三个 .wall-row（向左）；tile 结构/属性（loading="lazy" decoding="async" data-wall-src）逐 tile 与现状同格式；
+    main.js initWorksWall() 零改动（querySelectorAll 通配，38→60 天然覆盖；逐 tile 独立观察+注入后 unobserve+lazy，在载并发由视口而非总数决定，无需为 60 tile 调整）
+  Layout（C 组，全部写在 styles.css，断点统一 ≤767px 移动主档 + 768–1023px 平板档 + 既有 ≤430px map 档；新规则全包在媒体查询内 → ≥1024px 桌面零变化）: 逐区块处理详见 styles.css 内「C 组」注释块（导航两行化/Hero 大字 clamp/徽章 96px/卡内纵向预算/技能标题收字/墙 tile 135px/覆盖层阴影与字号 等）
+  Palette/Typography: 全部沿用存量（暖白 #F4F1EA / 石墨黑 #17181A / 朱红 #C8341F / 卡面例外 #FFFFFF、#16305C / 墙 tile 底 #E6E0D2；Inter + Space Mono + Noto Sans SC），零新色相、零新字体族；移动端只新增 clamp() 字号档位
+  Content map: 本轮零新增上屏文字、零文字值改动。全部 data-copy-target 值 / title / meta description / og・twitter / canonical / alt / figcaption / 01 层索引 / 05 层 13 条图注（含 4 条篇目）/ 墙图 alt 格式逐字保持；
+    data-career-start="2021-07-01T00:00:00" 与 #careerOrigin 两处逐字一致未动；计时器六格仍由 main.js 实时计算，未硬写年限；新增墙 tile 的 alt 按既有格式写入，属 B 组结构要求而非新文案
+  Assumptions（brief 未指明处的最朴素选择，全部服务于「同一套设计在窄屏的自然收束」）:
+    1) 导航：既有 DOM 四链接为 hidden md:flex → 移动端 About/Skills 无入口，与 C 组判定标准 4（导航链接可点）冲突；按 brief「不新增汉堡菜单/JS，用排版吸收（缩小字号、收紧间距、允许换行）」，
+       纯 CSS 在 ≤767px 让链接组换行到第二行（order:3 + width:100% + space-between，11px，每链接 min-height:44px）；DOM、href、id、文字零改动，未引入任何 JS；
+    2) #typewriter：复核后既有 clamp(12px,1.55vw,24px)+nowrap 在 375px 下满文本约 316px < 327px 可用宽，不裁切 → 按 brief「勿动」未写任何规则；
+    3) Hero line2/line3：原继承 text-7xl/8xl 在 375px 会溢出并被 overflow-hidden 包裹层切掉 → 移动档给 clamp(34px,11vw,46px) + line-height:1.05（与 line1 同手法）；line1 的 clamp(64px,11.5vw,126px)+1.05 规则一字未动；
+       hero-reveal class、三个 overflow-hidden 包裹层、内联 transform 全部未动，入场仍由 GSAP 接管；
+    4) 旋转徽章 128px 在移动档收为 96px + top:-28px（避免与 line3 墨迹仅 1px 净空）；仍 right-0/animate-spin-slow/hero-reveal；
+    5) 作品卡：既有移动档 .work-image{height:48%} 下最长卡（卡02）内容约 484px > 460px 可用高 → 图区收到 38%、正文 11.5px，复核后最长卡约 434px ✓；pin/scrub、offset 归零（既有）、contain 卡豁免全部未动；
+    6) 墙 tile 移动档 clamp(132px,36vw,200px) + 行距/间距 12px + 区块留白 20px → 375px 三行总高约 367px（约 55% 视口），读得出是墙、单张不糊、不吃掉半屏以上；
+    7) 长图规格一条未松：.wo-figs--long 仍单列 min(100%,1000px) 移动端自然回落 100%、等比、不裁切、无黑边；.wo-cols/.wo-figs 默认单栏（双栏仅 ≥900px）、masonry ≤767px 已 1 列，均无需新规则；
+    8) 自定义光标/磁吸：既有 ≤767px 档 + hidden md:block + initCursor() 提前 return 已隔离；本轮另补 @media(hover:none),(pointer:coarse) 隐藏假光标（纯 CSS，main.js 零改动；磁吸只绑 mousemove，触摸无位移）；
+    9) 电话 13910762005 在 DOM 中位于 contact.statement 纯文本内，不存在 tel: 链接（只有邮箱是 mailto:）—— 新增 tel: 属改 DOM/改上屏文字，本轮 Pinned Content 禁止，未动，已在总结中报告
+  本轮未动: <head> 全部声明（title/description/viewport/canonical/theme-color/三条 icon/og・twitter 全字段）；除作品墙 section 外 <body> 全部 DOM・节点顺序・class/id・data-copy-target 与 data-slot 的 id 值・文字；
+    assets/js/main.js 与 assets/js/work-overlay.js 一行未写（光标/磁吸/pin/计时器/打字机/跑马灯/IO 注入/hash 路由/层内滚动接管全部保持）；前几轮成果（起点两处、四处文案、数据位 5/5、长图规格、覆盖层机制、01 层索引、05 层图注）原样；
+    既有全部历史 preamble 与 HTML 注释零字符改动（其中描述的「B 组悬停参数仍在」等旧现状自本轮起作废，以本条为准）；未引用工作区 qa-*.html / qa-probe7-note.txt / 1309760997171208295/
+  QA risks: ① A 组清理后墙区无 hover 规则残留 -> 全文检索 hover:hover/overflow-clip/paused 仅命中注释；② 墙 3 行/60 tile/分配逐字符合表格 -> 源码计数与逐位比对；
+    ③ 375/390/768 无横向溢出、Hero 三行不裁切、卡内不溢出、导航两行不挤 -> 按计算样式/字宽度预算复核（沙箱 check_design/preview_artifact 在本项目超时，未做运行时实测的项已在总结中如实标注）；
+    ④ 桌面 ≥1024px 零变化 -> 全部新规则包在 max-width 媒体查询内，源码审查确认；⑤ initWorksWall() 对 60 tile 兼容 -> querySelectorAll 通配，未改 JS
+  -->
   <!--
   Preamble（2026-11-19 本轮 task html_task_stat_years_fix_11：纯文案 1 处等长数字替换 —— 仅 index.html 写入，styles.css / main.js / work-overlay.js 零写入）
   Canvas: 响应式单页作品集；顶层区块顺序与数量不变；作品画廊 6 卡、技能 3 组、关于区数据位 2、覆盖层 6 层、作品墙两行/19 张唯一素材/38 tile、计时器六格 全部不变；零布局、零结构、零配色、零字号、零动效、零 JS 改动
@@ -605,6 +685,7 @@
           <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-17.png" alt="作品墙作品 17 / Works wall piece 17"></div>
           <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-18.png" alt="作品墙作品 18 / Works wall piece 18"></div>
           <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-19.png" alt="作品墙作品 19 / Works wall piece 19"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-20.png" alt="作品墙作品 20 / Works wall piece 20"></div>
           <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-11.png" alt=""></div>
           <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-12.png" alt=""></div>
           <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-13.png" alt=""></div>
@@ -614,6 +695,31 @@
           <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-17.png" alt=""></div>
           <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-18.png" alt=""></div>
           <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-19.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-20.png" alt=""></div>
+        </div>
+      </div>
+      <div class="wall-row">
+        <div class="wall-track">
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-21.png" alt="作品墙作品 21 / Works wall piece 21"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-22.png" alt="作品墙作品 22 / Works wall piece 22"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-23.png" alt="作品墙作品 23 / Works wall piece 23"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-24.png" alt="作品墙作品 24 / Works wall piece 24"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-25.png" alt="作品墙作品 25 / Works wall piece 25"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-26.png" alt="作品墙作品 26 / Works wall piece 26"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-27.png" alt="作品墙作品 27 / Works wall piece 27"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-28.png" alt="作品墙作品 28 / Works wall piece 28"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-29.png" alt="作品墙作品 29 / Works wall piece 29"></div>
+          <div class="wall-tile"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-30.png" alt="作品墙作品 30 / Works wall piece 30"></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-21.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-22.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-23.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-24.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-25.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-26.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-27.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-28.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-29.png" alt=""></div>
+          <div class="wall-tile" aria-hidden="true"><img loading="lazy" decoding="async" data-wall-src="assets/img/wall-30.png" alt=""></div>
         </div>
       </div>
     </section>
@@ -623,8 +729,8 @@
       <div class="container mx-auto px-6 relative z-10 flex flex-col items-center text-center" data-lvt-eid="b979a16c04">
         <p class="font-mono text-xs tracking-[.25em] text-gray-500 mb-6" data-copy-target="contact.eyebrow" data-lvt-eid="c8ab07ce71">有项目想聊聊？ / Have a project in mind?</p>
         <h2 class="text-6xl md:text-9xl font-black mb-10" data-copy-target="contact.heading" data-lvt-eid="b3518c4fdd">开始合作 / Let's Talk</h2>
-        <p class="max-w-2xl text-gray-400 mb-12" data-copy-target="contact.statement" data-lvt-eid="d965b5002b">接受品牌视觉、卡牌与出版物类项目合作，也欢迎先聊方向与排期。邮箱 1002434241@qq.com / 电话 13910762005。</p>
-        <a href="mailto:1002434241@qq.com" class="magnetic-btn contact-email" data-copy-target="contact.email" data-lvt-eid="7971d82fa5">1002434241@qq.com</a>
+        <p class="max-w-2xl text-gray-400 mb-12" data-copy-target="contact.statement" data-lvt-eid="d965b5002b">接受品牌视觉、卡牌与出版物类项目合作，也欢迎先聊方向与排期。邮箱 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d3e2e3e3e1e7e0e7e1e7e293a2a2fdb0bcbe">[email&#160;protected]</a> / 电话 <a href="tel:13910762005">13910762005</a>。</p>
+        <a href="/cdn-cgi/l/email-protection#c2f3f2f2f0f6f1f6f0f6f382b3b3eca1adaf" class="magnetic-btn contact-email" data-copy-target="contact.email" data-lvt-eid="7971d82fa5"><span class="__cf_email__" data-cfemail="6a5b5a5a585e595e585e5b2a1b1b44090507">[email&#160;protected]</span></a>
         <div class="w-full max-w-2xl border-t border-gray-800 pt-8 mt-20 flex flex-col md:flex-row justify-between text-gray-500 font-mono text-xs" data-lvt-eid="13b7e38750">
           <p data-copy-target="footer.copyright" data-lvt-eid="da17368c6b">© 2026 张浩 Juzior. All rights reserved.</p><p data-copy-target="footer.credit" data-lvt-eid="9c42bd0268">张浩 Juzior · AI-Enhanced Visual Designer · 北京 Beijing</p>
         </div>
@@ -878,7 +984,7 @@
     </div>
   </section>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
